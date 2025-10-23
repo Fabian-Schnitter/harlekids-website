@@ -1,13 +1,23 @@
+import { useState, useEffect } from "react";
 import Section from "../components/Section";
 import Card from "../components/Card";
 import Button from "../components/Button";
-import { FaSun, FaPalette, FaUsers, FaHeart } from "react-icons/fa";
-
-// CMS NOTE: Ferientermine aus CMS laden
+import { FaSun, FaPalette, FaUsers, FaHeart, FaCalendar, FaClock, FaEuroSign } from "react-icons/fa";
+import { loadFerienprogramme, markdownToHtml } from "../utils/contentLoader";
 
 const Ferien = () => {
-	// CMS NOTE: Diese Termine später aus CMS
-	const ferienTermine = [
+	const [programme, setProgramme] = useState([]);
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		loadFerienprogramme().then((data) => {
+			setProgramme(data);
+			setLoading(false);
+		});
+	}, []);
+
+	// Fallback zu Demo-Daten wenn keine Programme im CMS
+	const ferienTermine = programme.length > 0 ? programme : [
 		{
 			id: 1,
 			title: "Osterferien 2025",
@@ -142,56 +152,116 @@ const Ferien = () => {
 				subtitle="Jetzt anmelden"
 				backgroundColor="gray"
 			>
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-					{ferienTermine.map((termin) => (
-						<Card key={termin.id} className="flex flex-col">
-							<div className="relative h-56 overflow-hidden rounded-t-xl">
-								<img
-									src={termin.image}
-									alt={termin.title}
-									className="w-full h-full object-cover"
-								/>
-								{termin.spotsLeft && (
-									<div className="absolute top-4 right-4 bg-circus-yellow text-gray-900 px-3 py-1 rounded-full text-sm font-semibold">
-										Noch {termin.spotsLeft} Plätze frei
+				{loading ? (
+					<div className="text-center py-12">
+						<p className="text-xl text-gray-600">Lade Ferienprogramme...</p>
+					</div>
+				) : ferienTermine.length === 0 ? (
+					<div className="text-center py-12">
+						<p className="text-xl text-gray-600">
+							Derzeit sind keine Ferienprogramme verfügbar.
+						</p>
+						<p className="text-gray-500 mt-4">
+							Schaut bald wieder vorbei oder kontaktiert uns direkt!
+						</p>
+					</div>
+				) : (
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+						{ferienTermine.map((termin, index) => (
+							<Card key={termin.slug || termin.id || index} className="flex flex-col">
+								{termin.image && (
+									<div className="relative h-56 overflow-hidden rounded-t-xl">
+										<img
+											src={termin.image}
+											alt={termin.title}
+											className="w-full h-full object-cover"
+										/>
+										{termin.maxParticipants && termin.spotsLeft && (
+											<div className="absolute top-4 right-4 bg-circus-yellow text-gray-900 px-3 py-1 rounded-full text-sm font-semibold">
+												Noch {termin.spotsLeft} Plätze frei
+											</div>
+										)}
 									</div>
 								)}
-							</div>
 
-							<div className="p-6 flex-grow flex flex-col">
-								<h3 className="text-2xl font-bold text-gray-900 mb-2">
-									{termin.title}
-								</h3>
-								<p className="text-gray-600 mb-4">{termin.description}</p>
+								<div className="p-6 flex-grow flex flex-col">
+									<h3 className="text-2xl font-bold text-gray-900 mb-2">
+										{termin.title}
+									</h3>
+									
+									<div 
+										className="text-gray-600 mb-4"
+										dangerouslySetInnerHTML={{ 
+											__html: termin.body ? markdownToHtml(termin.body) : termin.description 
+										}}
+									/>
 
-								<div className="space-y-2 mb-6 flex-grow">
-									<div className="flex justify-between text-gray-700">
-										<span className="font-semibold">Termine:</span>
-										<span>{termin.dates}</span>
+									<div className="space-y-2 mb-6 flex-grow">
+										{(termin.startDate || termin.dates) && (
+											<div className="flex justify-between text-gray-700">
+												<span className="font-semibold flex items-center">
+													<FaCalendar className="mr-2 text-circus-red" />
+													Termine:
+												</span>
+												<span>
+													{termin.startDate && termin.endDate ? (
+														`${new Date(termin.startDate).toLocaleDateString('de-DE')} - ${new Date(termin.endDate).toLocaleDateString('de-DE')}`
+													) : termin.dates}
+												</span>
+											</div>
+										)}
+										{(termin.ageGroup || termin.age) && (
+											<div className="flex justify-between text-gray-700">
+												<span className="font-semibold flex items-center">
+													<FaUsers className="mr-2 text-circus-blue" />
+													Alter:
+												</span>
+												<span>{termin.ageGroup || termin.age}</span>
+											</div>
+										)}
+										{termin.time && (
+											<div className="flex justify-between text-gray-700">
+												<span className="font-semibold flex items-center">
+													<FaClock className="mr-2 text-circus-green" />
+													Zeit:
+												</span>
+												<span>{termin.time}</span>
+											</div>
+										)}
+										{termin.price && (
+											<div className="flex justify-between text-gray-700">
+												<span className="font-semibold flex items-center">
+													<FaEuroSign className="mr-2 text-circus-yellow" />
+													Preis:
+												</span>
+												<span className="text-circus-red font-bold text-lg">
+													{termin.price}
+												</span>
+											</div>
+										)}
 									</div>
-									<div className="flex justify-between text-gray-700">
-										<span className="font-semibold">Alter:</span>
-										<span>{termin.age}</span>
-									</div>
-									<div className="flex justify-between text-gray-700">
-										<span className="font-semibold">Zeit:</span>
-										<span>{termin.time}</span>
-									</div>
-									<div className="flex justify-between text-gray-700">
-										<span className="font-semibold">Preis:</span>
-										<span className="text-circus-red font-bold text-lg">
-											{termin.price}
-										</span>
-									</div>
+
+									{termin.registrationLink ? (
+										<Button 
+											variant="primary" 
+											className="w-full"
+											as="a"
+											href={termin.registrationLink}
+											target="_blank"
+											rel="noopener noreferrer"
+										>
+											Jetzt anmelden
+										</Button>
+									) : (
+										<Button variant="primary" className="w-full" href="/kontakt">
+											Jetzt anmelden
+										</Button>
+									)}
 								</div>
-
-								<Button variant="primary" className="w-full">
-									Jetzt anmelden
-								</Button>
-							</div>
-						</Card>
-					))}
-				</div>
+							</Card>
+						))}
+					</div>
+				)}
 			</Section>
 
 			{/* Tagesablauf */}

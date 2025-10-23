@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Section from "../components/Section";
 import Card from "../components/Card";
 import Button from "../components/Button";
@@ -6,15 +7,23 @@ import {
 	FaClock,
 	FaMapMarkerAlt,
 	FaUsers,
+	FaEuroSign,
 } from "react-icons/fa";
-
-// CMS NOTE: Termine sollten aus dem CMS geladen werden
-// Beispiel: const [events, setEvents] = useState([]);
-// useEffect(() => { fetch('http://localhost:1337/api/events').then(res => res.json()).then(data => setEvents(data)); }, []);
+import { loadEvents, markdownToHtml } from "../utils/contentLoader";
 
 const Termine = () => {
-	// CMS NOTE: Diese Daten später aus CMS laden
-	const upcomingEvents = [
+	const [events, setEvents] = useState([]);
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		loadEvents().then((data) => {
+			setEvents(data);
+			setLoading(false);
+		});
+	}, []);
+
+	// Fallback zu Demo-Daten wenn keine Events im CMS
+	const upcomingEvents = events.length > 0 ? events : [
 		{
 			id: 1,
 			title: "Zirkusferien Osterferien",
@@ -123,59 +132,117 @@ const Termine = () => {
 
 			{/* Termine Grid */}
 			<Section title="Kommende Termine" subtitle="Was steht an?">
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-					{upcomingEvents.map((event) => (
-						<Card key={event.id} className="flex flex-col">
-							<div className="relative h-56 overflow-hidden rounded-t-xl">
-								<img
-									src={event.image}
-									alt={event.title}
-									className="w-full h-full object-cover"
-								/>
-								<div className="absolute top-4 left-4">
-									<span
-										className={`px-3 py-1 rounded-full text-sm font-semibold ${getCategoryColor(
-											event.category
-										)}`}
-									>
-										{event.category}
-									</span>
-								</div>
-								{event.spotsLeft && (
-									<div className="absolute top-4 right-4 bg-white text-gray-900 px-3 py-1 rounded-full text-sm font-semibold">
-										Noch {event.spotsLeft} Plätze frei
+				{loading ? (
+					<div className="text-center py-12">
+						<p className="text-xl text-gray-600">Lade Termine...</p>
+					</div>
+				) : upcomingEvents.length === 0 ? (
+					<div className="text-center py-12">
+						<p className="text-xl text-gray-600">
+							Derzeit sind keine Termine verfügbar.
+						</p>
+						<p className="text-gray-500 mt-4">
+							Schaut bald wieder vorbei oder kontaktiert uns direkt!
+						</p>
+					</div>
+				) : (
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+						{upcomingEvents.map((event, index) => (
+							<Card key={event.slug || event.id || index} className="flex flex-col">
+								{event.image && (
+									<div className="relative h-56 overflow-hidden rounded-t-xl">
+										<img
+											src={event.image}
+											alt={event.title}
+											className="w-full h-full object-cover"
+										/>
+										<div className="absolute top-4 left-4">
+											<span
+												className={`px-3 py-1 rounded-full text-sm font-semibold ${getCategoryColor(
+													event.category
+												)}`}
+											>
+												{event.category}
+											</span>
+										</div>
+										{event.spotsLeft && (
+											<div className="absolute top-4 right-4 bg-white text-gray-900 px-3 py-1 rounded-full text-sm font-semibold">
+												Noch {event.spotsLeft} Plätze frei
+											</div>
+										)}
 									</div>
 								)}
-							</div>
 
-							<div className="p-6 flex-grow">
-								<h3 className="text-2xl font-bold text-gray-900 mb-4">
-									{event.title}
-								</h3>
-								<p className="text-gray-600 mb-6">{event.description}</p>
+								<div className="p-6 flex-grow">
+									<h3 className="text-2xl font-bold text-gray-900 mb-4">
+										{event.title}
+									</h3>
+									
+									<div 
+										className="text-gray-600 mb-6"
+										dangerouslySetInnerHTML={{ 
+											__html: event.body ? markdownToHtml(event.body) : event.description 
+										}}
+									/>
 
-								<div className="space-y-3 mb-6">
-									<div className="flex items-center text-gray-700">
-										<FaCalendarAlt className="text-circus-red mr-3 flex-shrink-0" />
-										<span>{event.date}</span>
+									<div className="space-y-3 mb-6">
+										<div className="flex items-center text-gray-700">
+											<FaCalendarAlt className="text-circus-red mr-3 flex-shrink-0" />
+											<span>
+												{event.date ? new Date(event.date).toLocaleDateString('de-DE', {
+													day: '2-digit',
+													month: 'long',
+													year: 'numeric'
+												}) : event.date}
+											</span>
+										</div>
+										
+										{(event.startTime || event.time) && (
+											<div className="flex items-center text-gray-700">
+												<FaClock className="text-circus-red mr-3 flex-shrink-0" />
+												<span>
+													{event.startTime} {event.endTime && `- ${event.endTime}`} Uhr
+													{event.time && event.time}
+												</span>
+											</div>
+										)}
+										
+										{event.location && (
+											<div className="flex items-center text-gray-700">
+												<FaMapMarkerAlt className="text-circus-red mr-3 flex-shrink-0" />
+												<span>{event.location}</span>
+											</div>
+										)}
+										
+										{event.price && (
+											<div className="flex items-center text-gray-700">
+												<FaEuroSign className="text-circus-yellow mr-3 flex-shrink-0" />
+												<span>{event.price}</span>
+											</div>
+										)}
 									</div>
-									<div className="flex items-center text-gray-700">
-										<FaClock className="text-circus-red mr-3 flex-shrink-0" />
-										<span>{event.time}</span>
-									</div>
-									<div className="flex items-center text-gray-700">
-										<FaMapMarkerAlt className="text-circus-red mr-3 flex-shrink-0" />
-										<span>{event.location}</span>
-									</div>
+
+									{event.registrationRequired && event.registrationLink ? (
+										<Button 
+											variant="primary" 
+											className="w-full"
+											as="a"
+											href={event.registrationLink}
+											target="_blank"
+											rel="noopener noreferrer"
+										>
+											Jetzt anmelden
+										</Button>
+									) : (
+										<Button variant="primary" className="w-full" href="/kontakt">
+											Mehr Info
+										</Button>
+									)}
 								</div>
-
-								<Button variant="primary" className="w-full">
-									Anmelden / Mehr Info
-								</Button>
-							</div>
-						</Card>
-					))}
-				</div>
+							</Card>
+						))}
+					</div>
+				)}
 			</Section>
 
 			{/* Schulprojekte Section */}

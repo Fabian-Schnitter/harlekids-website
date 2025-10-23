@@ -1,18 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Section from "../components/Section";
 import Card from "../components/Card";
 import Button from "../components/Button";
 import { FaCalendar, FaUser, FaTag } from "react-icons/fa";
-
-// CMS NOTE: Blog-Beiträge aus CMS laden
-// Beispiel: const [posts, setPosts] = useState([]);
-// useEffect(() => { fetch('http://localhost:1337/api/posts').then(res => res.json()).then(data => setPosts(data)); }, []);
+import { loadBlogPosts, markdownToHtml } from "../utils/contentLoader";
 
 const Blog = () => {
-	// CMS NOTE: Diese Daten später aus CMS
+	const [posts, setPosts] = useState([]);
+	const [loading, setLoading] = useState(true);
 	const [selectedCategory, setSelectedCategory] = useState("all");
 
-	const blogPosts = [
+	useEffect(() => {
+		loadBlogPosts().then((data) => {
+			setPosts(data);
+			setLoading(false);
+		});
+	}, []);
+
+	// Fallback zu Demo-Daten wenn keine Posts im CMS
+	const blogPosts = posts.length > 0 ? posts : [
 		{
 			id: 1,
 			title: "Auch im nächsten Jahr Ferien im Zirkus",
@@ -87,15 +93,8 @@ const Blog = () => {
 		},
 	];
 
-	const categories = [
-		"all",
-		"Zirkusferien",
-		"Jugendzirkus",
-		"Fortbildung",
-		"Ausbildung",
-		"Festival",
-		"Allgemein",
-	];
+	// Extrahiere eindeutige Kategorien aus den Posts
+	const categories = ["all", ...new Set(blogPosts.map(post => post.category).filter(Boolean))];
 
 	const filteredPosts =
 		selectedCategory === "all"
@@ -115,70 +114,92 @@ const Blog = () => {
 
 			{/* Filter */}
 			<Section>
-				<div className="flex flex-wrap justify-center gap-3 mb-12">
-					{categories.map((category) => (
-						<button
-							key={category}
-							onClick={() => setSelectedCategory(category)}
-							className={`px-6 py-2 rounded-full font-semibold transition-all ${
-								selectedCategory === category
-									? "bg-circus-red text-white"
-									: "bg-gray-200 text-gray-700 hover:bg-gray-300"
-							}`}
-						>
-							{category === "all" ? "Alle" : category}
-						</button>
-					))}
-				</div>
-
-				{/* Blog Posts Grid */}
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-					{filteredPosts.map((post) => (
-						<Card key={post.id} className="flex flex-col">
-							<div className="relative h-56 overflow-hidden rounded-t-xl">
-								<img
-									src={post.image}
-									alt={post.title}
-									className="w-full h-full object-cover"
-								/>
-								<div className="absolute top-4 left-4 bg-circus-yellow text-gray-900 px-3 py-1 rounded-full text-sm font-semibold">
-									<FaTag className="inline mr-1" />
-									{post.category}
-								</div>
-							</div>
-
-							<div className="p-6 flex-grow flex flex-col">
-								<div className="flex items-center text-sm text-gray-600 mb-3 space-x-4">
-									<span className="flex items-center">
-										<FaCalendar className="mr-1 text-circus-red" />
-										{post.date}
-									</span>
-									<span className="flex items-center">
-										<FaUser className="mr-1 text-circus-red" />
-										{post.author}
-									</span>
-								</div>
-
-								<h3 className="text-xl font-bold text-gray-900 mb-3">
-									{post.title}
-								</h3>
-								<p className="text-gray-600 mb-6 flex-grow">{post.excerpt}</p>
-
-								<Button variant="outline" size="sm" className="w-full">
-									Weiterlesen
-								</Button>
-							</div>
-						</Card>
-					))}
-				</div>
-
-				{/* CMS NOTE: Pagination hier einfügen, wenn viele Blog-Posts */}
-				{filteredPosts.length === 0 && (
+				{loading ? (
 					<div className="text-center py-12">
-						<p className="text-gray-600 text-lg">
-							Keine Beiträge in dieser Kategorie gefunden.
-						</p>
+						<p className="text-xl text-gray-600">Lade Blog-Posts...</p>
 					</div>
+				) : (
+					<>
+						<div className="flex flex-wrap justify-center gap-3 mb-12">
+							{categories.map((category) => (
+								<button
+									key={category}
+									onClick={() => setSelectedCategory(category)}
+									className={`px-6 py-2 rounded-full font-semibold transition-all ${
+										selectedCategory === category
+											? "bg-circus-red text-white"
+											: "bg-gray-200 text-gray-700 hover:bg-gray-300"
+									}`}
+								>
+									{category === "all" ? "Alle" : category}
+								</button>
+							))}
+						</div>
+
+						{/* Blog Posts Grid */}
+						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+							{filteredPosts.map((post, index) => (
+								<Card key={post.slug || post.id || index} className="flex flex-col">
+									{post.image && (
+										<div className="relative h-56 overflow-hidden rounded-t-xl">
+											<img
+												src={post.image}
+												alt={post.title}
+												className="w-full h-full object-cover"
+											/>
+											{post.category && (
+												<div className="absolute top-4 left-4 bg-circus-yellow text-gray-900 px-3 py-1 rounded-full text-sm font-semibold">
+													<FaTag className="inline mr-1" />
+													{post.category}
+												</div>
+											)}
+										</div>
+									)}
+
+									<div className="p-6 flex-grow flex flex-col">
+										<div className="flex items-center text-sm text-gray-600 mb-3 space-x-4">
+											<span className="flex items-center">
+												<FaCalendar className="mr-1 text-circus-red" />
+												{post.date ? new Date(post.date).toLocaleDateString('de-DE', {
+													day: '2-digit',
+													month: 'long',
+													year: 'numeric'
+												}) : ''}
+											</span>
+											{post.author && (
+												<span className="flex items-center">
+													<FaUser className="mr-1 text-circus-red" />
+													{post.author}
+												</span>
+											)}
+										</div>
+
+										<h3 className="text-xl font-bold text-gray-900 mb-3">
+											{post.title}
+										</h3>
+										
+										<div className="text-gray-600 mb-6 flex-grow line-clamp-3">
+											{post.excerpt || (post.body && post.body.substring(0, 150) + '...')}
+										</div>
+
+										<Button variant="outline" size="sm" className="w-full">
+											Weiterlesen
+										</Button>
+									</div>
+								</Card>
+							))}
+						</div>
+
+						{filteredPosts.length === 0 && (
+							<div className="text-center py-12">
+								<p className="text-gray-600 text-lg">
+									{selectedCategory === 'all' 
+										? 'Noch keine Blog-Posts vorhanden. Erstellt welche im CMS!'
+										: 'Keine Beiträge in dieser Kategorie gefunden.'}
+								</p>
+							</div>
+						)}
+					</>
 				)}
 			</Section>
 
