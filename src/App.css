@@ -1,0 +1,42 @@
+/* Harlekids Website - Custom Styles */
+
+/* Smooth Scrolling */
+html {
+	scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #e63946;
+	border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #d32f3e;
+}
+
+/* Focus Styles for Accessibility */
+*:focus-visible {
+	outline: 2px solid #e63946;
+	outline-offset: 2px;
+}
+
+/* Image Optimization */
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+/* Prevent text overflow */
+.container {
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+}

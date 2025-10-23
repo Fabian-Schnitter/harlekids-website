@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+@theme {
+	--color-circus-red: #e63946;
+	--color-circus-blue: #457b9d;
+	--color-circus-yellow: #f4a261;
+	--color-circus-green: #2a9d8f;
+}
