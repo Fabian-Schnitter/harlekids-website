@@ -1,0 +1,5 @@
+# Redirect alle Routen zu index.html für React Router
+/*    /index.html   200
+
+# Admin Panel sollte direkt erreichbar sein
+/admin/*  /admin/index.html  200
