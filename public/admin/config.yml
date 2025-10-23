@@ -1,0 +1,162 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  # TERMINE / EVENTS
+  - name: "termine"
+    label: "Termine"
+    folder: "src/content/termine"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Datum", name: "date", widget: "datetime" }
+      - {
+          label: "Startzeit",
+          name: "startTime",
+          widget: "string",
+          required: false,
+        }
+      - { label: "Endzeit", name: "endTime", widget: "string", required: false }
+      - {
+          label: "Kategorie",
+          name: "category",
+          widget: "select",
+          options:
+            [
+              "Workshop",
+              "Aufführung",
+              "Ferienprogramm",
+              "Training",
+              "Sonstiges",
+            ],
+        }
+      - { label: "Ort", name: "location", widget: "string", required: false }
+      - { label: "Beschreibung", name: "description", widget: "markdown" }
+      - { label: "Bild", name: "image", widget: "image", required: false }
+      - { label: "Preis", name: "price", widget: "string", required: false }
+      - {
+          label: "Anmeldung erforderlich",
+          name: "registrationRequired",
+          widget: "boolean",
+          default: false,
+        }
+      - {
+          label: "Anmeldelink",
+          name: "registrationLink",
+          widget: "string",
+          required: false,
+        }
+      - {
+          label: "Veröffentlicht",
+          name: "published",
+          widget: "boolean",
+          default: true,
+        }
+
+  # BLOG-POSTS
+  - name: "blog"
+    label: "Blog"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Veröffentlichungsdatum", name: "date", widget: "datetime" }
+      - { label: "Autor", name: "author", widget: "string" }
+      - {
+          label: "Kategorie",
+          name: "category",
+          widget: "select",
+          options: ["Neuigkeiten", "Events", "Projekte", "Tipps"],
+        }
+      - { label: "Titelbild", name: "image", widget: "image" }
+      - { label: "Kurzbeschreibung", name: "excerpt", widget: "text" }
+      - { label: "Inhalt", name: "body", widget: "markdown" }
+      - {
+          label: "Veröffentlicht",
+          name: "published",
+          widget: "boolean",
+          default: true,
+        }
+
+  # FERIENPROGRAMME
+  - name: "ferienprogramme"
+    label: "Ferienprogramme"
+    folder: "src/content/ferienprogramme"
+    create: true
+    slug: "{{year}}-{{slug}}"
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - {
+          label: "Ferien",
+          name: "vacation",
+          widget: "select",
+          options:
+            [
+              "Sommerferien",
+              "Herbstferien",
+              "Winterferien",
+              "Osterferien",
+              "Pfingstferien",
+            ],
+        }
+      - { label: "Jahr", name: "year", widget: "number" }
+      - { label: "Startdatum", name: "startDate", widget: "datetime" }
+      - { label: "Enddatum", name: "endDate", widget: "datetime" }
+      - { label: "Beschreibung", name: "description", widget: "markdown" }
+      - { label: "Bild", name: "image", widget: "image" }
+      - { label: "Preis", name: "price", widget: "string" }
+      - { label: "Altersgruppe", name: "ageGroup", widget: "string" }
+      - {
+          label: "Max. Teilnehmer",
+          name: "maxParticipants",
+          widget: "number",
+          required: false,
+        }
+      - {
+          label: "Anmeldelink",
+          name: "registrationLink",
+          widget: "string",
+          required: false,
+        }
+      - {
+          label: "Veröffentlicht",
+          name: "published",
+          widget: "boolean",
+          default: true,
+        }
+
+  # EINSTELLUNGEN
+  - name: "settings"
+    label: "Einstellungen"
+    files:
+      - label: "Kontakt"
+        name: "contact"
+        file: "src/content/settings/contact.json"
+        fields:
+          - { label: "Telefon", name: "phone", widget: "string" }
+          - { label: "E-Mail", name: "email", widget: "string" }
+          - { label: "Adresse", name: "address", widget: "text" }
+          - {
+              label: "Facebook URL",
+              name: "facebook",
+              widget: "string",
+              required: false,
+            }
+          - {
+              label: "Instagram URL",
+              name: "instagram",
+              widget: "string",
+              required: false,
+            }
+          - {
+              label: "YouTube URL",
+              name: "youtube",
+              widget: "string",
+              required: false,
+            }
