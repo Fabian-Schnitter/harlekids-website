@@ -18,83 +18,89 @@ const Blog = () => {
 	}, []);
 
 	// Fallback zu Demo-Daten wenn keine Posts im CMS
-	const blogPosts = posts.length > 0 ? posts : [
-		{
-			id: 1,
-			title: "Auch im nächsten Jahr Ferien im Zirkus",
-			date: "23. Februar 2025",
-			author: "Kathi",
-			category: "Zirkusferien",
-			excerpt:
-				"Hier findet ihr alle Infos zu den Zirkusferien 2025. Die Termine stehen fest und die Anmeldung ist ab sofort möglich!",
-			image:
-				"https://images.unsplash.com/photo-1464047736614-af63643285bf?w=800&h=600&fit=crop",
-			content: "Vollständiger Artikel-Inhalt...",
-		},
-		{
-			id: 2,
-			title: "Trainingstermine aktualisiert",
-			date: "11. März 2023",
-			author: "Kathi",
-			category: "Jugendzirkus",
-			excerpt:
-				"Wir haben unser Trainingsangebot für euch aktualisiert. Kommt vorbei und probiert euch aus.",
-			image:
-				"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=600&fit=crop",
-			content: "Vollständiger Artikel-Inhalt...",
-		},
-		{
-			id: 3,
-			title: "Juleica-Schulung erfolgreich abgeschlossen",
-			date: "06. Juli 2022",
-			author: "Steffen",
-			category: "Ausbildung",
-			excerpt:
-				"Am Wochenende vom 17.06.22 – 19.06.22 fand das vierte und damit letzte Juleica-Wochenende statt. Schwerpunkt war der Erste-Hilfe-Kurs.",
-			image:
-				"https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=800&h=600&fit=crop",
-			content: "Vollständiger Artikel-Inhalt...",
-		},
-		{
-			id: 4,
-			title: "Fortbildung Social Circus 2022",
-			date: "01. Juni 2022",
-			author: "Steffen",
-			category: "Fortbildung",
-			excerpt:
-				"Auch in diesem Jahr findet wieder ein Teil der Fortbildungsreihe Social Circus nach der Methode des Cirque du Soleil statt.",
-			image:
-				"https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&h=600&fit=crop",
-			content: "Vollständiger Artikel-Inhalt...",
-		},
-		{
-			id: 5,
-			title: "Die Harlekids auf Schloss Trebnitz",
-			date: "27. März 2019",
-			author: "Admin",
-			category: "Allgemein",
-			excerpt:
-				"Auch in diesem Jahr waren wir wieder Gäste auf Schloss Trebnitz und haben im Rahmen der INISEK die Kennenlernwochen mehrerer 7. Klassen begleitet.",
-			image:
-				"https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=800&h=600&fit=crop",
-			content: "Vollständiger Artikel-Inhalt...",
-		},
-		{
-			id: 6,
-			title: "Sommerfest 2024 - Ein voller Erfolg!",
-			date: "15. Juli 2024",
-			author: "Kathi",
-			category: "Festival",
-			excerpt:
-				"Bei strahlendem Sonnenschein feierten wir unser jährliches Sommerfest. Über 200 Gäste kamen, um unsere Shows zu sehen.",
-			image:
-				"https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&h=600&fit=crop",
-			content: "Vollständiger Artikel-Inhalt...",
-		},
-	];
+	const blogPosts =
+		posts.length > 0
+			? posts
+			: [
+					{
+						id: 1,
+						title: "Auch im nächsten Jahr Ferien im Zirkus",
+						date: "23. Februar 2025",
+						author: "Kathi",
+						category: "Zirkusferien",
+						excerpt:
+							"Hier findet ihr alle Infos zu den Zirkusferien 2025. Die Termine stehen fest und die Anmeldung ist ab sofort möglich!",
+						image:
+							"https://images.unsplash.com/photo-1464047736614-af63643285bf?w=800&h=600&fit=crop",
+						content: "Vollständiger Artikel-Inhalt...",
+					},
+					{
+						id: 2,
+						title: "Trainingstermine aktualisiert",
+						date: "11. März 2023",
+						author: "Kathi",
+						category: "Jugendzirkus",
+						excerpt:
+							"Wir haben unser Trainingsangebot für euch aktualisiert. Kommt vorbei und probiert euch aus.",
+						image:
+							"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=600&fit=crop",
+						content: "Vollständiger Artikel-Inhalt...",
+					},
+					{
+						id: 3,
+						title: "Juleica-Schulung erfolgreich abgeschlossen",
+						date: "06. Juli 2022",
+						author: "Steffen",
+						category: "Ausbildung",
+						excerpt:
+							"Am Wochenende vom 17.06.22 – 19.06.22 fand das vierte und damit letzte Juleica-Wochenende statt. Schwerpunkt war der Erste-Hilfe-Kurs.",
+						image:
+							"https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=800&h=600&fit=crop",
+						content: "Vollständiger Artikel-Inhalt...",
+					},
+					{
+						id: 4,
+						title: "Fortbildung Social Circus 2022",
+						date: "01. Juni 2022",
+						author: "Steffen",
+						category: "Fortbildung",
+						excerpt:
+							"Auch in diesem Jahr findet wieder ein Teil der Fortbildungsreihe Social Circus nach der Methode des Cirque du Soleil statt.",
+						image:
+							"https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&h=600&fit=crop",
+						content: "Vollständiger Artikel-Inhalt...",
+					},
+					{
+						id: 5,
+						title: "Die Harlekids auf Schloss Trebnitz",
+						date: "27. März 2019",
+						author: "Admin",
+						category: "Allgemein",
+						excerpt:
+							"Auch in diesem Jahr waren wir wieder Gäste auf Schloss Trebnitz und haben im Rahmen der INISEK die Kennenlernwochen mehrerer 7. Klassen begleitet.",
+						image:
+							"https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=800&h=600&fit=crop",
+						content: "Vollständiger Artikel-Inhalt...",
+					},
+					{
+						id: 6,
+						title: "Sommerfest 2024 - Ein voller Erfolg!",
+						date: "15. Juli 2024",
+						author: "Kathi",
+						category: "Festival",
+						excerpt:
+							"Bei strahlendem Sonnenschein feierten wir unser jährliches Sommerfest. Über 200 Gäste kamen, um unsere Shows zu sehen.",
+						image:
+							"https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&h=600&fit=crop",
+						content: "Vollständiger Artikel-Inhalt...",
+					},
+			  ];
 
 	// Extrahiere eindeutige Kategorien aus den Posts
-	const categories = ["all", ...new Set(blogPosts.map(post => post.category).filter(Boolean))];
+	const categories = [
+		"all",
+		...new Set(blogPosts.map((post) => post.category).filter(Boolean)),
+	];
 
 	const filteredPosts =
 		selectedCategory === "all"
@@ -139,7 +145,10 @@ const Blog = () => {
 						{/* Blog Posts Grid */}
 						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 							{filteredPosts.map((post, index) => (
-								<Card key={post.slug || post.id || index} className="flex flex-col">
+								<Card
+									key={post.slug || post.id || index}
+									className="flex flex-col"
+								>
 									{post.image && (
 										<div className="relative h-56 overflow-hidden rounded-t-xl">
 											<img
@@ -160,11 +169,13 @@ const Blog = () => {
 										<div className="flex items-center text-sm text-gray-600 mb-3 space-x-4">
 											<span className="flex items-center">
 												<FaCalendar className="mr-1 text-circus-red" />
-												{post.date ? new Date(post.date).toLocaleDateString('de-DE', {
-													day: '2-digit',
-													month: 'long',
-													year: 'numeric'
-												}) : ''}
+												{post.date
+													? new Date(post.date).toLocaleDateString("de-DE", {
+															day: "2-digit",
+															month: "long",
+															year: "numeric",
+													  })
+													: ""}
 											</span>
 											{post.author && (
 												<span className="flex items-center">
@@ -177,9 +188,10 @@ const Blog = () => {
 										<h3 className="text-xl font-bold text-gray-900 mb-3">
 											{post.title}
 										</h3>
-										
+
 										<div className="text-gray-600 mb-6 flex-grow line-clamp-3">
-											{post.excerpt || (post.body && post.body.substring(0, 150) + '...')}
+											{post.excerpt ||
+												(post.body && post.body.substring(0, 150) + "...")}
 										</div>
 
 										<Button variant="outline" size="sm" className="w-full">
@@ -193,9 +205,9 @@ const Blog = () => {
 						{filteredPosts.length === 0 && (
 							<div className="text-center py-12">
 								<p className="text-gray-600 text-lg">
-									{selectedCategory === 'all' 
-										? 'Noch keine Blog-Posts vorhanden. Erstellt welche im CMS!'
-										: 'Keine Beiträge in dieser Kategorie gefunden.'}
+									{selectedCategory === "all"
+										? "Noch keine Blog-Posts vorhanden. Erstellt welche im CMS!"
+										: "Keine Beiträge in dieser Kategorie gefunden."}
 								</p>
 							</div>
 						)}
