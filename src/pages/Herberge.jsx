@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import Section from "../components/Section";
 import Card from "../components/Card";
 import Button from "../components/Button";
@@ -10,33 +9,43 @@ import {
 	FaParking,
 	FaShower,
 } from "react-icons/fa";
-import { loadHerberge } from "../utils/contentLoader";
+
+// CMS NOTE: Herbergs-Informationen aus CMS (optional für später)
 
 const Herberge = () => {
-	const [herbergeAngebote, setHerbergeAngebote] = useState([]);
-	const [loading, setLoading] = useState(true);
-
-	useEffect(() => {
-		loadHerberge().then((data) => {
-			setHerbergeAngebote(data);
-			setLoading(false);
-		});
-	}, []);
-
-	if (loading) {
-		return (
-			<div className="min-h-screen flex items-center justify-center">
-				<p className="text-xl">Lade Herbergen-Angebote...</p>
-			</div>
-		);
-	}
-
-	// Gruppiere nach Typ
-	const zimmer = herbergeAngebote.filter((a) => a.type === "Zimmer");
-	const räume = herbergeAngebote.filter((a) => a.type === "Veranstaltungsraum");
-	const ausstattungItems = herbergeAngebote.filter(
-		(a) => a.type === "Ausstattung",
-	);
+	const ausstattung = [
+		{
+			icon: <FaBed />,
+			title: "Übernachtung",
+			description:
+				"Platz für bis zu 30 Personen in gemütlichen Mehrbettzimmern",
+		},
+		{
+			icon: <FaShower />,
+			title: "Sanitäranlagen",
+			description: "Moderne Duschen und WCs",
+		},
+		{
+			icon: <FaUtensils />,
+			title: "Selbstversorger-Küche",
+			description: "Voll ausgestattete Küche für gemeinsames Kochen",
+		},
+		{
+			icon: <FaUsers />,
+			title: "Gemeinschaftsräume",
+			description: "Große Aufenthaltsräume für Gruppenaktivitäten",
+		},
+		{
+			icon: <FaWifi />,
+			title: "WLAN",
+			description: "Kostenloser Internetzugang",
+		},
+		{
+			icon: <FaParking />,
+			title: "Parkplätze",
+			description: "Ausreichend Parkplätze direkt vor Ort",
+		},
+	];
 
 	return (
 		<div className="min-h-screen">
