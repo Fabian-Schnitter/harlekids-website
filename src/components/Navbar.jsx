@@ -13,6 +13,7 @@ const Navbar = () => {
 		{ name: "Jugendzirkus", path: "/jugendzirkus" },
 		{ name: "Ferien", path: "/ferien" },
 		{ name: "Herberge", path: "/herberge" },
+		{ name: "Blog", path: "/blog" },
 		{ name: "Kontakt", path: "/kontakt" },
 	];
 
