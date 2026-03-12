@@ -94,7 +94,7 @@ const Blog = () => {
 							"https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&h=600&fit=crop",
 						content: "Vollständiger Artikel-Inhalt...",
 					},
-			  ];
+				];
 
 	// Extrahiere eindeutige Kategorien aus den Posts
 	const categories = [
@@ -174,7 +174,7 @@ const Blog = () => {
 															day: "2-digit",
 															month: "long",
 															year: "numeric",
-													  })
+														})
 													: ""}
 											</span>
 											{post.author && (
