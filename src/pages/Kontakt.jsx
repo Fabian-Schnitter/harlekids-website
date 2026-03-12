@@ -8,9 +8,12 @@ import {
 	FaFacebook,
 	FaInstagram,
 	FaClock,
+	FaCheckCircle,
+	FaExclamationCircle,
 } from "react-icons/fa";
 
-// CMS NOTE: Kontaktdaten aus CMS verwalten
+// WICHTIG: Diese URL später auf eure echte Domain ändern!
+const API_URL = "https://harlekids.de/api/contact.php";
 
 const Kontakt = () => {
 	const [formData, setFormData] = useState({
@@ -19,7 +22,16 @@ const Kontakt = () => {
 		phone: "",
 		subject: "",
 		message: "",
+		website: "", // Honeypot-Feld (Spam-Schutz)
 	});
+
+	const [status, setStatus] = useState({
+		loading: false,
+		success: false,
+		error: null,
+	});
+
+	const [startTime] = useState(Date.now()); // Spam-Schutz: Zeit-Check
 
 	const handleChange = (e) => {
 		setFormData({
@@ -28,19 +40,111 @@ const Kontakt = () => {
 		});
 	};
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		// CMS NOTE: Hier später Formular-Submission an Backend/CMS
-		console.log("Form submitted:", formData);
-		alert("Vielen Dank für Ihre Nachricht! Wir melden uns bald bei Ihnen.");
-		// Reset form
-		setFormData({
-			name: "",
-			email: "",
-			phone: "",
-			subject: "",
-			message: "",
-		});
+
+		// Spam-Schutz 1: Honeypot - wenn "website" ausgefüllt ist, ist es ein Bot
+		if (formData.website) {
+			console.log("Spam detected: honeypot filled");
+			return;
+		}
+
+		// Spam-Schutz 2: Zeit-Check - zu schnell = Bot (weniger als 3 Sekunden)
+		const timeSpent = Date.now() - startTime;
+		if (timeSpent < 3000) {
+			setStatus({
+				loading: false,
+				success: false,
+				error: "Bitte nehmen Sie sich einen Moment Zeit.",
+			});
+			return;
+		}
+
+		// Validierung
+		if (
+			!formData.name ||
+			!formData.email ||
+			!formData.subject ||
+			!formData.message
+		) {
+			setStatus({
+				loading: false,
+				success: false,
+				error: "Bitte füllen Sie alle Pflichtfelder aus.",
+			});
+			return;
+		}
+
+		// E-Mail Validierung
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (!emailRegex.test(formData.email)) {
+			setStatus({
+				loading: false,
+				success: false,
+				error: "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+			});
+			return;
+		}
+
+		setStatus({ loading: true, success: false, error: null });
+
+		try {
+			const response = await fetch(API_URL, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					name: formData.name,
+					email: formData.email,
+					phone: formData.phone,
+					subject: formData.subject,
+					message: formData.message,
+					website: formData.website, // Honeypot wird mitgesendet
+				}),
+			});
+
+			const data = await response.json();
+
+			if (response.ok && data.success) {
+				setStatus({
+					loading: false,
+					success: true,
+					error: null,
+				});
+
+				// Formular zurücksetzen
+				setFormData({
+					name: "",
+					email: "",
+					phone: "",
+					subject: "",
+					message: "",
+					website: "",
+				});
+
+				// Erfolgs-Nachricht nach 5 Sekunden ausblenden
+				setTimeout(() => {
+					setStatus({ loading: false, success: false, error: null });
+				}, 5000);
+			} else {
+				setStatus({
+					loading: false,
+					success: false,
+					error:
+						data.error ||
+						"Fehler beim Senden. Bitte versuchen Sie es später erneut.",
+				});
+			}
+		} catch (error) {
+			console.error("Error:", error);
+			setStatus({
+				loading: false,
+				success: false,
+				error:
+					"Verbindungsfehler. Bitte überprüfen Sie Ihre Internetverbindung.",
+			});
+		}
 	};
 
 	return (
@@ -161,14 +265,79 @@ const Kontakt = () => {
 									></textarea>
 								</div>
 
+								{/* Honeypot-Feld (versteckt, Spam-Schutz) */}
+								<div style={{ display: "none" }} aria-hidden="true">
+									<label htmlFor="website">Website (bitte leer lassen)</label>
+									<input
+										type="text"
+										id="website"
+										name="website"
+										value={formData.website}
+										onChange={handleChange}
+										tabIndex="-1"
+										autoComplete="off"
+									/>
+								</div>
+
+								{/* Status-Meldungen */}
+								{status.success && (
+									<div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg flex items-center gap-3">
+										<FaCheckCircle className="text-2xl" />
+										<div>
+											<p className="font-bold">Nachricht gesendet!</p>
+											<p className="text-sm">
+												Vielen Dank für Ihre Nachricht. Wir melden uns bald bei
+												Ihnen.
+											</p>
+										</div>
+									</div>
+								)}
+
+								{status.error && (
+									<div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg flex items-center gap-3">
+										<FaExclamationCircle className="text-2xl" />
+										<div>
+											<p className="font-bold">Fehler</p>
+											<p className="text-sm">{status.error}</p>
+										</div>
+									</div>
+								)}
+
 								<div>
 									<Button
 										type="submit"
 										variant="primary"
 										size="lg"
 										className="w-full"
+										disabled={status.loading}
 									>
-										Nachricht senden
+										{status.loading ? (
+											<span className="flex items-center justify-center gap-2">
+												<svg
+													className="animate-spin h-5 w-5"
+													xmlns="http://www.w3.org/2000/svg"
+													fill="none"
+													viewBox="0 0 24 24"
+												>
+													<circle
+														className="opacity-25"
+														cx="12"
+														cy="12"
+														r="10"
+														stroke="currentColor"
+														strokeWidth="4"
+													></circle>
+													<path
+														className="opacity-75"
+														fill="currentColor"
+														d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+													></path>
+												</svg>
+												Wird gesendet...
+											</span>
+										) : (
+											"Nachricht senden"
+										)}
 									</Button>
 								</div>
 
