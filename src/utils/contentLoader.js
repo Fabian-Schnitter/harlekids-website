@@ -84,7 +84,7 @@ export const loadFerienprogramme = async () => {
 		}
 
 		return programme.sort(
-			(a, b) => new Date(b.startDate) - new Date(a.startDate)
+			(a, b) => new Date(b.startDate) - new Date(a.startDate),
 		);
 	} catch (error) {
 		console.warn("Keine Ferienprogramme gefunden:", error);
@@ -107,6 +107,111 @@ export const loadContactSettings = async () => {
 	}
 };
 
+// Lade Fortbildungen
+export const loadFortbildungen = async () => {
+	try {
+		const fortbildungFiles = import.meta.glob(
+			"/src/content/fortbildungen/*.md",
+			{
+				eager: true,
+				as: "raw",
+			},
+		);
+
+		const fortbildungen = [];
+
+		for (const path in fortbildungFiles) {
+			const content = fortbildungFiles[path];
+			const parsed = parseFrontmatter(content);
+
+			if (parsed.published !== false && parsed.published !== "false") {
+				// Parse highlights array wenn es als String kommt
+				if (typeof parsed.highlights === "string") {
+					parsed.highlights = parsed.highlights
+						.split("\n")
+						.filter((h) => h.trim());
+				}
+
+				fortbildungen.push({
+					...parsed,
+					slug: path.split("/").pop().replace(".md", ""),
+				});
+			}
+		}
+
+		// Nach Sortierung (order) sortieren
+		return fortbildungen.sort((a, b) => (a.order || 0) - (b.order || 0));
+	} catch (error) {
+		console.warn("Keine Fortbildungen gefunden:", error);
+		return [];
+	}
+};
+
+// Lade Jugendzirkus Gruppen
+export const loadJugendzirkus = async () => {
+	try {
+		const gruppenFiles = import.meta.glob("/src/content/jugendzirkus/*.md", {
+			eager: true,
+			as: "raw",
+		});
+
+		const gruppen = [];
+
+		for (const path in gruppenFiles) {
+			const content = gruppenFiles[path];
+			const parsed = parseFrontmatter(content);
+
+			if (parsed.published !== false && parsed.published !== "false") {
+				gruppen.push({
+					...parsed,
+					slug: path.split("/").pop().replace(".md", ""),
+				});
+			}
+		}
+
+		// Nach Sortierung (order) sortieren
+		return gruppen.sort((a, b) => (a.order || 0) - (b.order || 0));
+	} catch (error) {
+		console.warn("Keine Jugendzirkus-Gruppen gefunden:", error);
+		return [];
+	}
+};
+
+// Lade Herberge Angebote
+export const loadHerberge = async () => {
+	try {
+		const herbergeFiles = import.meta.glob("/src/content/herberge/*.md", {
+			eager: true,
+			as: "raw",
+		});
+
+		const angebote = [];
+
+		for (const path in herbergeFiles) {
+			const content = herbergeFiles[path];
+			const parsed = parseFrontmatter(content);
+
+			if (parsed.published !== false && parsed.published !== "false") {
+				// Parse details array wenn es als String kommt
+				if (typeof parsed.details === "string") {
+					parsed.details = parsed.details.split("\n").filter((d) => d.trim());
+				}
+
+				angebote.push({
+					...parsed,
+					slug: path.split("/").pop().replace(".md", ""),
+				});
+			}
+		}
+
+		// Nach Sortierung (order) sortieren
+		return angebote.sort((a, b) => (a.order || 0) - (b.order || 0));
+	} catch (error) {
+		console.warn("Keine Herberge-Angebote gefunden:", error);
+		return [];
+	}
+};
+
 // Einfacher Frontmatter Parser für Markdown-Dateien
 function parseFrontmatter(content) {
 	const match = content.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
@@ -120,13 +225,41 @@ function parseFrontmatter(content) {
 
 	const frontmatter = {};
 	const lines = frontmatterText.split("\n");
+	let currentKey = null;
+	let currentArray = null;
 
-	for (const line of lines) {
+	for (let i = 0; i < lines.length; i++) {
+		const line = lines[i];
+
+		// Check if this is an array item
+		if (line.trim().startsWith("- ")) {
+			if (currentArray) {
+				const value = line.trim().substring(2).trim();
+				// Remove quotes if present
+				const cleaned = value.replace(/^["']|["']$/g, "");
+				currentArray.push(cleaned);
+			}
+			continue;
+		}
+
+		// New key:value pair
 		const colonIndex = line.indexOf(":");
 		if (colonIndex === -1) continue;
 
 		const key = line.slice(0, colonIndex).trim();
 		let value = line.slice(colonIndex + 1).trim();
+
+		// Check if this starts an array
+		if (value === "" || value === "[]") {
+			currentKey = key;
+			currentArray = [];
+			frontmatter[key] = currentArray;
+			continue;
+		}
+
+		// Reset array tracking
+		currentKey = null;
+		currentArray = null;
 
 		// Entferne Anführungszeichen
 		if (
@@ -169,7 +302,7 @@ export const markdownToHtml = (markdown) => {
 		// Links
 		.replace(
 			/\[([^\]]+)\]\(([^)]+)\)/g,
-			'<a href="$2" class="text-circus-blue hover:underline">$1</a>'
+			'<a href="$2" class="text-circus-blue hover:underline">$1</a>',
 		)
 		// Line breaks
 		.replace(/\n\n/g, '</p><p class="mb-4">')

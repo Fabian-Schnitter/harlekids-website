@@ -1,58 +1,28 @@
+import { useState, useEffect } from "react";
 import Section from "../components/Section";
 import Card from "../components/Card";
 import Button from "../components/Button";
 import { FaChild, FaUsers, FaStar, FaTheaterMasks } from "react-icons/fa";
-
-// CMS NOTE: Jugendzirkus-Daten aus CMS laden
+import { loadJugendzirkus } from "../utils/contentLoader";
 
 const Jugendzirkus = () => {
-	// CMS NOTE: Trainingsgruppen aus CMS
-	const trainingGroups = [
-		{
-			id: 1,
-			name: "Mini-Zirkus",
-			age: "6-8 Jahre",
-			day: "Montag",
-			time: "15:30 - 16:30 Uhr",
-			location: "Zirkushaus Harlekids",
-			description:
-				"Spielerischer Einstieg in die Zirkuswelt für unsere Kleinsten. Hier wird getanzt, jongliert und gelacht!",
-			level: "Anfänger",
-		},
-		{
-			id: 2,
-			name: "Kids-Zirkus",
-			age: "9-12 Jahre",
-			day: "Dienstag & Donnerstag",
-			time: "16:00 - 17:30 Uhr",
-			location: "Turnhalle Cottbus",
-			description:
-				"Die perfekte Gruppe für Grundschulkinder. Wir lernen Grundlagen in Akrobatik, Jonglage und mehr.",
-			level: "Anfänger & Fortgeschrittene",
-		},
-		{
-			id: 3,
-			name: "Jugend-Zirkus",
-			age: "13-16 Jahre",
-			day: "Mittwoch",
-			time: "17:00 - 19:00 Uhr",
-			location: "Zirkushaus Harlekids",
-			description:
-				"Für die älteren und erfahreneren Zirkuskünstler*innen. Training auf hohem Niveau mit Shows und Auftritten.",
-			level: "Fortgeschrittene",
-		},
-		{
-			id: 4,
-			name: "Akrobatik Intensiv",
-			age: "10-16 Jahre",
-			day: "Freitag",
-			time: "16:30 - 18:30 Uhr",
-			location: "Turnhalle Cottbus",
-			description:
-				"Spezialisiertes Training für alle, die tiefer in die Akrobatik eintauchen möchten.",
-			level: "Fortgeschrittene",
-		},
-	];
+	const [trainingGroups, setTrainingGroups] = useState([]);
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		loadJugendzirkus().then((data) => {
+			setTrainingGroups(data);
+			setLoading(false);
+		});
+	}, []);
+
+	if (loading) {
+		return (
+			<div className="min-h-screen flex items-center justify-center">
+				<p className="text-xl">Lade Jugendzirkus-Gruppen...</p>
+			</div>
+		);
+	}
 
 	const disciplines = [
 		{
@@ -152,43 +122,81 @@ const Jugendzirkus = () => {
 				subtitle="Finde deine Gruppe"
 				backgroundColor="gray"
 			>
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-					{trainingGroups.map((group) => (
-						<Card key={group.id} hoverable={false} className="h-full">
-							<div className="flex justify-between items-start mb-4">
-								<h3 className="text-2xl font-bold text-gray-900">
-									{group.name}
-								</h3>
-								<span className="bg-circus-yellow text-gray-900 px-3 py-1 rounded-full text-sm font-semibold">
-									{group.age}
-								</span>
-							</div>
+				{trainingGroups.length === 0 ? (
+					<p className="text-center text-gray-500">
+						Derzeit sind keine Trainingsgruppen verfügbar.
+					</p>
+				) : (
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+						{trainingGroups.map((group, index) => (
+							<Card key={index} hoverable={false} className="h-full">
+								{group.image && (
+									<img
+										src={group.image}
+										alt={group.title}
+										className="w-full h-48 object-cover rounded-t-lg mb-4"
+									/>
+								)}
 
-							<p className="text-gray-700 mb-6">{group.description}</p>
-
-							<div className="space-y-2 mb-6">
-								<div className="flex justify-between text-gray-700">
-									<span className="font-semibold">Wann:</span>
-									<span>
-										{group.day}, {group.time}
+								<div className="flex justify-between items-start mb-4">
+									<h3 className="text-2xl font-bold text-gray-900">
+										{group.title}
+									</h3>
+									<span className="bg-circus-yellow text-gray-900 px-3 py-1 rounded-full text-sm font-semibold">
+										{group.ageGroup}
 									</span>
 								</div>
-								<div className="flex justify-between text-gray-700">
-									<span className="font-semibold">Wo:</span>
-									<span>{group.location}</span>
-								</div>
-								<div className="flex justify-between text-gray-700">
-									<span className="font-semibold">Level:</span>
-									<span>{group.level}</span>
-								</div>
-							</div>
 
-							<Button variant="primary" className="w-full">
-								Schnuppertraining vereinbaren
-							</Button>
-						</Card>
-					))}
-				</div>
+								<p className="text-gray-700 mb-6">{group.description}</p>
+
+								<div className="space-y-2 mb-6">
+									<div className="flex justify-between text-gray-700">
+										<span className="font-semibold">Wann:</span>
+										<span>
+											{group.weekday}, {group.time}
+										</span>
+									</div>
+									{group.level && (
+										<div className="flex justify-between text-gray-700">
+											<span className="font-semibold">Level:</span>
+											<span>{group.level}</span>
+										</div>
+									)}
+									{group.price && (
+										<div className="flex justify-between text-gray-700">
+											<span className="font-semibold">Preis:</span>
+											<span>{group.price}</span>
+										</div>
+									)}
+									{group.availableSpots !== undefined &&
+										group.availableSpots !== null && (
+											<div className="flex justify-between text-gray-700">
+												<span className="font-semibold">Freie Plätze:</span>
+												<span className="text-circus-green font-bold">
+													{group.availableSpots}
+												</span>
+											</div>
+										)}
+								</div>
+
+								{group.registrationLink ? (
+									<Button
+										as="a"
+										href={group.registrationLink}
+										variant="primary"
+										className="w-full"
+									>
+										Jetzt anmelden
+									</Button>
+								) : (
+									<Button variant="primary" className="w-full" href="/kontakt">
+										Schnuppertraining vereinbaren
+									</Button>
+								)}
+							</Card>
+						))}
+					</div>
+				)}
 
 				<div className="mt-12 text-center bg-white p-8 rounded-lg shadow-md max-w-3xl mx-auto">
 					<h3 className="text-2xl font-bold mb-4 text-circus-red">

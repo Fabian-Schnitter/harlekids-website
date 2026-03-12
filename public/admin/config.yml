@@ -131,6 +131,153 @@ collections:
           default: true,
         }
 
+  # FORTBILDUNGEN (Zirkuspädagogik)
+  - name: "fortbildungen"
+    label: "Fortbildungen"
+    folder: "src/content/fortbildungen"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Dauer", name: "duration", widget: "string" }
+      - { label: "Level", name: "level", widget: "string" }
+      - { label: "Beschreibung", name: "description", widget: "text" }
+      - { label: "Bild", name: "image", widget: "image" }
+      - {
+          label: "Highlights",
+          name: "highlights",
+          widget: "list",
+          field: { label: "Highlight", name: "highlight", widget: "string" },
+        }
+      - { label: "Preis", name: "price", widget: "string", required: false }
+      - {
+          label: "Startdatum",
+          name: "startDate",
+          widget: "datetime",
+          required: false,
+        }
+      - {
+          label: "Anmeldelink",
+          name: "registrationLink",
+          widget: "string",
+          required: false,
+        }
+      - {
+          label: "Sortierung",
+          name: "order",
+          widget: "number",
+          default: 0,
+          hint: "Niedrigere Zahlen erscheinen zuerst",
+        }
+      - {
+          label: "Veröffentlicht",
+          name: "published",
+          widget: "boolean",
+          default: true,
+        }
+
+  # JUGENDZIRKUS GRUPPEN
+  - name: "jugendzirkus"
+    label: "Jugendzirkus Gruppen"
+    folder: "src/content/jugendzirkus"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Gruppenname", name: "title", widget: "string" }
+      - { label: "Altersgruppe", name: "ageGroup", widget: "string" }
+      - { label: "Wochentag", name: "weekday", widget: "string" }
+      - { label: "Uhrzeit", name: "time", widget: "string" }
+      - { label: "Beschreibung", name: "description", widget: "text" }
+      - { label: "Bild", name: "image", widget: "image", required: false }
+      - {
+          label: "Level",
+          name: "level",
+          widget: "select",
+          options: ["Anfänger", "Fortgeschritten", "Alle Level"],
+          default: "Alle Level",
+        }
+      - {
+          label: "Freie Plätze",
+          name: "availableSpots",
+          widget: "number",
+          required: false,
+        }
+      - {
+          label: "Max. Teilnehmer",
+          name: "maxParticipants",
+          widget: "number",
+          required: false,
+        }
+      - { label: "Monatsbeitrag", name: "price", widget: "string" }
+      - {
+          label: "Anmeldelink",
+          name: "registrationLink",
+          widget: "string",
+          required: false,
+        }
+      - {
+          label: "Sortierung",
+          name: "order",
+          widget: "number",
+          default: 0,
+          hint: "Niedrigere Zahlen erscheinen zuerst",
+        }
+      - {
+          label: "Veröffentlicht",
+          name: "published",
+          widget: "boolean",
+          default: true,
+        }
+
+  # HERBERGE ANGEBOTE
+  - name: "herberge"
+    label: "Herberge & Übernachtung"
+    folder: "src/content/herberge"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - {
+          label: "Typ",
+          name: "type",
+          widget: "select",
+          options: ["Zimmer", "Veranstaltungsraum", "Ausstattung"],
+        }
+      - { label: "Beschreibung", name: "description", widget: "text" }
+      - { label: "Bild", name: "image", widget: "image", required: false }
+      - {
+          label: "Details",
+          name: "details",
+          widget: "list",
+          field: { label: "Detail", name: "detail", widget: "string" },
+          required: false,
+        }
+      - {
+          label: "Kapazität",
+          name: "capacity",
+          widget: "string",
+          required: false,
+        }
+      - {
+          label: "Preis pro Nacht",
+          name: "pricePerNight",
+          widget: "string",
+          required: false,
+        }
+      - {
+          label: "Sortierung",
+          name: "order",
+          widget: "number",
+          default: 0,
+          hint: "Niedrigere Zahlen erscheinen zuerst",
+        }
+      - {
+          label: "Veröffentlicht",
+          name: "published",
+          widget: "boolean",
+          default: true,
+        }
+
   # EINSTELLUNGEN
   - name: "settings"
     label: "Einstellungen"

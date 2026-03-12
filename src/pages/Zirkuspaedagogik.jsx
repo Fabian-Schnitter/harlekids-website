@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import Section from "../components/Section";
 import Card from "../components/Card";
 import Button from "../components/Button";
@@ -7,76 +8,26 @@ import {
 	FaUsers,
 	FaBookOpen,
 } from "react-icons/fa";
-
-// CMS NOTE: Fortbildungsinhalte aus CMS
+import { loadFortbildungen } from "../utils/contentLoader";
 
 const Zirkuspaedagogik = () => {
-	const fortbildungen = [
-		{
-			id: 1,
-			title: "Social Circus Grundausbildung",
-			duration: "4 Wochenenden",
-			level: "Einsteiger & Fortgeschrittene",
-			description:
-				"Fortbildungsreihe nach der Methode des Cirque du Soleil. Professionell, praxisnah und zertifiziert.",
-			image:
-				"https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&h=600&fit=crop",
-			highlights: [
-				"Zirkuspädagogische Grundlagen",
-				"Social Circus Methodik",
-				"Praktische Übungen & Spiele",
-				"Zertifikat nach Abschluss",
-			],
-		},
-		{
-			id: 2,
-			title: "Juleica-Schulung",
-			duration: "4 Wochenenden",
-			level: "Ab 16 Jahren",
-			description:
-				"Jugendleiter*in-Card Schulung speziell für angehende Zirkustrainer*innen und Betreuer*innen.",
-			image:
-				"https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=800&h=600&fit=crop",
-			highlights: [
-				"Pädagogische Grundlagen",
-				"Aufsichtspflicht & Jugendschutz",
-				"Gruppendynamik",
-				"Erste Hilfe Kurs inklusive",
-			],
-		},
-		{
-			id: 3,
-			title: "Akrobatik für Pädagog*innen",
-			duration: "2 Tage",
-			level: "Alle Level",
-			description:
-				"Praktische Akrobatik-Einheiten für den Einsatz in Schule, Kita und Jugendarbeit.",
-			image:
-				"https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&h=600&fit=crop",
-			highlights: [
-				"Sicherheit & Spotting",
-				"Pyramiden & Partnerakrobatik",
-				"Aufwärmspiele",
-				"Direkt umsetzbare Übungen",
-			],
-		},
-		{
-			id: 4,
-			title: "Jonglage & Objektmanipulation",
-			duration: "1 Tag",
-			level: "Anfänger",
-			description:
-				"Jonglieren lernen und lehren – von den Basics bis zu kreativen Vermittlungsmethoden.",
-			image:
-				"https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&h=600&fit=crop",
-			highlights: [
-				"3-Ball-Jonglage",
-				"Diabolo, Poi, Flowersticks",
-				"Didaktische Vermittlung",
-				"Spiele & Übungen",
-			],
-		},
-	];
+	const [fortbildungen, setFortbildungen] = useState([]);
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		loadFortbildungen().then((data) => {
+			setFortbildungen(data);
+			setLoading(false);
+		});
+	}, []);
+
+	if (loading) {
+		return (
+			<div className="min-h-screen flex items-center justify-center">
+				<p className="text-xl">Lade Fortbildungen...</p>
+			</div>
+		);
+	}
 
 	return (
 		<div className="min-h-screen">
@@ -140,49 +91,85 @@ const Zirkuspaedagogik = () => {
 				subtitle="Angebote 2025"
 				backgroundColor="gray"
 			>
-				<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-					{fortbildungen.map((fortbildung) => (
-						<Card key={fortbildung.id} className="flex flex-col">
-							<div className="relative h-56 overflow-hidden rounded-t-xl">
-								<img
-									src={fortbildung.image}
-									alt={fortbildung.title}
-									className="w-full h-full object-cover"
-								/>
-								<div className="absolute top-4 left-4 bg-circus-yellow text-gray-900 px-3 py-1 rounded-full text-sm font-semibold">
-									{fortbildung.level}
-								</div>
-							</div>
+				{fortbildungen.length === 0 ? (
+					<p className="text-center text-gray-500">
+						Derzeit sind keine Fortbildungen verfügbar.
+					</p>
+				) : (
+					<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+						{fortbildungen.map((fortbildung, index) => (
+							<Card key={index} className="flex flex-col">
+								{fortbildung.image && (
+									<div className="relative h-56 overflow-hidden rounded-t-xl">
+										<img
+											src={fortbildung.image}
+											alt={fortbildung.title}
+											className="w-full h-full object-cover"
+										/>
+									</div>
+								)}
 
-							<div className="p-6 flex-grow flex flex-col">
-								<h3 className="text-2xl font-bold text-gray-900 mb-2">
-									{fortbildung.title}
-								</h3>
-								<div className="text-sm text-circus-red font-semibold mb-4">
-									Dauer: {fortbildung.duration}
-								</div>
-								<p className="text-gray-600 mb-6">{fortbildung.description}</p>
+								<div className="p-6 flex flex-col flex-grow">
+									<h3 className="text-2xl font-bold mb-2">
+										{fortbildung.title}
+									</h3>
 
-								<div className="mb-6">
-									<h4 className="font-semibold text-gray-900 mb-3">Inhalte:</h4>
-									<ul className="space-y-2">
-										{fortbildung.highlights.map((highlight, index) => (
-											<li key={index} className="text-gray-700">
-												✓ {highlight}
-											</li>
-										))}
-									</ul>
-								</div>
+									<div className="flex gap-4 mb-4 text-sm text-gray-600">
+										<span className="flex items-center gap-1">
+											<FaGraduationCap className="text-circus-blue" />
+											{fortbildung.level}
+										</span>
+										<span>• {fortbildung.duration}</span>
+									</div>
 
-								<div className="mt-auto">
-									<Button variant="primary" className="w-full">
-										Mehr Infos & Anmeldung
-									</Button>
+									<p className="text-gray-700 mb-4">
+										{fortbildung.description}
+									</p>
+
+									{fortbildung.highlights &&
+										fortbildung.highlights.length > 0 && (
+											<div className="mb-4">
+												<h4 className="font-bold mb-2">Inhalte:</h4>
+												<ul className="space-y-1">
+													{fortbildung.highlights.map((highlight, i) => (
+														<li key={i} className="text-gray-600 text-sm">
+															✓ {highlight}
+														</li>
+													))}
+												</ul>
+											</div>
+										)}
+
+									{fortbildung.price && (
+										<p className="text-lg font-bold text-circus-red mb-4">
+											{fortbildung.price}
+										</p>
+									)}
+
+									{fortbildung.startDate && (
+										<p className="text-sm text-gray-600 mb-4">
+											Start:{" "}
+											{new Date(fortbildung.startDate).toLocaleDateString(
+												"de-DE",
+											)}
+										</p>
+									)}
+
+									{fortbildung.registrationLink && (
+										<Button
+											as="a"
+											href={fortbildung.registrationLink}
+											variant="primary"
+											className="mt-auto"
+										>
+											Jetzt anmelden
+										</Button>
+									)}
 								</div>
-							</div>
-						</Card>
-					))}
-				</div>
+							</Card>
+						))}
+					</div>
+				)}
 			</Section>
 
 			{/* Was Sie lernen */}
