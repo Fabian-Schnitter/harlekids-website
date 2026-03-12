@@ -51,7 +51,7 @@ const Blog = () => {
 						title: "Juleica-Schulung erfolgreich abgeschlossen",
 						date: "06. Juli 2022",
 						author: "Steffen",
-						category: "Ausbildung",
+						category: "Fortbildungen",
 						excerpt:
 							"Am Wochenende vom 17.06.22 – 19.06.22 fand das vierte und damit letzte Juleica-Wochenende statt. Schwerpunkt war der Erste-Hilfe-Kurs.",
 						image:
@@ -63,7 +63,7 @@ const Blog = () => {
 						title: "Fortbildung Social Circus 2022",
 						date: "01. Juni 2022",
 						author: "Steffen",
-						category: "Fortbildung",
+						category: "Fortbildungen",
 						excerpt:
 							"Auch in diesem Jahr findet wieder ein Teil der Fortbildungsreihe Social Circus nach der Methode des Cirque du Soleil statt.",
 						image:
@@ -75,7 +75,7 @@ const Blog = () => {
 						title: "Die Harlekids auf Schloss Trebnitz",
 						date: "27. März 2019",
 						author: "Admin",
-						category: "Allgemein",
+						category: "Ausflüge",
 						excerpt:
 							"Auch in diesem Jahr waren wir wieder Gäste auf Schloss Trebnitz und haben im Rahmen der INISEK die Kennenlernwochen mehrerer 7. Klassen begleitet.",
 						image:
@@ -87,7 +87,7 @@ const Blog = () => {
 						title: "Sommerfest 2024 - Ein voller Erfolg!",
 						date: "15. Juli 2024",
 						author: "Kathi",
-						category: "Festival",
+						category: "Events",
 						excerpt:
 							"Bei strahlendem Sonnenschein feierten wir unser jährliches Sommerfest. Über 200 Gäste kamen, um unsere Shows zu sehen.",
 						image:

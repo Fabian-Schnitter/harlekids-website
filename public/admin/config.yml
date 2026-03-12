@@ -72,7 +72,16 @@ collections:
           label: "Kategorie",
           name: "category",
           widget: "select",
-          options: ["Neuigkeiten", "Events", "Projekte", "Tipps"],
+          options:
+            [
+              "Neuigkeiten",
+              "Events",
+              "Jugendzirkus",
+              "Zirkusferien",
+              "Fortbildungen",
+              "Projekte",
+              "Ausflüge",
+            ],
         }
       - { label: "Titelbild", name: "image", widget: "image" }
       - { label: "Kurzbeschreibung", name: "excerpt", widget: "text" }
