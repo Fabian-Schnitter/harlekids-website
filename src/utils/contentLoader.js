@@ -225,7 +225,6 @@ function parseFrontmatter(content) {
 
 	const frontmatter = {};
 	const lines = frontmatterText.split("\n");
-	let currentKey = null;
 	let currentArray = null;
 
 	for (let i = 0; i < lines.length; i++) {
@@ -251,14 +250,12 @@ function parseFrontmatter(content) {
 
 		// Check if this starts an array
 		if (value === "" || value === "[]") {
-			currentKey = key;
 			currentArray = [];
 			frontmatter[key] = currentArray;
 			continue;
 		}
 
 		// Reset array tracking
-		currentKey = null;
 		currentArray = null;
 
 		// Entferne Anführungszeichen

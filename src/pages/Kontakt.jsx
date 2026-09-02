@@ -362,9 +362,9 @@ const Kontakt = () => {
 										<p className="text-gray-700">
 											Zirkuspädagogisches Zentrum Harlekids
 											<br />
-											[Straße & Hausnummer]
+											Briesker Straße 134
 											<br />
-											[PLZ] [Ort]
+											01968 Senftenberg / OT Brieske
 											<br />
 											Deutschland
 										</p>
@@ -420,7 +420,7 @@ const Kontakt = () => {
 								</p>
 								<div className="flex space-x-4">
 									<a
-										href="https://facebook.com"
+										href="https://facebook.com/harlekids"
 										target="_blank"
 										rel="noopener noreferrer"
 										className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white text-circus-blue hover:bg-circus-blue hover:text-white transition-all"
@@ -428,7 +428,7 @@ const Kontakt = () => {
 										<FaFacebook size={24} />
 									</a>
 									<a
-										href="https://instagram.com"
+										href="https://instagram.com/harlekids"
 										target="_blank"
 										rel="noopener noreferrer"
 										className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white text-circus-red hover:bg-circus-red hover:text-white transition-all"
@@ -457,10 +457,12 @@ const Kontakt = () => {
 			{/* Karte */}
 			<Section id="karte" title="So finden Sie uns" backgroundColor="gray">
 				<div className="max-w-6xl mx-auto">
-					{/* CMS NOTE: Google Maps Embed hier einfügen */}
-					<div className="bg-gray-200 rounded-lg h-96 flex items-center justify-center mb-6">
-						<p className="text-gray-600">[Hier Google Maps Karte einbinden]</p>
-					</div>
+					<iframe
+						title="Karte: Harlekids in Senftenberg-Brieske"
+						src="https://www.openstreetmap.org/export/embed.html?bbox=13.962%2C51.497%2C13.973%2C51.507&amp;layer=mapnik&marker=51.502097%2C13.967400"
+						className="w-full h-96 rounded-lg border-0 mb-6"
+						loading="lazy"
+					/>
 
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 						<div className="bg-white p-6 rounded-lg shadow-md">
@@ -468,8 +470,8 @@ const Kontakt = () => {
 								Mit dem Auto
 							</h3>
 							<p className="text-gray-700">
-								Über die [Autobahn] Abfahrt [Name], dann Richtung [Ort]. Folgen
-								Sie der Beschilderung. Ausreichend Parkplätze vorhanden.
+								Über die B96 sowie die A13-Anschlüsse Klettwitz und Schwarzheide
+								ist Harlekids gut erreichbar. Parkplätze sind vor Ort vorhanden.
 							</p>
 						</div>
 
@@ -478,8 +480,8 @@ const Kontakt = () => {
 								Öffentliche Verkehrsmittel
 							</h3>
 							<p className="text-gray-700">
-								Bus-Linie [Nummer] bis Haltestelle "[Name]" (5 Min. Fußweg). Vom
-								Bahnhof [Ort] mit dem Bus ca. 15 Minuten.
+								Vom Bahnhof Senftenberg fährt die Citylinie zur Haltestelle „Hotel
+								Marga“ direkt gegenüber dem Zirkuspädagogischen Zentrum.
 							</p>
 						</div>
 					</div>
@@ -517,8 +519,7 @@ const Kontakt = () => {
 							Was kostet die Mitgliedschaft?
 						</h3>
 						<p className="text-gray-700 mb-4">
-							30€ pro Monat für die Teilnahme am Jugendzirkus. Ermäßigungen sind
-							möglich.
+							5€ pro Monat für die Teilnahme am Jugendzirkus.
 						</p>
 					</div>
 

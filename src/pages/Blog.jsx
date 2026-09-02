@@ -3,12 +3,13 @@ import Section from "../components/Section";
 import Card from "../components/Card";
 import Button from "../components/Button";
 import { FaCalendar, FaUser, FaTag } from "react-icons/fa";
-import { loadBlogPosts, markdownToHtml } from "../utils/contentLoader";
+import { loadBlogPosts } from "../utils/contentLoader";
 
 const Blog = () => {
 	const [posts, setPosts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [selectedCategory, setSelectedCategory] = useState("all");
+	const [expandedPost, setExpandedPost] = useState(null);
 
 	useEffect(() => {
 		loadBlogPosts().then((data) => {
@@ -144,9 +145,13 @@ const Blog = () => {
 
 						{/* Blog Posts Grid */}
 						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-							{filteredPosts.map((post, index) => (
+							{filteredPosts.map((post, index) => {
+								const postId = post.slug || post.id || index;
+								const isExpanded = expandedPost === postId;
+
+								return (
 								<Card
-									key={post.slug || post.id || index}
+									key={postId}
 									className="flex flex-col"
 								>
 									{post.image && (
@@ -194,12 +199,25 @@ const Blog = () => {
 												(post.body && post.body.substring(0, 150) + "...")}
 										</div>
 
-										<Button variant="outline" size="sm" className="w-full">
-											Weiterlesen
+										{isExpanded && (
+											<article className="text-gray-700 mb-6 border-t border-gray-200 pt-4 whitespace-pre-line">
+												{post.content || post.body || post.excerpt}
+											</article>
+										)}
+
+										<Button
+											variant="outline"
+											size="sm"
+											className="w-full"
+											onClick={() => setExpandedPost(isExpanded ? null : postId)}
+											aria-expanded={isExpanded}
+										>
+											{isExpanded ? "Weniger anzeigen" : "Weiterlesen"}
 										</Button>
 									</div>
 								</Card>
-							))}
+								);
+							})}
 						</div>
 
 						{filteredPosts.length === 0 && (
@@ -215,42 +233,18 @@ const Blog = () => {
 				)}
 			</Section>
 
-			{/* Newsletter Subscription */}
-			{/* CMS NOTE: Newsletter über CMS verwalten */}
-			<Section backgroundColor="red" className="text-white text-center">
-				<h2 className="text-4xl font-bold mb-6">Bleib informiert!</h2>
-				<p className="text-xl mb-8 max-w-2xl mx-auto">
-					Melde dich für unseren Newsletter an und erhalte regelmäßig News,
-					Termine und spannende Geschichten direkt in dein Postfach.
-				</p>
-				<form className="max-w-md mx-auto flex flex-col sm:flex-row gap-4">
-					<input
-						type="email"
-						placeholder="Deine E-Mail Adresse"
-						className="flex-grow px-6 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-circus-yellow"
-						required
-					/>
-					<Button variant="accent" size="md">
-						Anmelden
-					</Button>
-				</form>
-				<p className="text-sm mt-4 text-gray-200">
-					Kein Spam, versprochen! Du kannst dich jederzeit wieder abmelden.
-				</p>
-			</Section>
-
-			{/* Archiv Hinweis */}
+			{/* Archiv */}
 			<Section backgroundColor="gray">
 				<div className="text-center max-w-3xl mx-auto">
 					<h2 className="text-3xl font-bold mb-4 text-gray-900">
 						Auf der Suche nach älteren Beiträgen?
 					</h2>
 					<p className="text-lg text-gray-700 mb-6">
-						In unserem Archiv findest du alle vergangenen News und Berichte aus
-						den letzten Jahren.
+						Alle veröffentlichten Beiträge bleiben hier durchsuchbar. Wähle eine
+						Kategorie oben, um das Archiv einzugrenzen.
 					</p>
-					<Button variant="primary" size="lg">
-						Zum Archiv
+					<Button variant="primary" size="lg" onClick={() => setSelectedCategory("all")}>
+						Gesamtes Archiv anzeigen
 					</Button>
 				</div>
 			</Section>

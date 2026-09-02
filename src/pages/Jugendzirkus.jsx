@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Section from "../components/Section";
 import Card from "../components/Card";
 import Button from "../components/Button";
-import { FaChild, FaUsers, FaStar, FaTheaterMasks } from "react-icons/fa";
+import { FaChild, FaUsers, FaStar, FaTheaterMasks, FaRunning, FaMagic, FaMusic } from "react-icons/fa";
 import { loadJugendzirkus } from "../utils/contentLoader";
 
 const Jugendzirkus = () => {
@@ -27,37 +27,37 @@ const Jugendzirkus = () => {
 	const disciplines = [
 		{
 			name: "Akrobatik",
-			icon: "🤸",
+			icon: <FaRunning aria-hidden="true" />,
 			description:
 				"Pyramiden, Rad, Handstand und vieles mehr – Körperbeherrschung auf höchstem Niveau.",
 		},
 		{
 			name: "Jonglage",
-			icon: "🤹",
+			icon: <FaMagic aria-hidden="true" />,
 			description:
 				"Bälle, Keulen, Ringe oder Diabolo – wir bringen alles in die Luft!",
 		},
 		{
 			name: "Luftakrobatik",
-			icon: "🎪",
+			icon: <FaTheaterMasks aria-hidden="true" />,
 			description:
 				"Trapez, Vertikaltuch und Luftring – schwerelos durch die Lüfte schweben.",
 		},
 		{
 			name: "Einrad",
-			icon: "🚴",
+			icon: <FaRunning aria-hidden="true" />,
 			description:
 				"Balance und Geschicklichkeit auf einem Rad – eine echte Herausforderung!",
 		},
 		{
 			name: "Clownerie",
-			icon: "🤡",
+			icon: <FaTheaterMasks aria-hidden="true" />,
 			description:
 				"Spaß, Improvisation und Theater – hier wird gelacht und experimentiert.",
 		},
 		{
 			name: "Tanz & Choreografie",
-			icon: "💃",
+			icon: <FaMusic aria-hidden="true" />,
 			description: "Bewegung zur Musik, Ausdruckskraft und Performance.",
 		},
 	];
@@ -221,7 +221,7 @@ const Jugendzirkus = () => {
 							key={index}
 							className="text-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow"
 						>
-							<div className="text-6xl mb-4">{discipline.icon}</div>
+							<div className="text-5xl mb-4 text-circus-red">{discipline.icon}</div>
 							<h3 className="text-xl font-bold mb-3 text-gray-900">
 								{discipline.name}
 							</h3>
@@ -250,19 +250,14 @@ const Jugendzirkus = () => {
 							<h3 className="text-2xl font-bold mb-4 text-circus-red">
 								Mitgliedschaft
 							</h3>
-							<div className="text-4xl font-bold text-gray-900 mb-2">30€</div>
+							<div className="text-4xl font-bold text-gray-900 mb-2">5€</div>
 							<div className="text-gray-600 mb-6">pro Monat</div>
 							<ul className="space-y-3 text-gray-700 mb-6">
 								<li>✓ Teilnahme an allen Trainings deiner Gruppe</li>
 								<li>✓ Professionelle Betreuung</li>
 								<li>✓ Nutzung aller Geräte & Materialien</li>
 								<li>✓ Teilnahme an Shows & Auftritten</li>
-								<li>✓ Ermäßigung bei Ferienangeboten</li>
 							</ul>
-							<p className="text-sm text-gray-600">
-								* Ermäßigungen für Geschwisterkinder und soziale Härtefälle
-								möglich
-							</p>
 						</div>
 
 						<div className="bg-white p-8 rounded-lg shadow-md">

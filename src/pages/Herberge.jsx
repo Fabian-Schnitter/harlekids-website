@@ -5,7 +5,6 @@ import {
 	FaBed,
 	FaUsers,
 	FaUtensils,
-	FaWifi,
 	FaParking,
 	FaShower,
 } from "react-icons/fa";
@@ -36,11 +35,6 @@ const Herberge = () => {
 			description: "Große Aufenthaltsräume für Gruppenaktivitäten",
 		},
 		{
-			icon: <FaWifi />,
-			title: "WLAN",
-			description: "Kostenloser Internetzugang",
-		},
-		{
 			icon: <FaParking />,
 			title: "Parkplätze",
 			description: "Ausreichend Parkplätze direkt vor Ort",
@@ -69,12 +63,8 @@ const Herberge = () => {
 			>
 				<div className="max-w-4xl mx-auto">
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12">
-						<div>
-							<img
-								src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=600&fit=crop"
-								alt="Jugendherberge Außenansicht"
-								className="rounded-lg shadow-lg w-full"
-							/>
+						<div className="rounded-lg shadow-lg w-full min-h-64 bg-circus-blue text-white flex items-center justify-center p-8 text-center">
+							<FaBed className="text-6xl" aria-hidden="true" />
 						</div>
 						<div>
 							<p className="text-lg text-gray-700 mb-4 leading-relaxed">
@@ -118,11 +108,6 @@ const Herberge = () => {
 				<div className="max-w-5xl mx-auto">
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
 						<Card className="h-full">
-							<img
-								src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=500&fit=crop"
-								alt="Mehrbettzimmer"
-								className="w-full h-48 object-cover rounded-lg mb-4"
-							/>
 							<h3 className="text-2xl font-bold mb-3">Mehrbettzimmer</h3>
 							<p className="text-gray-700 mb-4">
 								Unsere Zimmer bieten Platz für 4-8 Personen. Schlicht, sauber
@@ -137,21 +122,16 @@ const Herberge = () => {
 						</Card>
 
 						<Card className="h-full">
-							<img
-								src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=500&fit=crop"
-								alt="Gemeinschaftsraum"
-								className="w-full h-48 object-cover rounded-lg mb-4"
-							/>
-							<h3 className="text-2xl font-bold mb-3">Gemeinschaftsräume</h3>
+							<h3 className="text-2xl font-bold mb-3">Kleine Zimmer</h3>
 							<p className="text-gray-700 mb-4">
-								Große Aufenthaltsräume für gemeinsame Aktivitäten, Workshops
-								oder einfach zum Zusammensein.
+								Für kleinere Gruppen stehen ruhige, einfach ausgestattete Zimmer
+								zur Verfügung. Die konkrete Zimmeraufteilung stimmen wir gern mit
+								euch ab.
 							</p>
 							<ul className="space-y-2 text-gray-700">
-								<li>✓ Sitzgelegenheiten</li>
-								<li>✓ Tische für Gruppenarbeit</li>
-								<li>✓ Beamer & Technik</li>
-								<li>✓ Direkte Verbindung zum Zirkushaus</li>
+								<li>✓ Flexible Belegung nach Absprache</li>
+								<li>✓ Heizung & Fenster</li>
+								<li>✓ Stauraum für Gepäck</li>
 							</ul>
 						</Card>
 					</div>
@@ -166,70 +146,12 @@ const Herberge = () => {
 				</div>
 			</Section>
 
-			{/* Angebote & Pakete */}
+			{/* Anfrage */}
 			<Section
-				title="Angebote & Pakete"
-				subtitle="Kombinationen mit Zirkus"
+				title="Übernachtung auf Anfrage"
+				subtitle="Wir planen euren Aufenthalt individuell"
 				backgroundColor="gray"
 			>
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-					<Card>
-						<h3 className="text-2xl font-bold mb-4 text-circus-red">
-							Übernachtung pur
-						</h3>
-						<div className="text-3xl font-bold text-gray-900 mb-2">15€</div>
-						<div className="text-gray-600 mb-6">pro Person/Nacht</div>
-						<ul className="space-y-2 text-gray-700 mb-6">
-							<li>✓ Übernachtung im Mehrbettzimmer</li>
-							<li>✓ Nutzung aller Gemeinschaftsräume</li>
-							<li>✓ Sanitäranlagen</li>
-							<li>✓ Selbstversorger-Küche</li>
-						</ul>
-						<Button variant="primary" className="w-full">
-							Anfragen
-						</Button>
-					</Card>
-
-					<Card className="border-2 border-circus-red">
-						<div className="bg-circus-red text-white text-sm font-bold px-3 py-1 rounded-full inline-block mb-4">
-							BELIEBT
-						</div>
-						<h3 className="text-2xl font-bold mb-4 text-circus-red">
-							Zirkus-Paket
-						</h3>
-						<div className="text-3xl font-bold text-gray-900 mb-2">35€</div>
-						<div className="text-gray-600 mb-6">pro Person/Tag</div>
-						<ul className="space-y-2 text-gray-700 mb-6">
-							<li>✓ Übernachtung</li>
-							<li>✓ Zirkus-Workshop (3 Std.)</li>
-							<li>✓ Zirkusmaterialien inklusive</li>
-							<li>✓ Betreuung durch Trainer*innen</li>
-							<li>✓ Kleine Abschlusspräsentation</li>
-						</ul>
-						<Button variant="primary" className="w-full">
-							Anfragen
-						</Button>
-					</Card>
-
-					<Card>
-						<h3 className="text-2xl font-bold mb-4 text-circus-red">
-							Projektwoche
-						</h3>
-						<div className="text-3xl font-bold text-gray-900 mb-2">ab 180€</div>
-						<div className="text-gray-600 mb-6">pro Person/5 Tage</div>
-						<ul className="space-y-2 text-gray-700 mb-6">
-							<li>✓ 4 Übernachtungen</li>
-							<li>✓ Tägliche Zirkustrainings</li>
-							<li>✓ Vollverpflegung optional</li>
-							<li>✓ Große Abschlussshow</li>
-							<li>✓ Individuelle Programmgestaltung</li>
-						</ul>
-						<Button variant="primary" className="w-full">
-							Anfragen
-						</Button>
-					</Card>
-				</div>
-
 				<div className="mt-12 text-center bg-white p-8 rounded-lg shadow-md max-w-3xl mx-auto">
 					<h3 className="text-2xl font-bold mb-4">Individuelle Angebote</h3>
 					<p className="text-gray-700 mb-6">
@@ -274,15 +196,6 @@ const Herberge = () => {
 						</div>
 					</div>
 
-					<div className="mt-8 bg-circus-yellow p-6 rounded-lg">
-						<h3 className="text-xl font-bold mb-3">Betreuung & Aufsicht</h3>
-						<p className="text-gray-900">
-							Für Gruppen mit Minderjährigen ist eine Begleitperson
-							erforderlich. Die Aufsichtspflicht liegt bei den begleitenden
-							Erwachsenen. Unsere Mitarbeiter*innen stehen für Fragen und
-							Notfälle zur Verfügung.
-						</p>
-					</div>
 				</div>
 			</Section>
 
@@ -298,17 +211,17 @@ const Herberge = () => {
 						<p className="text-gray-700 text-lg mb-4">
 							Zirkuspädagogisches Zentrum Harlekids
 							<br />
-							[Straße & Hausnummer]
+							Briesker Straße 134
 							<br />
-							[PLZ] [Ort]
+							01968 Senftenberg / OT Brieske
 						</p>
 
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
 							<div>
 								<h4 className="font-bold text-gray-900 mb-2">Mit dem Auto</h4>
 								<p className="text-gray-700">
-									Ausreichend Parkplätze direkt vor Ort vorhanden. Anfahrt über
-									[Hauptstraße].
+									Über die B96 sowie die A13-Anschlüsse Klettwitz und Schwarzheide
+									ist die Herberge gut erreichbar.
 								</p>
 							</div>
 							<div>
@@ -316,17 +229,19 @@ const Herberge = () => {
 									Öffentliche Verkehrsmittel
 								</h4>
 								<p className="text-gray-700">
-									Bus-Haltestelle "[Haltestellenname]" in 5 Min. Fußweg. Bahnhof
-									[Ort] ca. 10 km entfernt.
+									Vom Bahnhof Senftenberg fährt die Citylinie zur Haltestelle
+									„Hotel Marga“ direkt gegenüber dem Zirkuszentrum.
 								</p>
 							</div>
 						</div>
 					</div>
 
-					{/* CMS NOTE: Google Maps Embed hier einfügen */}
-					<div className="bg-gray-200 rounded-lg h-96 flex items-center justify-center">
-						<p className="text-gray-600">[Hier Google Maps Karte einbinden]</p>
-					</div>
+					<iframe
+						title="Karte: Harlekids in Senftenberg-Brieske"
+						src="https://www.openstreetmap.org/export/embed.html?bbox=13.962%2C51.497%2C13.973%2C51.507&amp;layer=mapnik&marker=51.502097%2C13.967400"
+						className="w-full h-96 rounded-lg border-0"
+						loading="lazy"
+					/>
 				</div>
 			</Section>
 

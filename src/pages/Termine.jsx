@@ -310,31 +310,6 @@ const Termine = () => {
 				</div>
 			</Section>
 
-			{/* Newsletter Section */}
-			{/* CMS NOTE: Newsletter-Anmeldung kann über das CMS verwaltet werden */}
-			<Section backgroundColor="red" className="text-white text-center">
-				<FaUsers className="text-6xl mb-6 mx-auto" />
-				<h2 className="text-4xl font-bold mb-4">Bleib auf dem Laufenden!</h2>
-				<p className="text-xl mb-8 max-w-2xl mx-auto">
-					Melde dich für unseren Newsletter an und verpasse keine Termine,
-					Events und Neuigkeiten mehr.
-				</p>
-				<form className="max-w-md mx-auto flex flex-col sm:flex-row gap-4">
-					<input
-						type="email"
-						placeholder="Deine E-Mail Adresse"
-						className="flex-grow px-6 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-circus-yellow"
-						required
-					/>
-					<Button variant="accent" size="md">
-						Anmelden
-					</Button>
-				</form>
-				<p className="text-sm mt-4 text-gray-200">
-					Keine Sorge, wir versenden nur relevante Infos und geben deine Daten
-					nicht weiter.
-				</p>
-			</Section>
 		</div>
 	);
 };

@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-	--color-circus-red: #e63946;
-	--color-circus-blue: #457b9d;
+	/* Palette taken from the existing Harlekids site: circus-tent blue,
+	   burgundy framing, with Harlekids orange restored as the warm accent. */
+	--color-circus-red: #ae0533;
+	--color-circus-blue: #064f69;
 	--color-circus-yellow: #f4a261;
-	--color-circus-green: #2a9d8f;
+	--color-circus-green: #2f7a66;
 }

@@ -23,7 +23,7 @@ const Footer = () => {
 						</p>
 						<div className="flex space-x-4">
 							<a
-								href="https://facebook.com"
+								href="https://facebook.com/harlekids"
 								target="_blank"
 								rel="noopener noreferrer"
 								className="text-gray-300 hover:text-circus-yellow transition-colors"
@@ -32,7 +32,7 @@ const Footer = () => {
 								<FaFacebook size={24} />
 							</a>
 							<a
-								href="https://instagram.com"
+								href="https://instagram.com/harlekids"
 								target="_blank"
 								rel="noopener noreferrer"
 								className="text-gray-300 hover:text-circus-yellow transition-colors"
