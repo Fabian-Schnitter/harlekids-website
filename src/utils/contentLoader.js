@@ -61,6 +61,27 @@ export const loadBlogPosts = async () => {
 	}
 };
 
+// Lade die Angebotskarten der Startseite
+export const loadOffers = async () => {
+	try {
+		const offerFiles = import.meta.glob("/src/content/angebote/*.md", {
+			eager: true,
+			as: "raw",
+		});
+		const offers = [];
+		for (const path in offerFiles) {
+			const parsed = parseFrontmatter(offerFiles[path]);
+			if (parsed.published !== false && parsed.published !== "false") {
+				offers.push({ ...parsed, slug: path.split("/").pop().replace(".md", "") });
+			}
+		}
+		return offers.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
+	} catch (error) {
+		console.warn("Keine Angebote gefunden:", error);
+		return [];
+	}
+};
+
 // Lade Ferienprogramme
 export const loadFerienprogramme = async () => {
 	try {

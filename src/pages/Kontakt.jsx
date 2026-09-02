@@ -376,10 +376,10 @@ const Kontakt = () => {
 									<div>
 										<h3 className="font-bold text-gray-900 mb-1">Telefon</h3>
 										<a
-											href="tel:+49123456789"
+										href="tel:+493573148181"
 											className="text-gray-700 hover:text-circus-red transition-colors"
 										>
-											+49 (0) XXX XXXXXX
+										03573 / 148181
 										</a>
 									</div>
 								</div>

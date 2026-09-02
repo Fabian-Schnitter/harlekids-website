@@ -26,10 +26,19 @@ const Navbar = () => {
 			<div className="container mx-auto px-4">
 				<div className="flex justify-between items-center py-4">
 					{/* Logo */}
-					<Link to="/" className="flex items-center space-x-3">
-						<div className="text-3xl font-bold text-circus-red">Harlekids</div>
-						<div className="text-sm text-circus-blue hidden md:block">
-							Zirkuspädagogisches Zentrum
+					<Link to="/" className="flex items-center gap-3" aria-label="Harlekids – Startseite">
+						<div
+							className="h-14 w-14 shrink-0 bg-no-repeat"
+							style={{
+								backgroundImage:
+									'url("https://www.zpz-harlekids.de/wp-content/themes/harlekids2010/images/head_center.jpg")',
+								backgroundSize: "317px auto",
+								backgroundPosition: "-239px top",
+							}}
+						/>
+						<div className="leading-tight">
+							<div className="text-2xl font-bold text-circus-red">Harlekids</div>
+							<div className="text-xs text-circus-blue">Zirkuspädagogisches Zentrum</div>
 						</div>
 					</Link>
 

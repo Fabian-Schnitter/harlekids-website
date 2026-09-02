@@ -93,6 +93,21 @@ collections:
           default: true,
         }
 
+  # ANGEBOTE AUF DER STARTSEITE
+  - name: "angebote"
+    label: "Startseite: Angebote"
+    folder: "src/content/angebote"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titel", name: "title", widget: "string" }
+      - { label: "Beschreibung", name: "description", widget: "text" }
+      - { label: "Bild", name: "image", widget: "image", required: false }
+      - { label: "Link", name: "link", widget: "string" }
+      - { label: "Button-Text", name: "buttonLabel", widget: "string" }
+      - { label: "Reihenfolge", name: "order", widget: "number", default: 1 }
+      - { label: "Veröffentlicht", name: "published", widget: "boolean", default: true }
+
   # FERIENPROGRAMME
   - name: "ferienprogramme"
     label: "Ferienprogramme"

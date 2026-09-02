@@ -126,18 +126,20 @@ const Footer = () => {
 							<li className="flex items-start space-x-3">
 								<FaMapMarkerAlt className="text-circus-yellow mt-1 flex-shrink-0" />
 								<span className="text-gray-300">
-									Zirkuspädagogisches Zentrum Harlekids
+									Harlekids e.V.
 									<br />
-									Brandenburg
+									Briesker Straße 134
+									<br />
+									01968 Senftenberg
 								</span>
 							</li>
 							<li className="flex items-center space-x-3">
 								<FaPhone className="text-circus-yellow flex-shrink-0" />
 								<a
-									href="tel:+49123456789"
+									href="tel:+493573148181"
 									className="text-gray-300 hover:text-circus-yellow transition-colors"
 								>
-									+49 (0) XXX XXXXXX
+									03573 / 148181
 								</a>
 							</li>
 							<li className="flex items-center space-x-3">

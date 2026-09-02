@@ -10,6 +10,7 @@ import Ferien from "./pages/Ferien";
 import Herberge from "./pages/Herberge";
 import Kontakt from "./pages/Kontakt";
 import Blog from "./pages/Blog";
+import { Datenschutz, Impressum } from "./pages/Legal";
 import "./App.css";
 
 function App() {
@@ -28,6 +29,8 @@ function App() {
 						<Route path="/herberge" element={<Herberge />} />
 						<Route path="/kontakt" element={<Kontakt />} />
 						<Route path="/blog" element={<Blog />} />
+						<Route path="/impressum" element={<Impressum />} />
+						<Route path="/datenschutz" element={<Datenschutz />} />
 					</Routes>
 				</main>
 				<Footer />
