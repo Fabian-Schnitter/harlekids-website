@@ -187,7 +187,7 @@ const Herberge = () => {
 								Mitbringen
 							</h3>
 							<ul className="space-y-2 text-gray-700">
-								<li>• Schlafsack & Kopfkissen (oder Bettwäsche)</li>
+								<li>• Bettwäsche ist vorhanden</li>
 								<li>• Handtücher</li>
 								<li>• Hausschuhe</li>
 								<li>• Kulturbeutel</li>
@@ -220,7 +220,7 @@ const Herberge = () => {
 							<div>
 								<h4 className="font-bold text-gray-900 mb-2">Mit dem Auto</h4>
 								<p className="text-gray-700">
-									Über die B96 sowie die A13-Anschlüsse Klettwitz und Schwarzheide
+									Über die B196 sowie die A13-Anschlüsse Klettwitz und Schwarzheide
 									ist die Herberge gut erreichbar.
 								</p>
 							</div>

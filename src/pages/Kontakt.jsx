@@ -470,7 +470,7 @@ const Kontakt = () => {
 								Mit dem Auto
 							</h3>
 							<p className="text-gray-700">
-								Über die B96 sowie die A13-Anschlüsse Klettwitz und Schwarzheide
+								Über die B196 sowie die A13-Anschlüsse Klettwitz und Schwarzheide
 								ist Harlekids gut erreichbar. Parkplätze sind vor Ort vorhanden.
 							</p>
 						</div>

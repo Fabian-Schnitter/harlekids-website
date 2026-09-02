@@ -292,93 +292,27 @@ const Ferien = () => {
 			<Section title="Ein typischer Tag" subtitle="So sieht's aus">
 				<div className="max-w-3xl mx-auto">
 					<div className="space-y-6">
-						<div className="flex items-start bg-white p-6 rounded-lg shadow-md">
-							<div className="font-bold text-circus-red text-2xl mr-4 flex-shrink-0">
-								9:00
+						{[
+							["08:30", "Frühstück", "Gemeinsam in den Tag starten."],
+							["09:00", "Treffen", "Ankommen und gemeinsamer Tagesbeginn."],
+							["10:00", "Training", "Training in den jeweiligen Zirkusdisziplinen."],
+							["12:00", "Pause", "Zeit zum Durchatmen und Erholen."],
+							["12:30", "Essen", "Gemeinsames Mittagessen."],
+							["bis 14:00", "Pause", "Mittagspause bis zum nächsten Workshop."],
+							["14:00", "Workshop", "Kreative Zeit und Vertiefung der Zirkuskünste."],
+							["15:45", "Vesper", "Gemeinsame Vesperpause."],
+							["16:00", "Abholen der Tageskinder", "Danach beginnt das Nachmittagsprogramm."],
+							["18:00", "Essen", "Gemeinsames Abendessen."],
+							["22:00", "Nachtruhe", "Zeit zum Ausruhen und Schlafen."],
+						].map(([time, title, description]) => (
+							<div key={`${time}-${title}`} className="flex items-start bg-white p-6 rounded-lg shadow-md">
+								<div className="font-bold text-circus-red text-2xl mr-4 flex-shrink-0">{time}</div>
+								<div>
+									<h3 className="font-bold text-lg mb-1">{title}</h3>
+									<p className="text-gray-600">{description}</p>
+								</div>
 							</div>
-							<div>
-								<h3 className="font-bold text-lg mb-1">Ankommen & Warm-Up</h3>
-								<p className="text-gray-600">
-									Gemeinsames Ankommen, Spiele und Aufwärmen für den Tag
-								</p>
-							</div>
-						</div>
-
-						<div className="flex items-start bg-white p-6 rounded-lg shadow-md">
-							<div className="font-bold text-circus-red text-2xl mr-4 flex-shrink-0">
-								10:00
-							</div>
-							<div>
-								<h3 className="font-bold text-lg mb-1">Workshop 1</h3>
-								<p className="text-gray-600">
-									Erste Trainingseinheit in Kleingruppen (Akrobatik, Jonglage,
-									etc.)
-								</p>
-							</div>
-						</div>
-
-						<div className="flex items-start bg-white p-6 rounded-lg shadow-md">
-							<div className="font-bold text-circus-red text-2xl mr-4 flex-shrink-0">
-								11:30
-							</div>
-							<div>
-								<h3 className="font-bold text-lg mb-1">Pause & Snack</h3>
-								<p className="text-gray-600">
-									Zeit zum Durchatmen, Trinken und Energie tanken
-								</p>
-							</div>
-						</div>
-
-						<div className="flex items-start bg-white p-6 rounded-lg shadow-md">
-							<div className="font-bold text-circus-red text-2xl mr-4 flex-shrink-0">
-								12:00
-							</div>
-							<div>
-								<h3 className="font-bold text-lg mb-1">Mittagessen</h3>
-								<p className="text-gray-600">
-									Gemeinsames Mittagessen (bitte selbst mitbringen oder vor Ort
-									bestellbar)
-								</p>
-							</div>
-						</div>
-
-						<div className="flex items-start bg-white p-6 rounded-lg shadow-md">
-							<div className="font-bold text-circus-red text-2xl mr-4 flex-shrink-0">
-								13:00
-							</div>
-							<div>
-								<h3 className="font-bold text-lg mb-1">Workshop 2</h3>
-								<p className="text-gray-600">
-									Zweite Trainingseinheit, andere Disziplinen ausprobieren
-								</p>
-							</div>
-						</div>
-
-						<div className="flex items-start bg-white p-6 rounded-lg shadow-md">
-							<div className="font-bold text-circus-red text-2xl mr-4 flex-shrink-0">
-								14:30
-							</div>
-							<div>
-								<h3 className="font-bold text-lg mb-1">Show-Probe</h3>
-								<p className="text-gray-600">
-									Gemeinsames Üben für die große Abschlussshow am Freitag
-								</p>
-							</div>
-						</div>
-
-						<div className="flex items-start bg-white p-6 rounded-lg shadow-md">
-							<div className="font-bold text-circus-red text-2xl mr-4 flex-shrink-0">
-								16:00
-							</div>
-							<div>
-								<h3 className="font-bold text-lg mb-1">
-									Abschlussrunde & Abholung
-								</h3>
-								<p className="text-gray-600">
-									Reflexion des Tages und Verabschiedung
-								</p>
-							</div>
-						</div>
+						))}
 					</div>
 
 					<div className="mt-8 bg-circus-yellow p-6 rounded-lg text-center">
@@ -465,15 +399,6 @@ const Ferien = () => {
 					>
 						Fragen? Kontakt
 					</Button>
-				</div>
-
-				<div className="mt-12 bg-white bg-opacity-20 rounded-lg p-6 max-w-2xl mx-auto">
-					<h3 className="text-xl font-bold mb-3">Ermäßigungen möglich</h3>
-					<p className="text-gray-100">
-						Geschwisterkinder erhalten 10% Rabatt. Bei finanziellen
-						Schwierigkeiten sprechen Sie uns bitte an – wir finden gemeinsam
-						eine Lösung!
-					</p>
 				</div>
 			</Section>
 		</div>
