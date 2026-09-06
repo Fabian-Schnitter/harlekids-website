@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Section from "../components/Section";
 import Card from "../components/Card";
 import Button from "../components/Button";
-import { FaChild, FaUsers, FaStar, FaTheaterMasks, FaRunning, FaMagic, FaMusic } from "react-icons/fa";
+import { FaChild, FaUsers, FaStar, FaTheaterMasks, FaRunning, FaMagic, FaMusic, FaMapMarkerAlt } from "react-icons/fa";
 import { loadJugendzirkus } from "../utils/contentLoader";
 
 const Jugendzirkus = () => {
@@ -71,8 +71,8 @@ const Jugendzirkus = () => {
 					Kinder- & Jugendzirkus
 				</h1>
 				<p className="text-xl max-w-3xl mx-auto">
-					Wöchentliche Trainings für alle Altersgruppen – vom ersten Schritt bis
-					zur großen Show. Bei uns findet jede*r ihren Platz im Zirkus!
+					Wöchentliche Trainings in Senftenberg, Brieske und Cottbus – als offene
+					Angebote sowie als feste Arbeitsgemeinschaften an Schulen und Einrichtungen.
 				</p>
 			</Section>
 
@@ -80,9 +80,9 @@ const Jugendzirkus = () => {
 			<Section title="Gemeinsam wachsen im Zirkus" subtitle="Was uns ausmacht">
 				<div className="max-w-4xl mx-auto text-center">
 					<p className="text-lg text-gray-700 mb-6 leading-relaxed">
-						Unser Kinder- und Jugendzirkus ist mehr als Training – es ist eine
-						Gemeinschaft, in der jede*r willkommen ist und Mut, Kreativität und
-						Teamgeist gefördert werden.
+						In den offenen Angeboten ist jede*r herzlich zum Schnuppern eingeladen.
+						Die Schul-AGs sind den Kindern und Jugendlichen der jeweils genannten
+						Schule oder Einrichtung vorbehalten.
 					</p>
 					<p className="text-lg text-gray-700 mb-8 leading-relaxed">
 						Egal ob du noch nie einen Ball gefangen hast oder schon Rad schlagen
@@ -142,20 +142,34 @@ const Jugendzirkus = () => {
 									<h3 className="text-2xl font-bold text-gray-900">
 										{group.title}
 									</h3>
-									<span className="bg-circus-yellow text-gray-900 px-3 py-1 rounded-full text-sm font-semibold">
-										{group.ageGroup}
-									</span>
+									{group.ageGroup && (
+										<span className="bg-circus-yellow text-gray-900 px-3 py-1 rounded-full text-sm font-semibold">
+											{group.ageGroup}
+										</span>
+									)}
 								</div>
 
 								<p className="text-gray-700 mb-6">{group.description}</p>
 
 								<div className="space-y-2 mb-6">
+									{group.offerType && (
+										<div className="flex justify-between gap-4 text-gray-700">
+											<span className="font-semibold">Angebot:</span>
+											<span className="text-right">{group.offerType}</span>
+										</div>
+									)}
 									<div className="flex justify-between text-gray-700">
 										<span className="font-semibold">Wann:</span>
 										<span>
 											{group.weekday}, {group.time}
 										</span>
 									</div>
+									{group.location && (
+										<div className="flex justify-between gap-4 text-gray-700">
+											<span className="flex items-center font-semibold"><FaMapMarkerAlt className="mr-2 text-circus-red" />Ort:</span>
+											<span className="text-right">{group.location}</span>
+										</div>
+									)}
 									{group.level && (
 										<div className="flex justify-between text-gray-700">
 											<span className="font-semibold">Level:</span>
@@ -172,8 +186,13 @@ const Jugendzirkus = () => {
 											</div>
 										)}
 								</div>
+								{group.note && <p className="mb-6 text-sm font-semibold text-circus-blue">{group.note}</p>}
 
-								{group.registrationLink ? (
+								{group.openToPublic === false || group.openToPublic === "false" ? (
+									<p className="rounded-lg bg-circus-blue/10 px-4 py-3 text-center font-semibold text-circus-blue">
+										Teilnahme nur über die jeweilige Schule oder Einrichtung
+									</p>
+								) : group.registrationLink ? (
 									<Button
 										as="a"
 										href={group.registrationLink}

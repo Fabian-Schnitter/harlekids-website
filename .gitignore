@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 public/admin/decap-cms.js
+public/api/vendor/
 
 # Editor directories and files
 .vscode/*

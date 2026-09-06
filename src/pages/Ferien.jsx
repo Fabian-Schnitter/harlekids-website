@@ -11,6 +11,8 @@ import {
 	FaClock,
 	FaEuroSign,
 	FaMapMarkerAlt,
+	FaEnvelope,
+	FaPhone,
 } from "react-icons/fa";
 import { loadFerienprogramme, markdownToHtml } from "../utils/contentLoader";
 
@@ -25,77 +27,13 @@ const Ferien = () => {
 		});
 	}, []);
 
-	// Fallback zu Demo-Daten wenn keine Programme im CMS
-	const ferienTermine =
-		programme.length > 0
-			? programme
-			: [
-					{
-						id: 1,
-						title: "Osterferien 2025",
-						dates: "7. - 11. April 2025",
-						age: "6-14 Jahre",
-						time: "9:00 - 16:00 Uhr",
-						price: "120€",
-						description:
-							"Frühlingserwachen im Zirkus! Eine Woche voller bunter Zirkusabenteuer.",
-						image:
-							"https://images.unsplash.com/photo-1464047736614-af63643285bf?w=800&h=600&fit=crop",
-						spotsLeft: 8,
-					},
-					{
-						id: 2,
-						title: "Pfingstferien 2025",
-						dates: "9. - 13. Juni 2025",
-						age: "6-14 Jahre",
-						time: "9:00 - 16:00 Uhr",
-						price: "120€",
-						description:
-							"Perfektes Wetter für Zirkusspaß draußen unter freiem Himmel!",
-						image:
-							"https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop",
-						spotsLeft: 15,
-					},
-					{
-						id: 3,
-						title: "Sommerferien Woche 1",
-						dates: "21. - 25. Juli 2025",
-						age: "6-14 Jahre",
-						time: "9:00 - 16:00 Uhr",
-						price: "120€",
-						description:
-							"Die erste von zwei spektakulären Sommerwochen im Zirkuszelt!",
-						image:
-							"https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&h=600&fit=crop",
-						spotsLeft: 12,
-					},
-					{
-						id: 4,
-						title: "Sommerferien Woche 2",
-						dates: "28. Juli - 1. August 2025",
-						age: "6-14 Jahre",
-						time: "9:00 - 16:00 Uhr",
-						price: "120€",
-						description:
-							"Noch eine Woche Zirkuszauber für alle, die nicht genug bekommen!",
-						image:
-							"https://images.unsplash.com/photo-1464047736614-af63643285bf?w=800&h=600&fit=crop",
-						spotsLeft: 15,
-					},
-					{
-						id: 5,
-						title: "Herbstferien 2025",
-						dates: "20. - 24. Oktober 2025",
-						age: "6-14 Jahre",
-						time: "9:00 - 16:00 Uhr",
-						price: "120€",
-						description:
-							"Herbstliche Zirkusmagie mit bunten Blättern und warmen Herzen.",
-						image:
-							"https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=800&h=600&fit=crop",
-						spotsLeft: 20,
-					},
-			  ];
+	const ferienTermine = programme;
+	const ferienJahre = [...new Set(ferienTermine.map((termin) => termin.year).filter(Boolean))]
+		.sort((a, b) => a - b)
+		.join(" / ");
+	const registrationContact = ferienTermine.find((termin) => termin.contactEmail);
+	const registrationEmail = registrationContact?.contactEmail || "herberge@zpz-harlekids.de";
+	const registrationLink = registrationContact?.registrationLink || `mailto:${registrationEmail}`;
 
 	return (
 		<div className="min-h-screen">
@@ -160,7 +98,7 @@ const Ferien = () => {
 
 			{/* Ferientermine */}
 			<Section
-				title="Termine 2025"
+				title={`Termine${ferienJahre ? ` ${ferienJahre}` : ""}`}
 				subtitle="Jetzt anmelden"
 				backgroundColor="gray"
 			>
@@ -249,27 +187,47 @@ const Ferien = () => {
 												<span>{termin.time}</span>
 											</div>
 										)}
-										{termin.price && (
-											<div className="flex justify-between text-gray-700">
-												<span className="font-semibold flex items-center">
+										{termin.priceWithStay || termin.priceWithoutStay ? (
+											<div className="space-y-2 border-t border-gray-200 pt-4 text-gray-700">
+												<p className="flex items-center font-semibold">
+													<FaEuroSign className="mr-2 text-circus-yellow" />
+													Preise
+												</p>
+												{termin.priceWithStay && (
+													<div className="grid grid-cols-[1fr_auto] items-center gap-3">
+														<span className="whitespace-nowrap">Mit Übernachtung</span>
+														<span className="whitespace-nowrap text-lg font-bold text-circus-red">
+															{termin.priceWithStay}
+														</span>
+													</div>
+												)}
+												{termin.priceWithoutStay && (
+													<div className="grid grid-cols-[1fr_auto] items-center gap-3">
+														<span className="whitespace-nowrap">Ohne Übernachtung</span>
+														<span className="whitespace-nowrap text-lg font-bold text-circus-red">
+															{termin.priceWithoutStay}
+														</span>
+													</div>
+												)}
+											</div>
+										) : termin.price ? (
+											<div className="flex items-center justify-between gap-3 text-gray-700">
+												<span className="flex items-center font-semibold">
 													<FaEuroSign className="mr-2 text-circus-yellow" />
 													Preis:
 												</span>
-												<span className="text-circus-red font-bold text-lg">
+												<span className="text-right text-lg font-bold text-circus-red">
 													{termin.price}
 												</span>
 											</div>
-										)}
+										) : null}
 									</div>
 
 									{termin.registrationLink ? (
 										<Button
 											variant="primary"
 											className="w-full"
-											as="a"
 											href={termin.registrationLink}
-											target="_blank"
-											rel="noopener noreferrer"
 										>
 											Jetzt anmelden
 										</Button>
@@ -277,7 +235,7 @@ const Ferien = () => {
 										<Button
 											variant="primary"
 											className="w-full"
-											href="/kontakt"
+											href={`mailto:${registrationEmail}`}
 										>
 											Jetzt anmelden
 										</Button>
@@ -285,6 +243,25 @@ const Ferien = () => {
 								</div>
 							</Card>
 						))}
+					</div>
+				)}
+
+				{registrationContact && (
+					<div className="mx-auto mt-10 max-w-3xl bg-white p-6 shadow-md md:p-8">
+						<h3 className="mb-4 text-2xl font-bold text-circus-red">Anmeldung</h3>
+						<p className="mb-5 text-gray-700">
+							Die Anmeldung für die Zirkusferien läuft direkt über {registrationContact.contactName}.
+						</p>
+						<div className="grid gap-3 text-gray-700 sm:grid-cols-2">
+							<a className="flex items-center font-semibold text-circus-blue hover:underline" href={`mailto:${registrationContact.contactEmail}`}>
+								<FaEnvelope className="mr-2" />{registrationContact.contactEmail}
+							</a>
+							<a className="flex items-center font-semibold text-circus-blue hover:underline" href={`tel:${registrationContact.contactPhone.replace(/[^+\d]/g, "")}`}>
+								<FaPhone className="mr-2" />{registrationContact.contactPhone}
+							</a>
+							{registrationContact.contactFax && <p>Fax: {registrationContact.contactFax}</p>}
+							<p>Harlekids e.V., Briesker Straße 134, 01968 Brieske</p>
+						</div>
 					</div>
 				)}
 			</Section>
@@ -453,15 +430,15 @@ const Ferien = () => {
 					Platz in den Harlekids Zirkusferien!
 				</p>
 				<div className="flex flex-col sm:flex-row gap-4 justify-center">
-					<Button variant="accent" size="lg" href="/kontakt">
+					<Button variant="accent" size="lg" href={registrationLink}>
 						Jetzt anmelden
 					</Button>
 					<Button
 						variant="inverse"
 						size="lg"
-						href="/kontakt"
+						href={`mailto:${registrationEmail}`}
 					>
-						Fragen? Kontakt
+						Fragen zur Anmeldung
 					</Button>
 				</div>
 			</Section>

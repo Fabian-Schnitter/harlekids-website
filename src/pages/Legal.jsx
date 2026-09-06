@@ -49,7 +49,9 @@ export const Datenschutz = () => (
 					Wenn Sie das Kontaktformular verwenden, verarbeiten wir Ihren Namen,
 					Ihre E-Mail-Adresse, die optional angegebene Telefonnummer, den Betreff
 					und Ihre Nachricht, um Ihr Anliegen zu beantworten. Zur Abwehr von Spam
-					wird außerdem die IP-Adresse verarbeitet. Die Verarbeitung erfolgt zur
+					wird außerdem die IP-Adresse vorübergehend für eine technische
+					Sendebegrenzung verarbeitet. Die Nachricht wird über das bei Variomedia
+					betriebene Vereinspostfach zugestellt. Die Verarbeitung erfolgt zur
 					Bearbeitung Ihrer Anfrage; die Daten werden nicht für Werbung verwendet.
 				</p>
 			</div>

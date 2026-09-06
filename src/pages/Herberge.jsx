@@ -8,6 +8,7 @@ import {
 	FaParking,
 	FaShower,
 } from "react-icons/fa";
+import herbergeSettings from "../content/settings/herberge.json";
 
 // CMS NOTE: Herbergs-Informationen aus CMS (optional für später)
 
@@ -146,6 +147,24 @@ const Herberge = () => {
 				</div>
 			</Section>
 
+			{/* Preise */}
+			<Section title="Preise" subtitle="Übernachtung und Verpflegung" backgroundColor="gray">
+				<div className="mx-auto max-w-4xl overflow-hidden bg-white shadow-md">
+					{herbergeSettings.prices.map((item) => (
+						<div
+							key={item.label}
+							className="grid grid-cols-[1fr_auto] items-center gap-4 border-b border-gray-200 px-5 py-4 last:border-b-0 md:px-8"
+						>
+							<div>
+								<h3 className="font-bold text-gray-900">{item.label}</h3>
+								{item.note && <p className="text-sm text-gray-600">{item.note}</p>}
+							</div>
+							<strong className="whitespace-nowrap text-lg text-circus-red">{item.price}</strong>
+						</div>
+					))}
+				</div>
+			</Section>
+
 			{/* Anfrage */}
 			<Section
 				title="Übernachtung auf Anfrage"
@@ -187,7 +206,7 @@ const Herberge = () => {
 								Mitbringen
 							</h3>
 							<ul className="space-y-2 text-gray-700">
-								<li>• Bettwäsche ist vorhanden</li>
+								<li>• Bettwäsche kann gegen eine einmalige Gebühr ausgeliehen werden</li>
 								<li>• Handtücher</li>
 								<li>• Hausschuhe</li>
 								<li>• Kulturbeutel</li>

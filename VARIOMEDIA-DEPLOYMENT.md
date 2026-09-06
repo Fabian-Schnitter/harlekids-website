@@ -82,3 +82,27 @@ aber vorsichtshalber keine anderen Dateien auf dem Variomedia-Webspace.
 3. Einen Testbeitrag speichern und veröffentlichen.
 4. In GitHub unter **Actions** den erfolgreichen Build und Upload prüfen.
 5. Kontrollieren, ob der Beitrag auf der Website sichtbar ist.
+
+## 6. Kontaktformular aktivieren
+
+Das Formular versendet Nachrichten über das Variomedia-Postfach
+`info@zpz-harlekids.de`. Die benötigte Mailer-Bibliothek wird beim automatischen
+Build installiert und zusammen mit der Website übertragen.
+
+Die Vorlage `server-config/harlekids-contact.example.php` kopieren, in
+`harlekids-contact.php` umbenennen und nur das echte Passwort des Postfachs
+eintragen. Die Datei anschließend neben der OAuth-Konfiguration außerhalb des
+Web-Verzeichnisses im Ordner `private` ablegen:
+
+```text
+/pfad/zur/private/harlekids-contact.php
+/pfad/zur/private/harlekids-oauth.php
+/pfad/zur/domain/index.html
+```
+
+Das Passwort darf weder in GitHub noch im öffentlichen Web-Verzeichnis liegen.
+Falls der Serveraufbau abweicht, kann der absolute Dateipfad über die
+Server-Umgebungsvariable `HARLEKIDS_CONTACT_CONFIG` gesetzt werden.
+
+Danach eine Testnachricht über die veröffentlichte Kontaktseite senden, den
+Posteingang sowie den Spam-Ordner prüfen und direkt auf die Nachricht antworten.

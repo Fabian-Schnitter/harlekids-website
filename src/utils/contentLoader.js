@@ -109,7 +109,7 @@ export const loadFerienprogramme = async () => {
 		}
 
 		return programme.sort(
-			(a, b) => new Date(b.startDate) - new Date(a.startDate),
+			(a, b) => new Date(a.startDate) - new Date(b.startDate),
 		);
 	} catch (error) {
 		console.warn("Keine Ferienprogramme gefunden:", error);

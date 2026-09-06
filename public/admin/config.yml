@@ -145,9 +145,11 @@ collections:
       - { label: "Enddatum", name: "endDate", widget: "datetime" }
       - { label: "Kurzbeschreibung", name: "description", widget: "text", required: false }
       - { label: "Ausführlicher Text", name: "body", widget: "markdown", required: false }
-      - { label: "Bild", name: "image", widget: "image" }
-      - { label: "Preis", name: "price", widget: "string" }
-      - { label: "Altersgruppe", name: "ageGroup", widget: "string" }
+      - { label: "Bild", name: "image", widget: "image", required: false }
+      - { label: "Preis mit Übernachtung", name: "priceWithStay", widget: "string" }
+      - { label: "Preis ohne Übernachtung", name: "priceWithoutStay", widget: "string" }
+      - { label: "Altersgruppe", name: "ageGroup", widget: "string", required: false }
+      - { label: "Betreuungszeit", name: "time", widget: "string", required: false }
       - {
           label: "Max. Teilnehmer",
           name: "maxParticipants",
@@ -160,6 +162,10 @@ collections:
           widget: "string",
           required: false,
         }
+      - { label: "Ansprechperson", name: "contactName", widget: "string" }
+      - { label: "Telefon Anmeldung", name: "contactPhone", widget: "string" }
+      - { label: "Fax Anmeldung", name: "contactFax", widget: "string", required: false }
+      - { label: "E-Mail Anmeldung", name: "contactEmail", widget: "string" }
       - {
           label: "Veröffentlicht",
           name: "published",
@@ -175,10 +181,18 @@ collections:
     slug: "{{slug}}"
     fields:
       - { label: "Gruppenname", name: "title", widget: "string" }
-      - { label: "Altersgruppe", name: "ageGroup", widget: "string" }
+      - { label: "Altersgruppe", name: "ageGroup", widget: "string", required: false }
       - { label: "Wochentag", name: "weekday", widget: "string" }
       - { label: "Uhrzeit", name: "time", widget: "string" }
+      - {
+          label: "Art des Angebots",
+          name: "offerType",
+          widget: "select",
+          options: ["Offenes Angebot", "Schul-AG / Einrichtung"],
+        }
+      - { label: "Ort", name: "location", widget: "string" }
       - { label: "Beschreibung", name: "description", widget: "text" }
+      - { label: "Zusatzhinweis", name: "note", widget: "string", required: false }
       - { label: "Bild", name: "image", widget: "image", required: false }
       - {
           label: "Level",
@@ -204,6 +218,13 @@ collections:
           name: "registrationLink",
           widget: "string",
           required: false,
+        }
+      - {
+          label: "Offen für alle",
+          name: "openToPublic",
+          widget: "boolean",
+          default: true,
+          hint: "Bei Schul-AGs ausschalten.",
         }
       - {
           label: "Sortierung",
@@ -296,4 +317,19 @@ collections:
               name: "youtube",
               widget: "string",
               required: false,
+            }
+      - label: "Herberge: Preise"
+        name: "herberge_prices"
+        file: "src/content/settings/herberge.json"
+        fields:
+          - {
+              label: "Preise",
+              name: "prices",
+              widget: "list",
+              fields:
+                [
+                  { label: "Leistung", name: "label", widget: "string" },
+                  { label: "Preis", name: "price", widget: "string" },
+                  { label: "Hinweis", name: "note", widget: "string", required: false },
+                ],
             }

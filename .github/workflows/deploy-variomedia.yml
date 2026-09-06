@@ -26,6 +26,16 @@ jobs:
           node-version: 20
           cache: npm
 
+      - name: PHP einrichten
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer:v2
+          coverage: none
+
+      - name: E-Mail-Versand vorbereiten
+        run: composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
+
       - name: Abhängigkeiten installieren
         run: npm ci
 

@@ -12,8 +12,7 @@ import {
 	FaExclamationCircle,
 } from "react-icons/fa";
 
-// WICHTIG: Diese URL später auf eure echte Domain ändern!
-const API_URL = "https://harlekids.de/api/contact.php";
+const API_URL = "/api/contact.php";
 
 const Kontakt = () => {
 	const [formData, setFormData] = useState({
@@ -101,6 +100,7 @@ const Kontakt = () => {
 					subject: formData.subject,
 					message: formData.message,
 					website: formData.website, // Honeypot wird mitgesendet
+					startedAt: startTime,
 				}),
 			});
 
@@ -341,10 +341,10 @@ const Kontakt = () => {
 									</Button>
 								</div>
 
-								<p className="text-sm text-gray-600">
-									* Pflichtfelder. Ihre Daten werden vertraulich behandelt und
-									nicht an Dritte weitergegeben.
-								</p>
+				<p className="text-sm text-gray-600">
+					* Pflichtfelder. Hinweise zur Verarbeitung Ihrer Angaben finden Sie
+					in unserer <a href="/datenschutz" className="text-circus-red hover:underline">Datenschutzerklärung</a>.
+				</p>
 							</form>
 						</div>
 

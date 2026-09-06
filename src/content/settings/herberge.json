@@ -1,0 +1,10 @@
+{
+  "prices": [
+    { "label": "Übernachtung", "price": "18,00 €", "note": "pro Person" },
+    { "label": "Bettwäsche", "price": "3,00 €", "note": "einmalig pro Person" },
+    { "label": "Frühstück", "price": "4,00 €", "note": "pro Person" },
+    { "label": "Mittagessen", "price": "4,50 €", "note": "pro Person" },
+    { "label": "Abendessen", "price": "4,00 €", "note": "pro Person" },
+    { "label": "Vesper", "price": "1,50 €", "note": "pro Person" }
+  ]
+}
