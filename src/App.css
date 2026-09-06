@@ -15,17 +15,17 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-	background: #e63946;
+	background: #ae0533;
 	border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: #d32f3e;
+	filter: brightness(0.9);
 }
 
 /* Focus Styles for Accessibility */
 *:focus-visible {
-	outline: 2px solid #e63946;
+	outline: 2px solid #ae0533;
 	outline-offset: 2px;
 }
 

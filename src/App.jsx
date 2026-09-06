@@ -1,10 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Navigate, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import Termine from "./pages/Termine";
-import Zirkuspaedagogik from "./pages/Zirkuspaedagogik";
 import Jugendzirkus from "./pages/Jugendzirkus";
 import Ferien from "./pages/Ferien";
 import Herberge from "./pages/Herberge";
@@ -23,7 +22,7 @@ function App() {
 					<Routes>
 						<Route path="/" element={<Home />} />
 						<Route path="/termine" element={<Termine />} />
-						<Route path="/zirkuspaedagogik" element={<Zirkuspaedagogik />} />
+						<Route path="/zirkuspaedagogik" element={<Navigate to="/" replace />} />
 						<Route path="/jugendzirkus" element={<Jugendzirkus />} />
 						<Route path="/ferien" element={<Ferien />} />
 						<Route path="/herberge" element={<Herberge />} />

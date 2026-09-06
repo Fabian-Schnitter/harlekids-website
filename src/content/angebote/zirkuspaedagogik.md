@@ -4,5 +4,5 @@ description: "Fortbildungen für Pädagog*innen, Lehrer*innen und alle, die zirk
 link: "/zirkuspaedagogik"
 buttonLabel: "Fortbildungen"
 order: 3
-published: true
+published: false
 ---

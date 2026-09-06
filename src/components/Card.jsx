@@ -3,15 +3,18 @@ const Card = ({
 	title,
 	image,
 	imageAlt = "",
+	icon: Icon,
+	accentColor,
 	className = "",
 	hoverable = true,
 	...props
 }) => {
-	const hoverStyles = hoverable ? "hover:shadow-2xl hover:-translate-y-2" : "";
+	const hoverStyles = hoverable ? "hover:shadow-md" : "";
 
 	return (
 		<div
-			className={`bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 ${hoverStyles} ${className}`}
+			className={`bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden transition-shadow duration-200 ${hoverStyles} ${className}`}
+			style={accentColor ? { "--card-accent": accentColor } : undefined}
 			{...props}
 		>
 			{image && (
@@ -24,6 +27,15 @@ const Card = ({
 				</div>
 			)}
 			<div className="p-6">
+				{Icon && (
+					<div
+						className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full text-white shadow-md"
+						style={{ backgroundColor: accentColor || "var(--color-circus-red)" }}
+						aria-hidden="true"
+					>
+						<Icon size={22} />
+					</div>
+				)}
 				{title && (
 					<h3 className="text-2xl font-bold text-gray-900 mb-4">{title}</h3>
 				)}

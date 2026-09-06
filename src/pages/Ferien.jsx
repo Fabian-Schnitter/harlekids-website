@@ -10,6 +10,7 @@ import {
 	FaCalendar,
 	FaClock,
 	FaEuroSign,
+	FaMapMarkerAlt,
 } from "react-icons/fa";
 import { loadFerienprogramme, markdownToHtml } from "../utils/contentLoader";
 
@@ -99,7 +100,7 @@ const Ferien = () => {
 	return (
 		<div className="min-h-screen">
 			{/* Hero Section */}
-			<Section backgroundColor="yellow" className="text-center py-20">
+			<Section backgroundColor="yellow" className="text-center py-14 md:py-16">
 				<FaSun className="text-6xl text-circus-red mb-6 mx-auto" />
 				<h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
 					Ferien im Zirkus
@@ -206,9 +207,9 @@ const Ferien = () => {
 									<div
 										className="text-gray-600 mb-4"
 										dangerouslySetInnerHTML={{
-											__html: termin.body
-												? markdownToHtml(termin.body)
-												: termin.description,
+											__html: markdownToHtml(
+												termin.body || termin.description,
+											),
 										}}
 									/>
 
@@ -242,7 +243,7 @@ const Ferien = () => {
 										{termin.time && (
 											<div className="flex justify-between text-gray-700">
 												<span className="font-semibold flex items-center">
-													<FaClock className="mr-2 text-circus-green" />
+											<FaClock className="mr-2 text-circus-blue" />
 													Zeit:
 												</span>
 												<span>{termin.time}</span>
@@ -317,7 +318,7 @@ const Ferien = () => {
 
 					<div className="mt-8 bg-circus-yellow p-6 rounded-lg text-center">
 						<h3 className="font-bold text-xl mb-2">
-							Die große Show am Freitag!
+							Die große Abschlussshow!
 						</h3>
 						<p className="text-gray-900">
 							Am letzten Tag präsentieren alle Kinder ihre erlernten Kunststücke
@@ -335,7 +336,7 @@ const Ferien = () => {
 				backgroundColor="gray"
 			>
 				<div className="max-w-3xl mx-auto">
-					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+					<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 						<div className="bg-white p-6 rounded-lg shadow-md">
 							<h3 className="text-xl font-bold mb-4 text-circus-red">
 								Kleidung & Co.
@@ -353,10 +354,22 @@ const Ferien = () => {
 								Verpflegung
 							</h3>
 							<ul className="space-y-2 text-gray-700">
-								<li>✓ Trinkflasche (immer wichtig!)</li>
-								<li>✓ Snacks für die Pausen</li>
-								<li>✓ Mittagessen oder Geld für Bestellung</li>
-								<li>✓ Obst & gesunde Snacks empfohlen</li>
+								<li>✓ Vollverpflegung während der Ferienwoche</li>
+								<li>✓ Frühstück, Mittagessen und Abendessen</li>
+								<li>✓ Bei Bedarf gibt es zusätzlich Vesper</li>
+								<li>✓ Wasser und Tee stehen zur Verfügung</li>
+								<li>✓ Allergien bitte bei der Anmeldung angeben</li>
+							</ul>
+						</div>
+
+						<div className="bg-white p-6 rounded-lg shadow-md">
+							<h3 className="text-xl font-bold mb-4 text-circus-red">
+								Sonstige Dinge
+							</h3>
+							<ul className="space-y-2 text-gray-700">
+								<li>✓ Beschriftete Trinkflasche</li>
+								<li>✓ Eigene Zirkussachen dürfen gern mitgebracht werden</li>
+								<li>✓ Kleiner Rucksack für persönliche Dinge</li>
 							</ul>
 						</div>
 					</div>
@@ -369,12 +382,64 @@ const Ferien = () => {
 								mitmachen!
 							</li>
 							<li>✓ Alle Zirkusmaterialien werden gestellt</li>
-							<li>✓ Getränke (Wasser, Tee) stehen zur Verfügung</li>
 							<li>
-								✓ Bitte Schmuck und Uhren zu Hause lassen (Verletzungsgefahr)
+								✓ Schmuck und Uhren bitte zu Hause lassen (Verletzungsgefahr)
 							</li>
+							<li>✓ Keine Wertsachen mitbringen</li>
+							<li>✓ Handys bitte zu Hause lassen</li>
 						</ul>
 					</div>
+				</div>
+			</Section>
+
+			{/* Lage & Anfahrt */}
+			<Section
+				title="Lage & Anfahrt"
+				subtitle="So findet ihr zu uns"
+				backgroundColor="gray"
+			>
+				<div className="max-w-4xl mx-auto">
+					<div className="bg-white p-8 rounded-lg shadow-md mb-8">
+						<div className="flex items-start gap-4">
+							<FaMapMarkerAlt className="text-3xl text-circus-red mt-1 flex-shrink-0" />
+							<div>
+								<h3 className="text-2xl font-bold mb-3 text-circus-red">Adresse</h3>
+								<p className="text-gray-700 text-lg">
+									Zirkuspädagogisches Zentrum Harlekids
+									<br />
+									Briesker Straße 134
+									<br />
+									01968 Senftenberg / OT Brieske
+								</p>
+							</div>
+						</div>
+
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+							<div>
+								<h4 className="font-bold text-gray-900 mb-2">Mit dem Auto</h4>
+								<p className="text-gray-700">
+									Über die B196 sowie die A13-Anschlüsse Klettwitz und Schwarzheide
+									ist das Zirkuszentrum gut erreichbar.
+								</p>
+							</div>
+							<div>
+								<h4 className="font-bold text-gray-900 mb-2">
+									Öffentliche Verkehrsmittel
+								</h4>
+								<p className="text-gray-700">
+									Vom Bahnhof Senftenberg fährt die Citylinie zur Haltestelle
+									„Hotel Marga“ direkt gegenüber dem Zirkuszentrum.
+								</p>
+							</div>
+						</div>
+					</div>
+
+					<iframe
+						title="Karte: Harlekids in Senftenberg-Brieske"
+						src="https://www.openstreetmap.org/export/embed.html?bbox=13.962%2C51.497%2C13.973%2C51.507&amp;layer=mapnik&marker=51.502097%2C13.967400"
+						className="w-full h-96 rounded-lg border-0"
+						loading="lazy"
+					/>
 				</div>
 			</Section>
 
@@ -392,9 +457,8 @@ const Ferien = () => {
 						Jetzt anmelden
 					</Button>
 					<Button
-						variant="outline"
+						variant="inverse"
 						size="lg"
-						className="border-white text-white hover:bg-white hover:text-circus-red"
 						href="/kontakt"
 					>
 						Fragen? Kontakt

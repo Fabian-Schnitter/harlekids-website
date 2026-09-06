@@ -150,7 +150,7 @@ const Kontakt = () => {
 	return (
 		<div className="min-h-screen">
 			{/* Hero */}
-			<Section backgroundColor="blue" className="text-white text-center py-20">
+			<Section backgroundColor="blue" className="text-white text-center py-14 md:py-16">
 				<FaEnvelope className="text-6xl mb-6 mx-auto" />
 				<h1 className="text-5xl md:text-6xl font-bold mb-6">Kontakt</h1>
 				<p className="text-xl max-w-3xl mx-auto">
@@ -281,7 +281,7 @@ const Kontakt = () => {
 
 								{/* Status-Meldungen */}
 								{status.success && (
-									<div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg flex items-center gap-3">
+									<div className="bg-circus-blue/10 border border-circus-blue text-circus-blue px-4 py-3 rounded-lg flex items-center gap-3">
 										<FaCheckCircle className="text-2xl" />
 										<div>
 											<p className="font-bold">Nachricht gesendet!</p>
@@ -294,7 +294,7 @@ const Kontakt = () => {
 								)}
 
 								{status.error && (
-									<div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg flex items-center gap-3">
+									<div className="bg-circus-red/10 border border-circus-red text-circus-red px-4 py-3 rounded-lg flex items-center gap-3">
 										<FaExclamationCircle className="text-2xl" />
 										<div>
 											<p className="font-bold">Fehler</p>
@@ -420,9 +420,10 @@ const Kontakt = () => {
 								</p>
 								<div className="flex space-x-4">
 									<a
-										href="https://facebook.com/harlekids"
+										href="https://www.facebook.com/harlekids/"
 										target="_blank"
 										rel="noopener noreferrer"
+										aria-label="Harlekids auf Facebook"
 										className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-white text-circus-blue hover:bg-circus-blue hover:text-white transition-all"
 									>
 										<FaFacebook size={24} />

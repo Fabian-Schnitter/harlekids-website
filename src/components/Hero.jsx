@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
 import Button from "./Button";
 
 const Hero = ({
 	title,
 	subtitle,
+	eyebrow,
 	backgroundImage,
 	primaryCTA,
 	secondaryCTA,
@@ -12,7 +12,7 @@ const Hero = ({
 }) => {
 	return (
 		<div
-			className={`relative ${height} flex items-center justify-center bg-cover bg-center`}
+			className={`circus-hero relative ${height} flex items-center justify-center bg-cover bg-center`}
 			style={{ backgroundImage: `url(${backgroundImage})` }}
 		>
 			{/* Overlay */}
@@ -22,42 +22,35 @@ const Hero = ({
 
 			{/* Content */}
 			<div className="relative z-10 container mx-auto px-4 text-center text-white">
-				<h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
+				{eyebrow && <p className="hero-eyebrow">{eyebrow}</p>}
+				<h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
 					{title}
 				</h1>
 				{subtitle && (
-					<p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto animate-fade-in-delay">
+					<p className="text-lg sm:text-xl md:text-2xl mb-8 max-w-3xl mx-auto animate-fade-in-delay">
 						{subtitle}
 					</p>
 				)}
 				<div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-delay-2">
 					{primaryCTA && (
-						<Link to={primaryCTA.link}>
-							<Button variant="accent" size="lg">
-								{primaryCTA.text}
-							</Button>
-						</Link>
+						<Button to={primaryCTA.link} variant="accent" size="lg">
+							{primaryCTA.text}
+						</Button>
 					)}
 					{secondaryCTA && (
-						<Link to={secondaryCTA.link}>
-							<Button
-								variant="outline"
-								size="lg"
-								className="border-white text-white hover:bg-white hover:text-gray-900"
-							>
+						secondaryCTA.link.startsWith("#") ? (
+							<Button href={secondaryCTA.link} variant="inverse" size="lg">
 								{secondaryCTA.text}
 							</Button>
-						</Link>
+						) : (
+							<Button to={secondaryCTA.link} variant="inverse" size="lg">
+								{secondaryCTA.text}
+							</Button>
+						)
 					)}
 				</div>
 			</div>
 
-			{/* Scroll Indicator */}
-			<div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 animate-bounce">
-				<div className="w-6 h-10 border-2 border-white rounded-full flex items-start justify-center p-2">
-					<div className="w-1 h-3 bg-white rounded-full"></div>
-				</div>
-			</div>
 		</div>
 	);
 };

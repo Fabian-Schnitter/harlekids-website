@@ -2,7 +2,7 @@
 title: "Cosmic Zirkus"
 date: 2026-06-06
 author: "Steffen"
-category: "Jugendzirkus"
+category: "Kurse"
 excerpt: "Am 21. Juni 2026 zeigen die Kinder und Jugendlichen des Harlekids e.V. ihre gemeinsame Zirkusaufführung im Zirkuszelt in der Briesker Straße 134."
 published: true
 ---

@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
 import Section from "../components/Section";
-import Card from "../components/Card";
 import Button from "../components/Button";
-import { FaCalendar, FaUser, FaTag } from "react-icons/fa";
-import { loadBlogPosts } from "../utils/contentLoader";
+import { FaCalendar, FaSearch, FaUser } from "react-icons/fa";
+import { loadBlogPosts, markdownToHtml } from "../utils/contentLoader";
 
 const Blog = () => {
 	const [posts, setPosts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [selectedCategory, setSelectedCategory] = useState("all");
+	const [selectedYear, setSelectedYear] = useState("all");
+	const [searchTerm, setSearchTerm] = useState("");
 	const [expandedPost, setExpandedPost] = useState(null);
+	const [visibleCount, setVisibleCount] = useState(8);
 
 	useEffect(() => {
 		loadBlogPosts().then((data) => {
@@ -102,16 +104,36 @@ const Blog = () => {
 		"all",
 		...new Set(blogPosts.map((post) => post.category).filter(Boolean)),
 	];
+	const getPostYear = (date) => String(date || "").match(/\b(?:19|20)\d{2}\b/)?.[0] || "";
+	const years = [...new Set(blogPosts.map((post) => getPostYear(post.date)).filter(Boolean))]
+		.sort((a, b) => Number(b) - Number(a));
+	const normalizedSearch = searchTerm.trim().toLocaleLowerCase("de-DE");
 
-	const filteredPosts =
-		selectedCategory === "all"
-			? blogPosts
-			: blogPosts.filter((post) => post.category === selectedCategory);
+	const filteredPosts = blogPosts.filter((post) => {
+		const matchesCategory =
+			selectedCategory === "all" || post.category === selectedCategory;
+		const matchesYear = selectedYear === "all" || getPostYear(post.date) === selectedYear;
+		const searchableText = [
+			post.title,
+			post.excerpt,
+			post.body,
+			post.content,
+			post.category,
+			post.author,
+		]
+			.filter(Boolean)
+			.join(" ")
+			.toLocaleLowerCase("de-DE");
+		const matchesSearch = !normalizedSearch || searchableText.includes(normalizedSearch);
+
+		return matchesCategory && matchesYear && matchesSearch;
+	});
+	const visiblePosts = filteredPosts.slice(0, visibleCount);
 
 	return (
 		<div className="min-h-screen">
 			{/* Hero */}
-			<Section backgroundColor="blue" className="text-white text-center py-20">
+			<Section backgroundColor="blue" className="circus-blog-hero text-white text-center py-14 md:py-16">
 				<h1 className="text-5xl md:text-6xl font-bold mb-6">News & Blog</h1>
 				<p className="text-xl max-w-3xl mx-auto">
 					Aktuelles aus der Harlekids-Welt – von Veranstaltungen über
@@ -127,11 +149,67 @@ const Blog = () => {
 					</div>
 				) : (
 					<>
+						<div className="blog-tools mb-8">
+							<label className="blog-search-field">
+								<span>Beiträge durchsuchen</span>
+								<div>
+									<FaSearch aria-hidden="true" />
+									<input
+										type="search"
+										value={searchTerm}
+										onChange={(event) => {
+											setSearchTerm(event.target.value);
+											setVisibleCount(8);
+											setExpandedPost(null);
+										}}
+										placeholder="Titel oder Stichwort eingeben"
+									/>
+								</div>
+							</label>
+
+							<label className="blog-year-field">
+								<span>Nach Jahr filtern</span>
+								<select
+									value={selectedYear}
+									onChange={(event) => {
+										setSelectedYear(event.target.value);
+										setVisibleCount(8);
+										setExpandedPost(null);
+									}}
+								>
+									<option value="all">Alle Jahre</option>
+									{years.map((year) => (
+										<option key={year} value={year}>{year}</option>
+									))}
+								</select>
+							</label>
+
+							{(searchTerm || selectedYear !== "all" || selectedCategory !== "all") && (
+								<Button
+									variant="outline"
+									size="sm"
+									onClick={() => {
+										setSearchTerm("");
+										setSelectedYear("all");
+										setSelectedCategory("all");
+										setVisibleCount(8);
+										setExpandedPost(null);
+									}}
+								>
+									Filter zurücksetzen
+								</Button>
+							)}
+						</div>
+
 						<div className="flex flex-wrap justify-center gap-3 mb-12">
 							{categories.map((category) => (
 								<button
 									key={category}
-									onClick={() => setSelectedCategory(category)}
+									onClick={() => {
+										setSelectedCategory(category);
+										setVisibleCount(8);
+										setExpandedPost(null);
+									}}
 									className={`px-6 py-2 rounded-full font-semibold transition-all ${
 										selectedCategory === category
 											? "bg-circus-red text-white"
@@ -143,36 +221,19 @@ const Blog = () => {
 							))}
 						</div>
 
-						{/* Blog Posts Grid */}
-						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-							{filteredPosts.map((post, index) => {
+						<div className="blog-list">
+							{visiblePosts.map((post, index) => {
 								const postId = post.slug || post.id || index;
 								const isExpanded = expandedPost === postId;
 
 								return (
-								<Card
+								<article
 									key={postId}
-									className="flex flex-col"
+									className="blog-list-item"
 								>
-									{post.image && (
-										<div className="relative h-56 overflow-hidden rounded-t-xl">
-											<img
-												src={post.image}
-												alt={post.title}
-												className="w-full h-full object-cover"
-											/>
-											{post.category && (
-												<div className="absolute top-4 left-4 bg-circus-yellow text-gray-900 px-3 py-1 rounded-full text-sm font-semibold">
-													<FaTag className="inline mr-1" />
-													{post.category}
-												</div>
-											)}
-										</div>
-									)}
-
-									<div className="p-6 flex-grow flex flex-col">
-										<div className="flex items-center text-sm text-gray-600 mb-3 space-x-4">
-											<span className="flex items-center">
+									<div className="blog-list-meta">
+										{post.category && <strong>{post.category}</strong>}
+										<span className="flex items-center">
 												<FaCalendar className="mr-1 text-circus-red" />
 												{post.date
 													? new Date(post.date).toLocaleDateString("de-DE", {
@@ -181,72 +242,72 @@ const Blog = () => {
 															year: "numeric",
 														})
 													: ""}
-											</span>
-											{post.author && (
-												<span className="flex items-center">
+										</span>
+										{post.author && (
+											<span className="flex items-center">
 													<FaUser className="mr-1 text-circus-red" />
 													{post.author}
-												</span>
-											)}
-										</div>
+											</span>
+										)}
+									</div>
 
-										<h3 className="text-xl font-bold text-gray-900 mb-3">
+									<div className="blog-list-copy">
+										<h2>
 											{post.title}
-										</h3>
+										</h2>
 
-										<div className="text-gray-600 mb-6 flex-grow line-clamp-3">
+										<div className="text-gray-600 leading-relaxed line-clamp-2">
 											{post.excerpt ||
 												(post.body && post.body.substring(0, 150) + "...")}
 										</div>
-
-										{isExpanded && (
-											<article className="text-gray-700 mb-6 border-t border-gray-200 pt-4 whitespace-pre-line">
-												{post.content || post.body || post.excerpt}
-											</article>
-										)}
-
-										<Button
-											variant="outline"
-											size="sm"
-											className="w-full"
-											onClick={() => setExpandedPost(isExpanded ? null : postId)}
-											aria-expanded={isExpanded}
-										>
-											{isExpanded ? "Weniger anzeigen" : "Weiterlesen"}
-										</Button>
 									</div>
-								</Card>
+
+									<Button
+										variant="outline"
+										size="sm"
+										className="blog-list-button"
+										onClick={() => setExpandedPost(isExpanded ? null : postId)}
+										aria-expanded={isExpanded}
+									>
+										{isExpanded ? "Schließen" : "Weiterlesen"}
+									</Button>
+
+									{isExpanded && (
+										<div
+											className="blog-list-content text-gray-700"
+												dangerouslySetInnerHTML={{
+													__html: markdownToHtml(
+														post.content || post.body || post.excerpt,
+													),
+												}}
+										/>
+									)}
+								</article>
 								);
 							})}
 						</div>
 
+						{visibleCount < filteredPosts.length && (
+							<div className="mt-10 text-center">
+								<Button
+									variant="primary"
+									size="lg"
+									onClick={() => setVisibleCount((count) => count + 8)}
+								>
+									Mehr Beiträge anzeigen
+								</Button>
+							</div>
+						)}
+
 						{filteredPosts.length === 0 && (
 							<div className="text-center py-12">
 								<p className="text-gray-600 text-lg">
-									{selectedCategory === "all"
-										? "Noch keine Blog-Posts vorhanden. Erstellt welche im CMS!"
-										: "Keine Beiträge in dieser Kategorie gefunden."}
+									Keine Beiträge für diese Suche gefunden.
 								</p>
 							</div>
 						)}
 					</>
 				)}
-			</Section>
-
-			{/* Archiv */}
-			<Section backgroundColor="gray">
-				<div className="text-center max-w-3xl mx-auto">
-					<h2 className="text-3xl font-bold mb-4 text-gray-900">
-						Auf der Suche nach älteren Beiträgen?
-					</h2>
-					<p className="text-lg text-gray-700 mb-6">
-						Alle veröffentlichten Beiträge bleiben hier durchsuchbar. Wähle eine
-						Kategorie oben, um das Archiv einzugrenzen.
-					</p>
-					<Button variant="primary" size="lg" onClick={() => setSelectedCategory("all")}>
-						Gesamtes Archiv anzeigen
-					</Button>
-				</div>
 			</Section>
 		</div>
 	);

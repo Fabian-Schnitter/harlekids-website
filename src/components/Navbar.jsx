@@ -9,8 +9,7 @@ const Navbar = () => {
 	const navItems = [
 		{ name: "Start", path: "/" },
 		{ name: "Termine", path: "/termine" },
-		{ name: "Zirkuspädagogik", path: "/zirkuspaedagogik" },
-		{ name: "Jugendzirkus", path: "/jugendzirkus" },
+		{ name: "Kurse", path: "/jugendzirkus" },
 		{ name: "Ferien", path: "/ferien" },
 		{ name: "Herberge", path: "/herberge" },
 		{ name: "Blog", path: "/blog" },
@@ -22,8 +21,8 @@ const Navbar = () => {
 	};
 
 	return (
-		<nav className="bg-white shadow-lg sticky top-0 z-50">
-			<div className="container mx-auto px-4">
+		<nav className="circus-navbar bg-white shadow-lg sticky top-0 z-50">
+			<div className="w-full px-4">
 				<div className="flex justify-between items-center py-4">
 					{/* Logo */}
 					<Link to="/" className="flex items-center gap-3" aria-label="Harlekids – Startseite">

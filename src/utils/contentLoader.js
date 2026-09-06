@@ -5,7 +5,8 @@ export const loadEvents = async () => {
 	try {
 		const eventFiles = import.meta.glob("/src/content/termine/*.md", {
 			eager: true,
-			as: "raw",
+			query: "?raw",
+			import: "default",
 		});
 
 		const events = [];
@@ -36,7 +37,8 @@ export const loadBlogPosts = async () => {
 	try {
 		const blogFiles = import.meta.glob("/src/content/blog/*.md", {
 			eager: true,
-			as: "raw",
+			query: "?raw",
+			import: "default",
 		});
 
 		const posts = [];
@@ -66,7 +68,8 @@ export const loadOffers = async () => {
 	try {
 		const offerFiles = import.meta.glob("/src/content/angebote/*.md", {
 			eager: true,
-			as: "raw",
+			query: "?raw",
+			import: "default",
 		});
 		const offers = [];
 		for (const path in offerFiles) {
@@ -87,7 +90,8 @@ export const loadFerienprogramme = async () => {
 	try {
 		const ferienFiles = import.meta.glob("/src/content/ferienprogramme/*.md", {
 			eager: true,
-			as: "raw",
+			query: "?raw",
+			import: "default",
 		});
 
 		const programme = [];
@@ -135,7 +139,8 @@ export const loadFortbildungen = async () => {
 			"/src/content/fortbildungen/*.md",
 			{
 				eager: true,
-				as: "raw",
+				query: "?raw",
+				import: "default",
 			},
 		);
 
@@ -173,7 +178,8 @@ export const loadJugendzirkus = async () => {
 	try {
 		const gruppenFiles = import.meta.glob("/src/content/jugendzirkus/*.md", {
 			eager: true,
-			as: "raw",
+			query: "?raw",
+			import: "default",
 		});
 
 		const gruppen = [];
@@ -203,7 +209,8 @@ export const loadHerberge = async () => {
 	try {
 		const herbergeFiles = import.meta.glob("/src/content/herberge/*.md", {
 			eager: true,
-			as: "raw",
+			query: "?raw",
+			import: "default",
 		});
 
 		const angebote = [];
@@ -287,12 +294,12 @@ function parseFrontmatter(content) {
 			value = value.slice(1, -1);
 		}
 
-		// Parse boolean
-		if (value === "true") value = true;
-		if (value === "false") value = false;
-
-		// Parse number
-		if (!isNaN(value) && value !== "") {
+		// Parse boolean und nur unveränderte Textwerte anschließend als Zahl.
+		if (value === "true") {
+			value = true;
+		} else if (value === "false") {
+			value = false;
+		} else if (!isNaN(value) && value !== "") {
 			const num = Number(value);
 			if (Number.isFinite(num)) value = num;
 		}
@@ -304,11 +311,35 @@ function parseFrontmatter(content) {
 	return frontmatter;
 }
 
-// Konvertiere Markdown zu HTML (einfache Version)
+const escapeHtml = (value) =>
+	String(value)
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&#039;");
+
+const isSafeLink = (href) => {
+	const value = href.trim();
+	const firstCharacterCode = value.charCodeAt(0);
+	if (
+		!value ||
+		firstCharacterCode <= 31 ||
+		firstCharacterCode === 127 ||
+		value.startsWith("//")
+	) {
+		return false;
+	}
+
+	return /^(https?:\/\/|mailto:|tel:|\/(?!\/)|\.\.?\/|#)/i.test(value);
+};
+
+// Konvertiert den kleinen, im CMS erlaubten Markdown-Umfang zu sicherem HTML.
+// Rohes HTML sowie unsichere Link-Protokolle werden dabei nicht übernommen.
 export const markdownToHtml = (markdown) => {
 	if (!markdown) return "";
 
-	let html = markdown
+	let html = escapeHtml(markdown)
 		// Headers
 		.replace(/^### (.*$)/gim, '<h3 class="text-xl font-bold mt-4 mb-2">$1</h3>')
 		.replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold mt-6 mb-3">$1</h2>')
@@ -320,7 +351,10 @@ export const markdownToHtml = (markdown) => {
 		// Links
 		.replace(
 			/\[([^\]]+)\]\(([^)]+)\)/g,
-			'<a href="$2" class="text-circus-blue hover:underline">$1</a>',
+			(_match, label, href) =>
+				isSafeLink(href)
+					? `<a href="${href.trim()}" class="text-circus-blue hover:underline">${label}</a>`
+					: label,
 		)
 		// Line breaks
 		.replace(/\n\n/g, '</p><p class="mb-4">')

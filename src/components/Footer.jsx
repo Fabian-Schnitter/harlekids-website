@@ -23,7 +23,7 @@ const Footer = () => {
 						</p>
 						<div className="flex space-x-4">
 							<a
-								href="https://facebook.com/harlekids"
+								href="https://www.facebook.com/harlekids/"
 								target="_blank"
 								rel="noopener noreferrer"
 								className="text-gray-300 hover:text-circus-yellow transition-colors"
@@ -70,7 +70,7 @@ const Footer = () => {
 									to="/jugendzirkus"
 									className="text-gray-300 hover:text-circus-yellow transition-colors"
 								>
-									Jugendzirkus
+									Kurse
 								</Link>
 							</li>
 							<li>
@@ -90,14 +90,6 @@ const Footer = () => {
 							Angebote
 						</h4>
 						<ul className="space-y-2">
-							<li>
-								<Link
-									to="/zirkuspaedagogik"
-									className="text-gray-300 hover:text-circus-yellow transition-colors"
-								>
-									Zirkuspädagogik
-								</Link>
-							</li>
 							<li>
 								<Link
 									to="/ferien"

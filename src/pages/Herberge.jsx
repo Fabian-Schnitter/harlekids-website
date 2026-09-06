@@ -44,7 +44,7 @@ const Herberge = () => {
 	return (
 		<div className="min-h-screen">
 			{/* Hero */}
-			<Section backgroundColor="blue" className="text-white text-center py-20">
+			<Section backgroundColor="blue" className="text-white text-center py-14 md:py-16">
 				<FaBed className="text-6xl mb-6 mx-auto" />
 				<h1 className="text-5xl md:text-6xl font-bold mb-6">
 					Die Jugendherberge im Zirkus
@@ -259,9 +259,8 @@ const Herberge = () => {
 						Verfügbarkeit anfragen
 					</Button>
 					<Button
-						variant="outline"
+						variant="inverse"
 						size="lg"
-						className="border-white text-white hover:bg-white hover:text-circus-red"
 						href="/kontakt"
 					>
 						Fragen? Kontakt

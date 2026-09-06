@@ -123,7 +123,7 @@ const Termine = () => {
 	return (
 		<div className="min-h-screen">
 			{/* Header */}
-			<Section backgroundColor="blue" className="text-white text-center py-20">
+			<Section backgroundColor="blue" className="text-white text-center py-14 md:py-16">
 				<h1 className="text-5xl md:text-6xl font-bold mb-6">
 					Termine & Veranstaltungen
 				</h1>
@@ -187,9 +187,9 @@ const Termine = () => {
 									<div
 										className="text-gray-600 mb-6"
 										dangerouslySetInnerHTML={{
-											__html: event.body
-												? markdownToHtml(event.body)
-												: event.description,
+											__html: markdownToHtml(
+												event.body || event.description,
+											),
 										}}
 									/>
 

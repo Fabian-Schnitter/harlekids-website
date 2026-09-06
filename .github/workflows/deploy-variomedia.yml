@@ -1,0 +1,79 @@
+name: Website zu Variomedia übertragen
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: variomedia-production
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Quellcode laden
+        uses: actions/checkout@v4
+
+      - name: Node.js einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      - name: Website prüfen und bauen
+        run: |
+          npm run lint
+          npm run build
+
+      - name: Zu Variomedia übertragen
+        if: ${{ vars.ENABLE_VARIOMEDIA_DEPLOY == 'true' }}
+        env:
+          DEPLOY_HOST: ${{ secrets.VARIOMEDIA_SSH_HOST }}
+          DEPLOY_USER: ${{ secrets.VARIOMEDIA_SSH_USER }}
+          DEPLOY_PORT: ${{ secrets.VARIOMEDIA_SSH_PORT }}
+          DEPLOY_PATH: ${{ secrets.VARIOMEDIA_DEPLOY_PATH }}
+          SSH_PRIVATE_KEY: ${{ secrets.VARIOMEDIA_SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.VARIOMEDIA_SSH_KNOWN_HOSTS }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          : "${DEPLOY_HOST:?VARIOMEDIA_SSH_HOST fehlt}"
+          : "${DEPLOY_USER:?VARIOMEDIA_SSH_USER fehlt}"
+          : "${DEPLOY_PATH:?VARIOMEDIA_DEPLOY_PATH fehlt}"
+          : "${SSH_PRIVATE_KEY:?VARIOMEDIA_SSH_PRIVATE_KEY fehlt}"
+          : "${SSH_KNOWN_HOSTS:?VARIOMEDIA_SSH_KNOWN_HOSTS fehlt}"
+
+          DEPLOY_PORT="${DEPLOY_PORT:-22}"
+
+          if [[ ! "$DEPLOY_PORT" =~ ^[0-9]+$ ]]; then
+            echo "Der SSH-Port ist ungültig."
+            exit 1
+          fi
+
+          if [[ ! "$DEPLOY_PATH" =~ ^/[^/]+/[^/]+ ]]; then
+            echo "Der Zielpfad muss ein ausreichend genauer absoluter Pfad sein."
+            exit 1
+          fi
+
+          install -d -m 700 "$HOME/.ssh"
+          printf '%s\n' "$SSH_PRIVATE_KEY" > "$HOME/.ssh/id_ed25519"
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
+          chmod 600 "$HOME/.ssh/id_ed25519" "$HOME/.ssh/known_hosts"
+
+          rsync \
+            --archive \
+            --compress \
+            --chmod=D755,F644 \
+            --rsh="ssh -p ${DEPLOY_PORT} -i $HOME/.ssh/id_ed25519 -o StrictHostKeyChecking=yes" \
+            dist/ \
+            "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH%/}/"

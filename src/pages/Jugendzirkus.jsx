@@ -65,7 +65,7 @@ const Jugendzirkus = () => {
 	return (
 		<div className="min-h-screen">
 			{/* Hero Section */}
-			<Section backgroundColor="blue" className="text-white text-center py-20">
+			<Section backgroundColor="blue" className="text-white text-center py-14 md:py-16">
 				<FaTheaterMasks className="text-6xl mb-6 mx-auto" />
 				<h1 className="text-5xl md:text-6xl font-bold mb-6">
 					Kinder- & Jugendzirkus
@@ -162,17 +162,11 @@ const Jugendzirkus = () => {
 											<span>{group.level}</span>
 										</div>
 									)}
-									{group.price && (
-										<div className="flex justify-between text-gray-700">
-											<span className="font-semibold">Preis:</span>
-											<span>{group.price}</span>
-										</div>
-									)}
 									{group.availableSpots !== undefined &&
 										group.availableSpots !== null && (
 											<div className="flex justify-between text-gray-700">
 												<span className="font-semibold">Freie Plätze:</span>
-												<span className="text-circus-green font-bold">
+												<span className="text-circus-blue font-bold">
 													{group.availableSpots}
 												</span>
 											</div>

@@ -18,7 +18,7 @@ const Section = ({
 	return (
 		<section
 			id={id}
-			className={`py-16 md:py-24 ${bgColors[backgroundColor]} ${className}`}
+			className={`py-12 md:py-16 ${bgColors[backgroundColor]} ${className}`}
 			{...props}
 		>
 			<div className="container mx-auto px-4">
@@ -30,7 +30,7 @@ const Section = ({
 							</p>
 						)}
 						{title && (
-							<h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+							<h2 className="circus-title text-4xl md:text-5xl font-bold text-gray-900 mb-4">
 								{title}
 							</h2>
 						)}

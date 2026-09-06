@@ -2,7 +2,7 @@
 title: "Trainingstermine"
 date: 2023-03-11
 author: "Kathi"
-category: "Jugendzirkus"
+category: "Kurse"
 excerpt: "Unser Trainingsangebot wurde aktualisiert. Kommt vorbei und probiert euch aus."
 published: true
 ---
