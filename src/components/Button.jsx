@@ -1,5 +1,37 @@
 import { Link } from "react-router-dom";
 
+const hasControlCharacters = (value) =>
+	[...value].some((character) => {
+		const code = character.charCodeAt(0);
+		return code <= 31 || code === 127;
+	});
+
+const isSafeInternalPath = (value) =>
+	typeof value === "string" &&
+	value.startsWith("/") &&
+	!value.startsWith("//") &&
+	!hasControlCharacters(value);
+
+const isSafeHref = (value) => {
+	if (typeof value !== "string") return false;
+	const href = value.trim();
+	if (
+		/^mailto:[^\s]+$/i.test(href) ||
+		/^tel:[+\d][+\d ()/.-]*$/i.test(href) ||
+		/^#[A-Za-z0-9_-]+$/.test(href) ||
+		isSafeInternalPath(href)
+	) {
+		return true;
+	}
+
+	try {
+		const url = new URL(href);
+		return url.protocol === "https:" && Boolean(url.hostname) && !url.username && !url.password;
+	} catch {
+		return false;
+	}
+};
+
 const Button = ({
 	children,
 	variant = "primary",
@@ -33,7 +65,7 @@ const Button = ({
 
 	const classes = `${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`;
 
-	if (to) {
+	if (to && isSafeInternalPath(to)) {
 		return (
 			<Link to={to} className={classes} {...props}>
 				{children}
@@ -41,11 +73,19 @@ const Button = ({
 		);
 	}
 
-	if (href) {
+	if (href && isSafeHref(href)) {
 		return (
 			<a href={href} className={classes} {...props}>
 				{children}
 			</a>
+		);
+	}
+
+	if (to || href) {
+		return (
+			<span className={`${classes} cursor-not-allowed opacity-60`} aria-disabled="true">
+				{children}
+			</span>
 		);
 	}
 

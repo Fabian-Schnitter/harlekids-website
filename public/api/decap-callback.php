@@ -44,6 +44,7 @@ try {
         throw new RuntimeException('GitHub konnte die Anmeldung nicht bestätigen.');
     }
 
+    decap_verify_granted_scope($response['body']['scope'] ?? null);
     decap_verify_repository_access($token);
     session_destroy();
 
@@ -58,4 +59,3 @@ try {
 
     decap_render_oauth_result('error', ['message' => $error->getMessage()]);
 }
-

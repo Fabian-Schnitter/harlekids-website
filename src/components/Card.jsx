@@ -3,6 +3,7 @@ const Card = ({
 	title,
 	image,
 	imageAlt = "",
+	imagePosition = "center",
 	icon: Icon,
 	accentColor,
 	className = "",
@@ -22,7 +23,10 @@ const Card = ({
 					<img
 						src={image}
 						alt={imageAlt}
+						loading="lazy"
+						decoding="async"
 						className="w-full h-full object-cover"
+						style={{ objectPosition: imagePosition }}
 					/>
 				</div>
 			)}

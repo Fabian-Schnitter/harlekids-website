@@ -32,7 +32,6 @@ html {
 /* Image Optimization */
 img {
 	max-width: 100%;
-	height: auto;
 }
 
 /* Prevent text overflow */

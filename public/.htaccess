@@ -18,5 +18,15 @@ Options -Indexes
 	Header always set X-Content-Type-Options "nosniff"
 	Header always set X-Frame-Options "SAMEORIGIN"
 	Header always set Referrer-Policy "strict-origin-when-cross-origin"
-	Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+	Header always set Permissions-Policy "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+	Header always set Strict-Transport-Security "max-age=31536000"
+	Header always set Cross-Origin-Opener-Policy "same-origin-allow-popups"
+	Header always set Cross-Origin-Resource-Policy "same-site"
+	Header always set X-Permitted-Cross-Domain-Policies "none"
+
+	# Gilt nur für die eigentliche Website. PHP-OAuth-Antworten setzen eine
+	# eigene, strengere Richtlinie mit einem zufälligen Script-Nonce.
+	<FilesMatch "\.html?$">
+		Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; upgrade-insecure-requests"
+	</FilesMatch>
 </IfModule>

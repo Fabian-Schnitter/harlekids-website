@@ -10,7 +10,6 @@ return [
     'client_secret' => 'GITHUB_OAUTH_CLIENT_SECRET_EINTRAGEN',
     'site_origin' => 'https://harlekids.de',
     'repository' => 'Fabian-Schnitter/harlekids-website',
-    // Für ein privates Repository wird der Scope "repo" benötigt.
-    'scope' => 'repo',
+    // Das Website-Repository ist öffentlich; private Repositories bleiben unzugänglich.
+    'scope' => 'public_repo',
 ];
-

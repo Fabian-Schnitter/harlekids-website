@@ -75,7 +75,8 @@ function contact_rate_limit(): bool
         if (is_resource($handle)) {
             fclose($handle);
         }
-        return true;
+        // Ohne funktionierende Begrenzung wird nicht ungeschützt versendet.
+        return false;
     }
 
     $now = time();
@@ -121,7 +122,7 @@ if (!str_starts_with($contentType, 'application/json')) {
 $config = contact_config();
 $origin = (string) ($_SERVER['HTTP_ORIGIN'] ?? '');
 $allowedOrigins = $config['allowed_origins'] ?? [];
-if ($origin !== '' && (!is_array($allowedOrigins) || !in_array($origin, $allowedOrigins, true))) {
+if ($origin === '' || !is_array($allowedOrigins) || !in_array($origin, $allowedOrigins, true)) {
     contact_response(403, ['success' => false, 'error' => 'Anfrage nicht erlaubt.']);
 }
 

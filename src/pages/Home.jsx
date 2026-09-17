@@ -13,6 +13,7 @@ import Hero from "../components/Hero";
 import Section from "../components/Section";
 import Card from "../components/Card";
 import Button from "../components/Button";
+import MomentsGallery from "../components/MomentsGallery";
 import { loadBlogPosts, loadOffers } from "../utils/contentLoader";
 
 const quickLinks = [
@@ -74,7 +75,7 @@ const Home = () => {
 				eyebrow="Kinder- und Jugendzirkus in Senftenberg"
 				title="Willkommen bei Harlekids"
 				subtitle="Zirkus, der bewegt – mit Mut, Kreativität und ganz viel Gemeinschaft."
-				backgroundImage="https://www.zpz-harlekids.de/wp-content/themes/harlekids2010/images/head_center.jpg"
+				backgroundImage="/images/momente/hauptbild-gruppe-zirkuszelt.jpg"
 				primaryCTA={{ text: "Mitmachen", link: "/jugendzirkus" }}
 				secondaryCTA={{ text: "Ferien entdecken", link: "/ferien" }}
 			/>
@@ -175,6 +176,29 @@ const Home = () => {
 				</div>
 			</section>
 
+			<MomentsGallery
+				eyebrow="Mitten im Geschehen"
+				title="Zirkusmomente, die bleiben"
+				items={[
+					{
+						src: "/images/momente/einradtraining-zelt.jpg",
+						alt: "Einradgruppe beim gemeinsamen Training im Zirkuszelt",
+						caption: "Gemeinsam üben",
+					},
+					{
+						src: "/images/momente/einander-vertrauen-gruppe.jpg",
+						alt: "Kinder und Jugendliche umarmen sich als Gruppe",
+						caption: "Einander vertrauen",
+						position: "center 43%",
+					},
+					{
+						src: "/images/momente/gruppenschatten.jpg",
+						alt: "Schatten einer Zirkusgruppe auf einer Wiese",
+						caption: "Als Gruppe wachsen",
+					},
+				]}
+			/>
+
 			<Section
 				id="angebote"
 				title="Unsere Angebote"
@@ -198,7 +222,7 @@ const Home = () => {
 								key={offer.slug}
 								title={offer.title}
 								image={offer.image}
-								imageAlt={`Illustration zu ${offer.title}`}
+								imageAlt={`Einblick in das Angebot ${offer.title}`}
 								icon={presentation.icon}
 								accentColor={presentation.color}
 								className="circus-offer-card w-full md:w-[calc(50%_-_0.875rem)] lg:w-[calc(33.333%_-_1.167rem)]"

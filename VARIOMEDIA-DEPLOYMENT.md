@@ -31,6 +31,12 @@ settings → OAuth Apps → New OAuth App** folgende Werte eintragen:
 Anschließend Client ID und Client Secret kopieren. Das Secret niemals in dieses
 Repository oder in das öffentliche Web-Verzeichnis schreiben.
 
+Der Login fordert ausschließlich Zugriff auf öffentliche Repositories an. Falls
+das CMS schon einmal mit der früheren Berechtigung `repo` verwendet wurde, muss
+jede betroffene Person die **Harlekids CMS** OAuth-App einmal unter **GitHub →
+Settings → Applications → Authorized OAuth Apps** widerrufen und sich danach
+neu anmelden. Erst dann ist der Zugriff auf private Repositories sicher entfernt.
+
 ## 3. OAuth-Konfiguration bei Variomedia hinterlegen
 
 Die mitgelieferte `.htaccess` stellt die Domain bei Variomedia auf PHP 8.4.

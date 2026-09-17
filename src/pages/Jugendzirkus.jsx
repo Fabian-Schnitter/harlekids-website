@@ -2,8 +2,24 @@ import { useState, useEffect } from "react";
 import Section from "../components/Section";
 import Card from "../components/Card";
 import Button from "../components/Button";
+import MomentsGallery from "../components/MomentsGallery";
 import { FaChild, FaUsers, FaStar, FaTheaterMasks, FaRunning, FaMagic, FaMusic, FaMapMarkerAlt } from "react-icons/fa";
 import { loadJugendzirkus } from "../utils/contentLoader";
+
+const trainingImages = {
+	"einradtraining-senftenberg": {
+		src: "/images/momente/einrad-kette-bahn.jpg",
+		position: "center 72%",
+	},
+	"akrobatiktraining-brieske": {
+		src: "/images/momente/akrobatik-draussen.jpg",
+		position: "center 78%",
+	},
+	"balancetraining-brieske": {
+		src: "/images/momente/einrad-balance-stange.jpg",
+		position: "center 58%",
+	},
+};
 
 const Jugendzirkus = () => {
 	const [trainingGroups, setTrainingGroups] = useState([]);
@@ -116,6 +132,31 @@ const Jugendzirkus = () => {
 				</div>
 			</Section>
 
+			<MomentsGallery
+				className="moments-gallery-muted"
+				eyebrow="Training in Bildern"
+				title="Ausprobieren, üben, gemeinsam weiterkommen"
+				items={[
+					{
+						src: "/images/momente/einrad-kette-sporthalle.jpg",
+						alt: "Einradgruppe fährt gemeinsam durch eine Sporthalle",
+						caption: "Einrad & Balance",
+					},
+					{
+						src: "/images/momente/jonglage-baelle-halle.jpg",
+						alt: "Ein Artist jongliert in der Halle mit mehreren Bällen",
+						caption: "Jonglage & Geschick",
+						position: "center 49%",
+					},
+					{
+						src: "/images/momente/akrobatik-koerperspannung.jpg",
+						alt: "Kinder üben gemeinsam Partnerakrobatik und Körperspannung",
+						caption: "Akrobatik & Körperspannung",
+						position: "center 50%",
+					},
+				]}
+			/>
+
 			{/* Trainingsgruppen */}
 			<Section
 				title="Unsere Trainingsgruppen"
@@ -128,15 +169,18 @@ const Jugendzirkus = () => {
 					</p>
 				) : (
 					<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-						{trainingGroups.map((group, index) => (
-							<Card key={index} hoverable={false} className="h-full">
-								{group.image && (
-									<img
-										src={group.image}
-										alt={group.title}
-										className="w-full h-48 object-cover rounded-t-lg mb-4"
-									/>
-								)}
+						{trainingGroups.map((group, index) => {
+							const trainingImage = trainingImages[group.slug];
+
+							return (
+							<Card
+								key={index}
+								hoverable={false}
+								className="h-full"
+								image={trainingImage?.src}
+								imageAlt={`Trainingseindruck: ${group.title}`}
+								imagePosition={trainingImage?.position}
+							>
 
 								<div className="flex justify-between items-start mb-4">
 									<h3 className="text-2xl font-bold text-gray-900">
@@ -207,7 +251,8 @@ const Jugendzirkus = () => {
 									</Button>
 								)}
 							</Card>
-						))}
+							);
+						})}
 					</div>
 				)}
 

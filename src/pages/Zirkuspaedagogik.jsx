@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Section from "../components/Section";
 import Card from "../components/Card";
 import Button from "../components/Button";
+import MomentsGallery from "../components/MomentsGallery";
 import {
 	FaGraduationCap,
 	FaCertificate,
@@ -84,6 +85,29 @@ const Zirkuspaedagogik = () => {
 					</div>
 				</div>
 			</Section>
+
+			<MomentsGallery
+				className="moments-gallery-muted"
+				eyebrow="Praxisnah lernen"
+				title="Technik vermitteln, Vertrauen ermöglichen"
+				items={[
+					{
+						src: "/images/momente/diabolo-coaching.jpg",
+						alt: "Trainer begleitet eine Teilnehmerin beim Diabolospiel",
+						caption: "Schritt für Schritt anleiten",
+					},
+					{
+						src: "/images/momente/kreativwerkstatt.jpg",
+						alt: "Teilnehmer arbeitet konzentriert an einem Requisit",
+						caption: "Material & Gestaltung",
+					},
+					{
+						src: "/images/momente/jonglage-draussen.jpg",
+						alt: "Jonglageübung im Freien in warmem Abendlicht",
+						caption: "Methoden praktisch erproben",
+					},
+				]}
+			/>
 
 			{/* Fortbildungen */}
 			<Section

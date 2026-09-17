@@ -30,7 +30,7 @@ const Navbar = () => {
 							className="h-14 w-14 shrink-0 bg-no-repeat"
 							style={{
 								backgroundImage:
-									'url("https://www.zpz-harlekids.de/wp-content/themes/harlekids2010/images/head_center.jpg")',
+									'url("/images/harlekids-header.jpg")',
 								backgroundSize: "317px auto",
 								backgroundPosition: "-239px top",
 							}}

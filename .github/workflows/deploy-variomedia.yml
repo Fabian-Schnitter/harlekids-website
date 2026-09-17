@@ -36,11 +36,17 @@ jobs:
       - name: E-Mail-Versand vorbereiten
         run: composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
 
+      - name: Serverfunktionen und PHP-Bibliotheken prüfen
+        run: |
+          find public/api -type f -name '*.php' -print0 | xargs -0 -n1 php -l
+          composer audit --no-dev
+
       - name: Abhängigkeiten installieren
         run: npm ci
 
       - name: Website prüfen und bauen
         run: |
+          npm audit --omit=dev --audit-level=high
           npm run lint
           npm run build
 

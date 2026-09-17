@@ -58,7 +58,7 @@ function decap_oauth_config(): array
     $config += [
         'site_origin' => 'https://harlekids.de',
         'repository' => 'Fabian-Schnitter/harlekids-website',
-        'scope' => 'repo',
+        'scope' => 'public_repo',
     ];
 
     return $config;
@@ -204,6 +204,25 @@ function decap_verify_repository_access(string $token): void
     }
 }
 
+function decap_verify_granted_scope(mixed $scope): void
+{
+    if (!is_string($scope)) {
+        throw new RuntimeException('GitHub hat keine gültige Berechtigung bestätigt.');
+    }
+
+    $scopes = preg_split('/[\s,]+/', trim($scope), -1, PREG_SPLIT_NO_EMPTY);
+    if (!is_array($scopes) || !in_array('public_repo', $scopes, true)) {
+        throw new RuntimeException('Die benötigte Berechtigung für das öffentliche Website-Repository fehlt.');
+    }
+
+    if (in_array('repo', $scopes, true)) {
+        throw new RuntimeException(
+            'Die frühere, zu weitreichende GitHub-Berechtigung ist noch aktiv. '
+            . 'Bitte die Harlekids-OAuth-App bei GitHub widerrufen und erneut anmelden.'
+        );
+    }
+}
+
 function decap_render_oauth_result(string $status, array $content): never
 {
     decap_no_cache_headers();
@@ -247,4 +266,3 @@ function decap_render_oauth_result(string $status, array $content): never
 
     exit;
 }
-

@@ -1,5 +1,9 @@
 Options -Indexes
 
+<FilesMatch "^(?:composer\.(?:json|lock)|autoload\.php)$">
+	Require all denied
+</FilesMatch>
+
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 	RewriteRule ^vendor(?:/|$) - [F,L]

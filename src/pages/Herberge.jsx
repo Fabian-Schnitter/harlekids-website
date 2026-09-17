@@ -64,9 +64,18 @@ const Herberge = () => {
 			>
 				<div className="max-w-4xl mx-auto">
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-12">
-						<div className="rounded-lg shadow-lg w-full min-h-64 bg-circus-blue text-white flex items-center justify-center p-8 text-center">
-							<FaBed className="text-6xl" aria-hidden="true" />
-						</div>
+						<figure className="overflow-hidden rounded-lg bg-gray-100 shadow-lg">
+							<img
+								src="/images/momente/harlekids-gelaende.jpg"
+								alt="Harlekids-Gelände mit Zirkuswagen und Vereinsfahrzeug"
+								className="h-80 w-full object-cover"
+								loading="lazy"
+								decoding="async"
+							/>
+							<figcaption className="bg-circus-blue px-4 py-3 text-sm font-semibold text-white">
+								Direkt auf dem Harlekids-Gelände
+							</figcaption>
+						</figure>
 						<div>
 							<p className="text-lg text-gray-700 mb-4 leading-relaxed">
 								Unsere Jugendherberge liegt direkt neben dem Zirkushaus und

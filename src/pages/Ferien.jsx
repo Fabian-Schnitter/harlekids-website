@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Section from "../components/Section";
 import Card from "../components/Card";
 import Button from "../components/Button";
+import MomentsGallery from "../components/MomentsGallery";
 import {
 	FaSun,
 	FaPalette,
@@ -15,6 +16,13 @@ import {
 	FaPhone,
 } from "react-icons/fa";
 import { loadFerienprogramme, markdownToHtml } from "../utils/contentLoader";
+
+const programmeImages = [
+	"/images/momente/feriengruppe-unter-baeumen.jpg",
+	"/images/momente/lagerfeuer.jpg",
+	"/images/momente/zirkuszelt-tag.jpg",
+	"/images/momente/ferienausflug.jpg",
+];
 
 const Ferien = () => {
 	const [programme, setProgramme] = useState([]);
@@ -96,6 +104,28 @@ const Ferien = () => {
 				</div>
 			</Section>
 
+			<MomentsGallery
+				eyebrow="Ferienmomente"
+				title="Eine Woche, viele gemeinsame Erlebnisse"
+				items={[
+					{
+						src: "/images/momente/feriengruppe-unter-baeumen.jpg",
+						alt: "Feriengruppe unterwegs auf einem Weg unter großen Bäumen",
+						caption: "Gemeinsam unterwegs",
+					},
+					{
+						src: "/images/momente/lagerfeuer.jpg",
+						alt: "Marshmallows werden gemeinsam über einer Feuerschale geröstet",
+						caption: "Abende am Lagerfeuer",
+					},
+					{
+						src: "/images/momente/zirkuskino.jpg",
+						alt: "Kinder schauen im abgedunkelten Zirkuszelt gemeinsam einen Film",
+						caption: "Zeit zum Entspannen",
+					},
+				]}
+			/>
+
 			{/* Ferientermine */}
 			<Section
 				title={`Termine${ferienJahre ? ` ${ferienJahre}` : ""}`}
@@ -122,11 +152,13 @@ const Ferien = () => {
 								key={termin.slug || termin.id || index}
 								className="flex flex-col"
 							>
-								{termin.image && (
+								{(termin.image || programmeImages[index % programmeImages.length]) && (
 									<div className="relative h-56 overflow-hidden rounded-t-xl">
 										<img
-											src={termin.image}
+											src={termin.image || programmeImages[index % programmeImages.length]}
 											alt={termin.title}
+											loading="lazy"
+											decoding="async"
 											className="w-full h-full object-cover"
 										/>
 										{termin.maxParticipants && termin.spotsLeft && (
@@ -179,12 +211,14 @@ const Ferien = () => {
 											</div>
 										)}
 										{termin.time && (
-											<div className="flex justify-between text-gray-700">
-												<span className="font-semibold flex items-center">
-											<FaClock className="mr-2 text-circus-blue" />
+											<div className="flex flex-col gap-1 text-gray-700 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+												<span className="flex shrink-0 items-center font-semibold">
+													<FaClock className="mr-2 text-circus-blue" />
 													Zeit:
 												</span>
-												<span>{termin.time}</span>
+												<span className="pl-6 leading-relaxed sm:pl-0 sm:text-right">
+													{termin.time}
+												</span>
 											</div>
 										)}
 										{termin.priceWithStay || termin.priceWithoutStay ? (

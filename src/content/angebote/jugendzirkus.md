@@ -1,6 +1,7 @@
 ---
 title: "Jugendzirkus"
 description: "Wöchentliche Trainings für alle Altersgruppen – von Anfänger*innen bis Fortgeschrittene. Gemeinsam erarbeiten wir Kunststücke und bringen sie in großen Shows auf die Bühne."
+image: "/images/momente/einrad-zirkuszelt.jpg"
 link: "/jugendzirkus"
 buttonLabel: "Mehr erfahren"
 order: 1
