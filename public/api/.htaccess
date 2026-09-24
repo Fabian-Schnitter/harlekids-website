@@ -8,3 +8,10 @@ Options -Indexes
 	RewriteEngine On
 	RewriteRule ^vendor(?:/|$) - [F,L]
 </IfModule>
+
+<IfModule mod_headers.c>
+	<FilesMatch "^decap-(?:auth|callback)\.php$">
+		Header always unset Cross-Origin-Opener-Policy
+		Header always set Cross-Origin-Opener-Policy "unsafe-none"
+	</FilesMatch>
+</IfModule>

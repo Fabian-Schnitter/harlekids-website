@@ -5,6 +5,8 @@ Options -Indexes
 <IfModule mod_setenvif.c>
 	# Das CMS benötigt für seine lokale JavaScript-Ausführung eine eigene CSP.
 	SetEnvIf Request_URI "^/admin(?:/|$)" harlekids_cms=1
+	# OAuth-Popups müssen ihre Verbindung zum öffnenden CMS-Fenster behalten.
+	SetEnvIf Request_URI "^/api/decap-(?:auth|callback)\.php$" harlekids_oauth=1
 </IfModule>
 
 <IfModule mod_rewrite.c>
@@ -25,7 +27,7 @@ Options -Indexes
 	Header always set Referrer-Policy "strict-origin-when-cross-origin"
 	Header always set Permissions-Policy "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
 	Header always set Strict-Transport-Security "max-age=31536000"
-	Header always set Cross-Origin-Opener-Policy "same-origin-allow-popups"
+	Header always set Cross-Origin-Opener-Policy "same-origin-allow-popups" env=!harlekids_oauth
 	Header always set Cross-Origin-Resource-Policy "same-site"
 	Header always set X-Permitted-Cross-Domain-Policies "none"
 
