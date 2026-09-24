@@ -18,12 +18,12 @@ jobs:
 
     steps:
       - name: Quellcode laden
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Node.js einrichten
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       - name: PHP einrichten
@@ -51,14 +51,12 @@ jobs:
           npm run build
 
       - name: Testumgebung schützen und konfigurieren
-        if: ${{ vars.ENABLE_STAGING_PROTECTION == 'true' }}
         env:
           STAGING_SITE_ORIGIN: https://${{ secrets.VARIOMEDIA_SSH_HOST }}
           STAGING_AUTH_USER_FILE: /homepages/${{ secrets.VARIOMEDIA_SSH_USER }}/private/harlekids-test.htpasswd
         run: node scripts/prepare-staging-deploy.mjs
 
       - name: Zu Variomedia übertragen
-        if: ${{ vars.ENABLE_VARIOMEDIA_DEPLOY == 'true' }}
         env:
           DEPLOY_HOST: ${{ secrets.VARIOMEDIA_SSH_HOST }}
           DEPLOY_USER: ${{ secrets.VARIOMEDIA_SSH_USER }}
