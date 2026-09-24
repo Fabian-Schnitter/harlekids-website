@@ -2,6 +2,11 @@ AddHandler application/x-httpd-php84 .php
 
 Options -Indexes
 
+<IfModule mod_setenvif.c>
+	# Das CMS benötigt für seine lokale JavaScript-Ausführung eine eigene CSP.
+	SetEnvIf Request_URI "^/admin(?:/|$)" harlekids_cms=1
+</IfModule>
+
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 
@@ -25,8 +30,9 @@ Options -Indexes
 	Header always set X-Permitted-Cross-Domain-Policies "none"
 
 	# Gilt nur für die eigentliche Website. PHP-OAuth-Antworten setzen eine
-	# eigene, strengere Richtlinie mit einem zufälligen Script-Nonce.
+	# eigene, strengere Richtlinie mit einem zufälligen Script-Nonce. Das CMS
+	# erhält seine abweichende Richtlinie in /admin/.htaccess.
 	<FilesMatch "\.html?$">
-		Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; upgrade-insecure-requests"
+		Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; upgrade-insecure-requests" env=!harlekids_cms
 	</FilesMatch>
 </IfModule>
