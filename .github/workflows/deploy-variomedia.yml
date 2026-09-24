@@ -53,7 +53,7 @@ jobs:
       - name: Testumgebung schützen und konfigurieren
         env:
           STAGING_SITE_ORIGIN: https://${{ secrets.VARIOMEDIA_SSH_HOST }}
-          STAGING_AUTH_USER_FILE: /homepages/${{ secrets.VARIOMEDIA_SSH_USER }}/private/harlekids-test.htpasswd
+          STAGING_AUTH_USER_FILE: /homepages/${{ secrets.VARIOMEDIA_SSH_USER }}/.htpasswd-harlekids-test
         run: node scripts/prepare-staging-deploy.mjs
 
       - name: Zu Variomedia übertragen
