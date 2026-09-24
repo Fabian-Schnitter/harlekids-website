@@ -42,6 +42,7 @@ function contact_config(): array
     }
 
     return $config + [
+        'transport' => 'mail',
         'host' => 'smtp.variomedia.de',
         'port' => 465,
         'encryption' => PHPMailer::ENCRYPTION_SMTPS,
@@ -189,18 +190,29 @@ if (!contact_rate_limit()) {
 
 try {
     $mailer = new PHPMailer(true);
-    $mailer->isSMTP();
-    $mailer->Host = contact_config_string($config, 'host');
-    $mailer->Port = (int) ($config['port'] ?? 465);
-    $mailer->SMTPAuth = true;
-    $mailer->Username = contact_config_string($config, 'username');
-    $mailer->Password = contact_config_string($config, 'password');
-    $mailer->SMTPSecure = contact_config_string($config, 'encryption');
+    $transport = strtolower(contact_config_string($config, 'transport'));
+
+    if ($transport === 'mail') {
+        // Variomedias lokaler Webserver-Maildienst benötigt keine Postfach-Anmeldung.
+        $mailer->isMail();
+    } elseif ($transport === 'smtp') {
+        $mailer->isSMTP();
+        $mailer->Host = contact_config_string($config, 'host');
+        $mailer->Port = (int) ($config['port'] ?? 465);
+        $mailer->SMTPAuth = true;
+        $mailer->Username = contact_config_string($config, 'username');
+        $mailer->Password = contact_config_string($config, 'password');
+        $mailer->SMTPSecure = contact_config_string($config, 'encryption');
+    } else {
+        throw new RuntimeException('Unbekannte Versandart für das Kontaktformular.');
+    }
+
     $mailer->CharSet = PHPMailer::CHARSET_UTF8;
-    $mailer->setFrom(
-        contact_config_string($config, 'from_email'),
-        contact_config_string($config, 'from_name')
-    );
+    $fromEmail = contact_config_string($config, 'from_email');
+    $mailer->setFrom($fromEmail, contact_config_string($config, 'from_name'));
+    if ($transport === 'mail') {
+        $mailer->Sender = $fromEmail;
+    }
     $mailer->addAddress(
         contact_config_string($config, 'to_email'),
         contact_config_string($config, 'to_name')

@@ -91,14 +91,18 @@ aber vorsichtshalber keine anderen Dateien auf dem Variomedia-Webspace.
 
 ## 6. Kontaktformular aktivieren
 
-Das Formular versendet Nachrichten über das Variomedia-Postfach
-`info@zpz-harlekids.de`. Die benötigte Mailer-Bibliothek wird beim automatischen
-Build installiert und zusammen mit der Website übertragen.
+Das Formular versendet Nachrichten über den lokalen Maildienst des
+Variomedia-Webservers an die Weiterleitung `info@zpz-harlekids.de`. Dafür ist
+kein Passwort erforderlich. Als Absender wird ebenfalls `info@zpz-harlekids.de`
+verwendet; die vom Besucher angegebene Adresse wird ausschließlich als
+Antwortadresse (`Reply-To`) gesetzt. Die benötigte Mailer-Bibliothek wird beim
+automatischen Build installiert und zusammen mit der Website übertragen.
 
-Die Vorlage `server-config/harlekids-contact.example.php` kopieren, in
-`harlekids-contact.php` umbenennen und nur das echte Passwort des Postfachs
-eintragen. Die Datei anschließend neben der OAuth-Konfiguration außerhalb des
-Web-Verzeichnisses im Ordner `private` ablegen:
+Die Standardkonfiguration ist bereits im Kontakt-Endpunkt hinterlegt. Nur wenn
+Adressen oder erlaubte Domains abweichen, die Vorlage
+`server-config/harlekids-contact.example.php` kopieren, in
+`harlekids-contact.php` umbenennen und außerhalb des Web-Verzeichnisses im
+Ordner `private` ablegen:
 
 ```text
 /pfad/zur/private/harlekids-contact.php
@@ -106,7 +110,6 @@ Web-Verzeichnisses im Ordner `private` ablegen:
 /pfad/zur/domain/index.html
 ```
 
-Das Passwort darf weder in GitHub noch im öffentlichen Web-Verzeichnis liegen.
 Falls der Serveraufbau abweicht, kann der absolute Dateipfad über die
 Server-Umgebungsvariable `HARLEKIDS_CONTACT_CONFIG` gesetzt werden.
 

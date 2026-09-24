@@ -3,11 +3,8 @@
 declare(strict_types=1);
 
 return [
-    'host' => 'smtp.variomedia.de',
-    'port' => 465,
-    'encryption' => 'ssl',
-    'username' => 'info@zpz-harlekids.de',
-    'password' => 'PASSWORT_DES_VARIOMEDIA_POSTFACHS_EINTRAGEN',
+    // Passwortloser Versand über den lokalen Maildienst des Webservers.
+    'transport' => 'mail',
     'from_email' => 'info@zpz-harlekids.de',
     'from_name' => 'Harlekids Website',
     'to_email' => 'info@zpz-harlekids.de',
