@@ -23,22 +23,16 @@ const Navbar = () => {
 	return (
 		<nav className="circus-navbar bg-white shadow-lg sticky top-0 z-50">
 			<div className="w-full px-4">
-				<div className="flex justify-between items-center py-4">
+				<div className="flex justify-between items-center py-2">
 					{/* Logo */}
-					<Link to="/" className="flex items-center gap-3" aria-label="Harlekids – Startseite">
-						<div
-							className="h-14 w-14 shrink-0 bg-no-repeat"
-							style={{
-								backgroundImage:
-									'url("/images/harlekids-header.jpg")',
-								backgroundSize: "317px auto",
-								backgroundPosition: "-239px top",
-							}}
+					<Link to="/" className="shrink-0" aria-label="Harlekids – Startseite">
+						<img
+							src="/images/harlekids-logo.jpg"
+							alt="Harlekids – Zirkuspädagogisches Zentrum"
+							width="443"
+							height="282"
+							className="h-14 w-auto sm:h-16"
 						/>
-						<div className="leading-tight">
-							<div className="text-2xl font-bold text-circus-red">Harlekids</div>
-							<div className="text-xs text-circus-blue">Zirkuspädagogisches Zentrum</div>
-						</div>
 					</Link>
 
 					{/* Desktop Navigation */}
