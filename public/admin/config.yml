@@ -2,12 +2,12 @@ backend:
   name: github
   repo: Fabian-Schnitter/harlekids-website
   branch: main
-  site_domain: harlekids.de
-  base_url: https://harlekids.de
+  site_domain: zpz-harlekids.de
+  base_url: https://zpz-harlekids.de
   auth_endpoint: /api/decap-auth.php
 
-site_url: https://harlekids.de
-display_url: https://harlekids.de
+site_url: https://zpz-harlekids.de
+display_url: https://zpz-harlekids.de
 locale: de
 publish_mode: simple
 local_backend: true

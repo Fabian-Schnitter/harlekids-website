@@ -25,8 +25,8 @@ Im GitHub-Konto des Repository-Eigentümers unter **Settings → Developer
 settings → OAuth Apps → New OAuth App** folgende Werte eintragen:
 
 - Application name: `Harlekids CMS`
-- Homepage URL: `https://harlekids.de/admin/`
-- Authorization callback URL: `https://harlekids.de/api/decap-callback.php`
+- Homepage URL: `https://zpz-harlekids.de/admin/`
+- Authorization callback URL: `https://zpz-harlekids.de/api/decap-callback.php`
 
 Anschließend Client ID und Client Secret kopieren. Das Secret niemals in dieses
 Repository oder in das öffentliche Web-Verzeichnis schreiben.
@@ -83,7 +83,7 @@ aber vorsichtshalber keine anderen Dateien auf dem Variomedia-Webspace.
 
 ## 5. Funktion prüfen
 
-1. `https://harlekids.de/admin/` öffnen.
+1. `https://zpz-harlekids.de/admin/` öffnen.
 2. Mit einem eingeladenen GitHub-Konto anmelden.
 3. Einen Testbeitrag speichern und veröffentlichen.
 4. In GitHub unter **Actions** den erfolgreichen Build und Upload prüfen.

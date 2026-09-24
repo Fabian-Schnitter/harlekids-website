@@ -12,5 +12,9 @@ return [
     'from_name' => 'Harlekids Website',
     'to_email' => 'info@zpz-harlekids.de',
     'to_name' => 'Harlekids e.V.',
-    'allowed_origins' => ['https://harlekids.de', 'https://www.harlekids.de'],
+    'allowed_origins' => [
+        'https://zpz-harlekids.de',
+        'https://www.zpz-harlekids.de',
+        'https://test.zpz-harlekids.de',
+    ],
 ];

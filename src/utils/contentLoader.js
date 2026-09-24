@@ -126,7 +126,7 @@ export const loadContactSettings = async () => {
 		console.warn("Kontakt-Einstellungen konnten nicht geladen werden:", error);
 		return {
 			phone: "+49 123 456789",
-			email: "info@harlekids.de",
+			email: "info@zpz-harlekids.de",
 			address: "Musterstraße 123\n12345 Musterstadt",
 		};
 	}

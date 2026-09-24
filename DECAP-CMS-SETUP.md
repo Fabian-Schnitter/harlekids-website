@@ -278,7 +278,7 @@ src/content/
 ```json
 {
 	"phone": "+49 123 456789",
-	"email": "info@harlekids.de",
+	"email": "info@zpz-harlekids.de",
 	"address": "Musterstraße 123\n12345 Musterstadt",
 	"facebook": "https://facebook.com/harlekids",
 	"instagram": "https://instagram.com/harlekids",
@@ -323,7 +323,7 @@ git push
 
 1. Kauft eine Domain bei einem Anbieter (z.B. namecheap.com, ionos.de)
 2. In Netlify: **Site settings** → **Domain management** → **Add custom domain**
-3. Gebt eure Domain ein (z.B. `harlekids.de`)
+3. Gebt eure Domain ein (z.B. `zpz-harlekids.de`)
 4. Folgt den Anweisungen zum DNS-Setup
 5. Netlify erstellt automatisch ein SSL-Zertifikat (HTTPS)
 

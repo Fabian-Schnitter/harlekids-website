@@ -56,7 +56,7 @@ function decap_oauth_config(): array
     }
 
     $config += [
-        'site_origin' => 'https://harlekids.de',
+        'site_origin' => 'https://zpz-harlekids.de',
         'repository' => 'Fabian-Schnitter/harlekids-website',
         'scope' => 'public_repo',
     ];
