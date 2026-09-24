@@ -22,21 +22,21 @@ const Navbar = () => {
 
 	return (
 		<nav className="circus-navbar bg-white shadow-lg sticky top-0 z-50">
-			<div className="w-full px-4">
-				<div className="flex justify-between items-center py-2">
+			<div className="mx-auto w-full max-w-[1500px] px-4 sm:px-6 lg:px-10">
+				<div className="flex min-h-24 justify-between items-center gap-6 py-2 lg:min-h-28">
 					{/* Logo */}
-					<Link to="/" className="shrink-0" aria-label="Harlekids – Startseite">
+					<Link to="/" className="circus-brand shrink-0" aria-label="Harlekids – Startseite">
 						<img
 							src="/images/harlekids-logo.jpg"
 							alt="Harlekids – Zirkuspädagogisches Zentrum"
-							width="443"
-							height="282"
-							className="h-14 w-auto sm:h-16"
+							width="499"
+							height="318"
+							className="h-20 w-auto sm:h-24 lg:h-28"
 						/>
 					</Link>
 
 					{/* Desktop Navigation */}
-					<div className="hidden lg:flex space-x-1">
+					<div className="hidden xl:flex space-x-1">
 						{navItems.map((item) => (
 							<Link
 								key={item.path}
@@ -55,7 +55,7 @@ const Navbar = () => {
 					{/* Mobile Menu Button */}
 					<button
 						onClick={() => setIsOpen(!isOpen)}
-						className="lg:hidden text-gray-700 hover:text-circus-red transition-colors"
+						className="xl:hidden text-gray-700 hover:text-circus-red transition-colors"
 						aria-label="Toggle menu"
 					>
 						{isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
@@ -64,7 +64,7 @@ const Navbar = () => {
 
 				{/* Mobile Navigation */}
 				{isOpen && (
-					<div className="lg:hidden pb-4">
+					<div className="xl:hidden pb-4">
 						{navItems.map((item) => (
 							<Link
 								key={item.path}
