@@ -176,7 +176,7 @@ const Jugendzirkus = () => {
 							<Card
 								key={index}
 								hoverable={false}
-								className="h-full"
+								className="training-card h-full"
 								image={trainingImage?.src}
 								imageAlt={`Trainingseindruck: ${group.title}`}
 								imagePosition={trainingImage?.position}
@@ -187,7 +187,7 @@ const Jugendzirkus = () => {
 										{group.title}
 									</h3>
 									{group.ageGroup && (
-										<span className="bg-circus-yellow text-gray-900 px-3 py-1 rounded-full text-sm font-semibold">
+										<span className="inline-flex shrink-0 items-center justify-center rounded-full bg-circus-yellow px-3 py-1 text-center text-sm font-semibold leading-tight text-gray-900">
 											{group.ageGroup}
 										</span>
 									)}
@@ -233,7 +233,7 @@ const Jugendzirkus = () => {
 								{group.note && <p className="mb-6 text-sm font-semibold text-circus-blue">{group.note}</p>}
 
 								{group.openToPublic === false || group.openToPublic === "false" ? (
-									<p className="rounded-lg bg-circus-blue/10 px-4 py-3 text-center font-semibold text-circus-blue">
+									<p className="mt-auto rounded-lg bg-circus-blue/10 px-4 py-3 text-center font-semibold text-circus-blue">
 										Teilnahme nur über die jeweilige Schule oder Einrichtung
 									</p>
 								) : group.registrationLink ? (
@@ -241,12 +241,12 @@ const Jugendzirkus = () => {
 										as="a"
 										href={group.registrationLink}
 										variant="primary"
-										className="w-full"
+										className="mt-auto w-full"
 									>
 										Jetzt anmelden
 									</Button>
 								) : (
-									<Button variant="primary" className="w-full" href="/kontakt">
+									<Button variant="primary" className="mt-auto w-full" href="/kontakt">
 										Schnuppertraining vereinbaren
 									</Button>
 								)}

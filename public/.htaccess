@@ -35,6 +35,6 @@ Options -Indexes
 	# eigene, strengere Richtlinie mit einem zufälligen Script-Nonce. Das CMS
 	# erhält seine abweichende Richtlinie in /admin/.htaccess.
 	<FilesMatch "\.html?$">
-		Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; upgrade-insecure-requests" env=!harlekids_cms
+		Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self'; frame-src 'self' https://www.openstreetmap.org; object-src 'none'; base-uri 'self'; frame-ancestors 'self'; form-action 'self'; upgrade-insecure-requests" env=!harlekids_cms
 	</FilesMatch>
 </IfModule>

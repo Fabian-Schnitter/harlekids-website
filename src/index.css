@@ -136,6 +136,15 @@ body { margin: 0; }
 }
 .circus-offer-card > .p-6 > p { flex: 1; }
 .circus-offer-card h3 { letter-spacing: -0.025em; }
+.training-card {
+	display: flex;
+	flex-direction: column;
+}
+.training-card > .p-6 {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+}
 .circus-blog-banner { background: var(--color-circus-blue); border-radius: 6px; }
 .home-values .rounded-full { background: #eef4f6; color: var(--color-circus-blue); }
 
