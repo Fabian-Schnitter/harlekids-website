@@ -8,7 +8,10 @@
 return [
     'client_id' => 'GITHUB_OAUTH_CLIENT_ID_EINTRAGEN',
     'client_secret' => 'GITHUB_OAUTH_CLIENT_SECRET_EINTRAGEN',
-    'site_origin' => 'https://zpz-harlekids.de',
+    'site_origins' => [
+        'https://zpz-harlekids.de',
+        'https://test.zpz-harlekids.de',
+    ],
     'repository' => 'Fabian-Schnitter/harlekids-website',
     // Das Website-Repository ist öffentlich; private Repositories bleiben unzugänglich.
     'scope' => 'public_repo',

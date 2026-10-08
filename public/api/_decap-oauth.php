@@ -56,7 +56,10 @@ function decap_oauth_config(): array
     }
 
     $config += [
-        'site_origin' => 'https://zpz-harlekids.de',
+        'site_origins' => [
+            'https://zpz-harlekids.de',
+            'https://test.zpz-harlekids.de',
+        ],
         'repository' => 'Fabian-Schnitter/harlekids-website',
         'scope' => 'public_repo',
     ];
@@ -78,22 +81,54 @@ function decap_oauth_value(string $key): string
 
 function decap_site_origin(): string
 {
-    $origin = rtrim(decap_oauth_value('site_origin'), '/');
-    $parts = parse_url($origin);
+    $config = decap_oauth_config();
+    $origins = $config['site_origins'] ?? [];
 
-    if (
-        !is_array($parts)
-        || ($parts['scheme'] ?? '') !== 'https'
-        || empty($parts['host'])
-        || isset($parts['user'])
-        || isset($parts['pass'])
-        || isset($parts['query'])
-        || isset($parts['fragment'])
-    ) {
-        throw new RuntimeException('DECAP_SITE_ORIGIN muss eine vollständige HTTPS-Adresse sein.');
+    if (!is_array($origins)) {
+        $origins = [];
     }
 
-    return $origin;
+    // Unterstützt während der Umstellung weiterhin die bisherige Einzelangabe.
+    if (isset($config['site_origin']) && is_string($config['site_origin'])) {
+        $origins[] = $config['site_origin'];
+    }
+
+    $allowedOrigins = [];
+    foreach ($origins as $origin) {
+        if (!is_string($origin)) {
+            continue;
+        }
+
+        $origin = rtrim(trim($origin), '/');
+        $parts = parse_url($origin);
+        if (
+            !is_array($parts)
+            || ($parts['scheme'] ?? '') !== 'https'
+            || empty($parts['host'])
+            || isset($parts['port'])
+            || isset($parts['user'])
+            || isset($parts['pass'])
+            || isset($parts['path'])
+            || isset($parts['query'])
+            || isset($parts['fragment'])
+        ) {
+            throw new RuntimeException('Die konfigurierte CMS-Adresse ist ungültig.');
+        }
+
+        $allowedOrigins[] = strtolower($origin);
+    }
+
+    $requestHost = strtolower((string) ($_SERVER['HTTP_HOST'] ?? ''));
+    if (!preg_match('/^[a-z0-9.-]+$/', $requestHost)) {
+        throw new RuntimeException('Der aufgerufene Hostname ist ungültig.');
+    }
+
+    $requestOrigin = 'https://' . $requestHost;
+    if (!in_array($requestOrigin, array_unique($allowedOrigins), true)) {
+        throw new RuntimeException('Diese Domain ist nicht für den CMS-Login freigegeben.');
+    }
+
+    return $requestOrigin;
 }
 
 function decap_callback_url(): string

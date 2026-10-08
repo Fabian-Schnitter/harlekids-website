@@ -12,6 +12,10 @@ Options -Indexes
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 
+	# Die öffentliche Website verwendet die Domain ohne www als Hauptadresse.
+	RewriteCond %{HTTP_HOST} ^www\.zpz-harlekids\.de$ [NC]
+	RewriteRule ^ https://zpz-harlekids.de%{REQUEST_URI} [R=301,L]
+
 	# Vorhandene Dateien, CMS und PHP-Endpunkte unverändert ausliefern.
 	RewriteCond %{REQUEST_FILENAME} -f [OR]
 	RewriteCond %{REQUEST_FILENAME} -d
