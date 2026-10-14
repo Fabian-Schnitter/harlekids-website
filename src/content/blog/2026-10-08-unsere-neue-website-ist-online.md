@@ -3,7 +3,8 @@ title: Unsere neue Website ist online!
 date: 2026-10-08T14:19:00.000+02:00
 author: Harlekids-Team
 category: Neuigkeiten
-excerpt: Unsere neue Website ist online
+excerpt: Unsere neue Website ist online – moderner, übersichtlicher und mit
+  allen wichtigen Informationen rund um die Harlekids.
 published: true
 ---
 Unsere neue Website ist online!
