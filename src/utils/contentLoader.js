@@ -254,6 +254,7 @@ function parseFrontmatter(content) {
 	const frontmatter = {};
 	const lines = frontmatterText.split("\n");
 	let currentArray = null;
+	let currentKey = null;
 
 	for (let i = 0; i < lines.length; i++) {
 		const line = lines[i];
@@ -269,6 +270,19 @@ function parseFrontmatter(content) {
 			continue;
 		}
 
+		// Decap CMS bricht längere YAML-Texte in eingerückte Folgezeilen um.
+		// Diese gehören weiterhin zum zuletzt gelesenen Feld.
+		if (
+			/^\s+/.test(line) &&
+			line.trim() !== "" &&
+			currentArray === null &&
+			currentKey &&
+			typeof frontmatter[currentKey] === "string"
+		) {
+			frontmatter[currentKey] = `${frontmatter[currentKey]} ${line.trim()}`;
+			continue;
+		}
+
 		// New key:value pair
 		const colonIndex = line.indexOf(":");
 		if (colonIndex === -1) continue;
@@ -280,6 +294,7 @@ function parseFrontmatter(content) {
 		if (value === "" || value === "[]") {
 			currentArray = [];
 			frontmatter[key] = currentArray;
+			currentKey = key;
 			continue;
 		}
 
@@ -305,6 +320,7 @@ function parseFrontmatter(content) {
 		}
 
 		frontmatter[key] = value;
+		currentKey = key;
 	}
 
 	frontmatter.body = body.trim();
