@@ -365,6 +365,17 @@ body { margin: 0; }
 	letter-spacing: -0.025em;
 	line-height: 1.2;
 }
+.blog-list-copy {
+	min-width: 0;
+}
+.blog-list-copy > div {
+	display: block;
+	overflow: visible;
+	white-space: normal;
+	overflow-wrap: anywhere;
+	-webkit-box-orient: initial;
+	-webkit-line-clamp: unset;
+}
 .blog-list-button { white-space: nowrap; }
 .blog-list-content {
 	grid-column: 2 / 4;
