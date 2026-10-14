@@ -73,7 +73,7 @@ const Home = () => {
 		<div className="min-h-screen overflow-hidden">
 			<Hero
 				eyebrow="Kinder- und Jugendzirkus in Senftenberg"
-				title="Willkommen bei Harlekids"
+				title="Willkommen bei den Harlekids"
 				subtitle="Zirkus, der bewegt – mit Mut, Kreativität und ganz viel Gemeinschaft."
 				backgroundImage="/images/momente/hauptbild-gruppe-zirkuszelt.jpg"
 				primaryCTA={{ text: "Mitmachen", link: "/jugendzirkus" }}

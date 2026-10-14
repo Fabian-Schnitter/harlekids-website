@@ -256,7 +256,7 @@ const Blog = () => {
 											{post.title}
 										</h2>
 
-										<div className="text-gray-600 leading-relaxed line-clamp-2">
+										<div className="text-gray-600 leading-relaxed">
 											{post.excerpt ||
 												(post.body && post.body.substring(0, 150) + "...")}
 										</div>
